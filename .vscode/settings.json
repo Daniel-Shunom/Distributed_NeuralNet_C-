@@ -53,6 +53,8 @@
         "fstream": "cpp",
         "variant": "cpp",
         "algorithm": "cpp",
-        "array": "cpp"
+        "array": "cpp",
+        "chrono": "cpp",
+        "thread": "cpp"
     }
 }
