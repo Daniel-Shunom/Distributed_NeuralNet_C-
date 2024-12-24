@@ -66,6 +66,8 @@ public:
     H_Params h_params;
 
     HyperParams();
+    ~HyperParams();
+    
     std::array<float, HIDDEN_NODES> allocate_memory(std::array<Node*, HIDDEN_NODES> input_nodes,
                                                     std::array<Node*, HIDDEN_NODES> next_nodes);
     std::vector<float> hidden_unit(std::vector<float> activations);

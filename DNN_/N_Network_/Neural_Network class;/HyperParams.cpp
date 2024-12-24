@@ -62,3 +62,10 @@ void HyperParams::deep_net_constructor(std::vector<std::array<Node*, HIDDEN_NODE
 void HyperParams::change_learning_rate(float new_rate) {
     node.learning_rate =  new_rate;
 }
+
+HyperParams::~HyperParams() {
+    std::string Deallocator = "[DESTRUCTOR CALLED!]\n[DEALLOCATING MEMORY...]\n";
+    for (int i = 0; i < HIDDEN_NODES; i++) {
+        delete node.hidden_nodes[i];
+    }
+}
