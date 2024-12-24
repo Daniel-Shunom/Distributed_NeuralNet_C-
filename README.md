@@ -1,41 +1,66 @@
-```markdown
 <div align="center">
 
-# 🧠 Distributed Neural Network Architecture
+# 🧠 Distributed Deep Neural Network Architecture
 
 [![MIT License](https://img.shields.io/badge/License-MIT-green.svg)](https://choosealicense.com/licenses/mit/)
-[![C++](https://img.shields.io/badge/C++-Solutions-blue.svg?style=flat&logo=c%2B%2B)](http://www.cplusplus.org/)
+[![C++](https://img.shields.io/badge/C++-17-blue.svg?style=flat&logo=c%2B%2B)](http://www.cplusplus.org/)
 [![PRs Welcome](https://img.shields.io/badge/PRs-welcome-brightgreen.svg?style=flat)](http://makeapullrequest.com)
+[![Build Status](https://img.shields.io/badge/build-passing-brightgreen.svg)](https://github.com/Daniel-Shunom/Distributed_NeuralNet_C-)
+[![Stars](https://img.shields.io/github/stars/Daniel-Shunom/Distributed_NeuralNet_C-?style=social)](https://github.com/Daniel-Shunom/Distributed_NeuralNet_C-/stargazers)
 
-*A robust implementation of distributed neural network architecture with consensus-driven forward-propagation*
+<br/>
 
-[Overview](#-overview) •
-[Installation](#-installation) •
-[Usage](#-usage) •
-[Features](#-features) •
-[Contributing](#-contributing) •
-[Contact](#-contact)
+<img src="https://raw.githubusercontent.com/Daniel-Shunom/Distributed_NeuralNet_C-/main/assets/logo.png" alt="Project Logo" width="200"/>
+
+### *Deep Neural Networks Implemntation via Distributed Computing*
+
+<p align="center">
+    <b>A sophisticated implementation of distributed neural network architecture leveraging consensus mechanisms for robust and scalable forward-propagation</b>
+</p>
+
+<br/>
+
+[📖 Overview](#-overview) •
+[⚡ Quick Start](#-installation) •
+[🛠️ Usage](#-usage) •
+[🎯 Features](#-features) •
+[🤝 Contributing](#-contributing) •
+[📧 Contact](#-contact)
+
+---
 
 </div>
 
 ## 🌟 Overview
 
-This project implements a sophisticated distributed neural network architecture where each network layer's computations are distributed and validated through a consensus mechanism for propagation.
+Welcome to the Distributed Neural Network Architecture project! This innovative implementation brings together:
+
+- **Distributed Computing**: Each neural network layer operates independently
+- **Consensus Mechanisms**: Ensures computational integrity across nodes
+- **Scalable Architecture**: Designed for horizontal scaling and high performance
+- **Smart Propagation**: Optimized forward propagation with validation checkpoints
+
+<div align="center">
+    <img src="https://raw.githubusercontent.com/Daniel-Shunom/Distributed_NeuralNet_C-/main/assets/architecture.png" alt="Architecture Overview" width="600"/>
+</div>
 
 ## 🚀 Installation
 
-Get started with the project by following these steps:
+Get up and running with these simple steps:
 
 ```bash
-# Clone the repository
+# Clone the latest version of the repository
 git clone https://github.com/Daniel-Shunom/Distributed_NeuralNet_C-.git
 
-# Navigate to project directory
+# Navigate to the project directory
 cd DNN_
 
-# Install dependencies
+# Build and install dependencies
+cmake .
 make install
-```
+
+# Verify installation
+make test
 
 ## 💻 Usage
 
