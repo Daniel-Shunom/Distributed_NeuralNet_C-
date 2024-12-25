@@ -12,7 +12,7 @@
 
 <img src="https://raw.githubusercontent.com/Daniel-Shunom/Distributed_NeuralNet_C-/main/assets/logo.png" alt="Project Logo" width="200"/>
 
-### *Deep Neural Networks Implemntation via Distributed Computing*
+### *Deep Neural Networks Implementation via Distributed Computing*
 
 <p align="center">
     <b>A sophisticated implementation of distributed neural network architecture leveraging consensus mechanisms for robust and scalable forward-propagation</b>
