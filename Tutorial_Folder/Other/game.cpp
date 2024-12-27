@@ -23,8 +23,8 @@ int play_game() {
     int arr[250];
     int guess_count = 1;
 
-    std::cout << "YOUR JOB IS TO GUESS A RANDOM NUMBER WE KNOW OF.";
-    std::cout << "\nGUESS THE NUMBER: ";
+    std::cout << "\t\t[ YOUR JOB IS TO GUESS A RANDOM NUMBER ]";
+    std::cout << "\n\t\t[ GUESS THE NUMBER: ]\t";
     
     while(true) {
         std::cin >> guess;
@@ -33,7 +33,16 @@ int play_game() {
         if (guess != random_number) {
             arr[guess_count++] = guess;
 
-            std::cout << "Hint/answer, the number is: " << random_number << std::endl << std::endl; std::cout << "WRONG NUMBER. TRY AGAIN: "; } else { std::cout << "\nYOU WIN!"; std::cout << "\nNumber of guesses: " << guess_count << '\n'; for (int i = 0; i < guess_count; i++) { std::cout << arr[i] << '\t'; } return 0; }/* */
+            std::cout << "\t\tHint/answer, the number is: " << random_number << std::endl << std::endl; 
+            std::cout << "\t\t[ WRONG NUMBER. TRY AGAIN: ]\t"; 
+        } else { 
+            std::cout << "\t\t\t\t\nYOU WIN!"; 
+            std::cout << "\t\t\nNumber of guesses: " << guess_count << '\n'; 
+            for (int i = 0; i < guess_count; i++) { 
+                std::cout << "\t\t" << arr[i] << '\t'; 
+            } 
+            return 0; 
+        }/* */
     }
     std::cout << "YOUR NUMBER IS: " << random_number;
 }
@@ -44,16 +53,20 @@ int guess_game() {
     int choice;
     
     do {
-        std::cout << "\n0. QUIT \n1. PLAY \nEnter Choice: ";
+        std::cout << "\n0. [ QUIT ] \n1. [ PLAY ] \nEnter Choice:\t";
         std::cin >> choice;
+        if (choice > 1) {
+            std::cout << "\n\n[ ENTER VALID OPTION ]:\t";
+            continue;
+        }
 
         switch(choice) {
             case 0:
-                std::cout << "GOODBYE!";
+                std::cout << "[ GOODBYE! ]";
                 return 0;
 
             case 1:
-                //std::cout << "LET'S PLAY!";
+                std::cout << "[\tLET'S PLAY!!!\t]";
                 play_game();
                 break;
         }
@@ -65,6 +78,7 @@ int guess_game() {
 std::vector<std::string> name = {"Daniel", "Aniyah", "Joseph", "Jeremiah"};
 
 int main() {
+    /*
     for (int i = 0; i < name.size(); i++) {
         std::cout << name[i] << '\t';
     }
@@ -80,6 +94,7 @@ int main() {
 
     std::cout << "\nCapacity is: " << name.capacity();
     std::cout << "\nName Size is: " << name.size() << "\n\n\n";
-
+    /**/ 
+    guess_game();
     return 0;
 }
