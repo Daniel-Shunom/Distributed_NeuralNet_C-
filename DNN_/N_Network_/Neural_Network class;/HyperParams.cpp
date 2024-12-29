@@ -26,6 +26,7 @@ HyperParams::HyperParams() {
     node.learning_rate = LEARNING_RATE;
 }
 
+//To allocate memory at compile time
 std::array<float, HIDDEN_NODES> HyperParams::allocate_memory(std::array<Node*, HIDDEN_NODES> hidden_nodes,
                                                              std::array<Node*, HIDDEN_NODES> next_nodes) {}
 
@@ -38,28 +39,35 @@ std::vector<float> HyperParams::hidden_unit(std::vector<float> activations) {
 //This is designed to iterate over h_params.hidden_nodes, and for each outer iteration
 // an innner iteration is performed to connect the nodes of that current layer to the 
 // nodes of the next layer.
-void HyperParams::hidden_layer(std::array<Node*, HIDDEN_NODES> hidden_nodes,
-                                             std::array<Node*, HIDDEN_NODES> next_nodes) {
+std::vector<std::vector<float>> HyperParams::hidden_layer(std::array<Node*, HIDDEN_NODES> &hidden_nodes,
+                                             std::array<Node*, HIDDEN_NODES> &next_nodes) {
+    std::vector<std::vector<float>> activations(2, std::vector<float>(HIDDEN_NODES, 0.0f));
     for (int i = 0; i < hidden_nodes.size(); i++) {
         if (hidden_nodes[i]) {
             for (int j = 0; j < next_nodes.size(); j++) {
-                hidden_nodes[i]->computed_activations = node.computed_activations;
-                hidden_nodes[i]->hidden_nodes[j] = next_nodes[j];
                 next_nodes[j]->computed_activations = node.computed_activations;
+                hidden_nodes[i]->hidden_nodes[j] = next_nodes[j];
+                activations[i][j] = hidden_nodes[i]->computed_activations[j];
             }
         }
     }
+    return activations;
 }
 
 //This constructs the deep net with all interconnected nodes
-void HyperParams::deep_net_constructor(std::vector<std::array<Node*, HIDDEN_NODES>>& layers) {
+std::vector<HyperParams::Node> HyperParams::deep_net_constructor(std::vector<
+                                                                 std::array<Node*, 
+                                                                 HIDDEN_NODES>>& layers) {
+    std::vector<Node> layer_activations;
     for (int i = 0; i < HIDDEN_LAYERS; i++) {
-        hidden_layer(layers[i], layers[i+1]);
+        std::vector<std::vector<float>> layer_activations = hidden_layer(layers[i], 
+                                                                         layers[i+1]);
     }
+    return layer_activations;
 }
 
 //change the learning rate
-void HyperParams::change_learning_rate(float new_rate) {
+void HyperParams::change_learning_rate(float &new_rate) {
     node.learning_rate =  new_rate;
 }
 

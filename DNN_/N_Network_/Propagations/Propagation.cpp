@@ -45,9 +45,9 @@ std::string Propagation::error_check(std::vector<float> _weights,
 }
 
 //Forward propagation
-std::vector<float> Propagation::forwardpass(std::vector<float> _weights, 
-                                            std::vector<float> _biases, 
-                                            std::vector<float> input) {
+std::vector<float> Propagation::forwardpass(std::vector<float> &_weights, 
+                                            std::vector<float> &_biases, 
+                                            std::vector<float> &input) {
     std::vector<float> Z(input.size());
     std::string Err = error_check(_weights, _biases, input);
 

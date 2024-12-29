@@ -71,10 +71,10 @@ public:
     std::array<float, HIDDEN_NODES> allocate_memory(std::array<Node*, HIDDEN_NODES> input_nodes,
                                                     std::array<Node*, HIDDEN_NODES> next_nodes);
     std::vector<float> hidden_unit(std::vector<float> activations);
-    void hidden_layer(std::array<Node*, HIDDEN_NODES> input_nodes, 
-                      std::array<Node*, HIDDEN_NODES> next_nodes);
-    void deep_net_constructor(std::vector<std::array<Node*, HIDDEN_NODES>>& layers);
-    void change_learning_rate(float learning_rate);
+    std::vector<std::vector<float>> hidden_layer(std::array<Node*, HIDDEN_NODES> &input_nodes, 
+                      std::array<Node*, HIDDEN_NODES> &next_nodes);
+    std::vector<Node> deep_net_constructor(std::vector<std::array<Node*, HIDDEN_NODES>>& layers);
+    void change_learning_rate(float &learning_rate);
 
 };
 

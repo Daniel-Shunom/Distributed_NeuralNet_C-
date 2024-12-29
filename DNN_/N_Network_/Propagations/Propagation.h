@@ -54,9 +54,9 @@ public:
                             std::vector<float> input);
 
     Propagation();
-    std::vector<float> forwardpass(std::vector<float> _weights, 
-                                   std::vector<float> _biases, 
-                                   std::vector<float> input);
+    std::vector<float> forwardpass(std::vector<float> &_weights, 
+                                   std::vector<float> &_biases, 
+                                   std::vector<float> &input);
 
     std::vector<float> sigmoid_activations(std::vector<float> Z);
     std::vector<float> tanh_activations(std::vector<float> Z);
