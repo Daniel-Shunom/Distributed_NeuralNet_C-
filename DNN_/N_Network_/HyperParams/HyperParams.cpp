@@ -40,7 +40,7 @@ std::vector<float> HyperParams::hidden_unit(std::vector<float> activations) {
 // an innner iteration is performed to connect the nodes of that current layer to the 
 // nodes of the next layer.
 std::vector<std::vector<float>> HyperParams::hidden_layer(std::array<Node*, HIDDEN_NODES> &hidden_nodes,
-                                             std::array<Node*, HIDDEN_NODES> &next_nodes) {
+                                                          std::array<Node*, HIDDEN_NODES> &next_nodes) {
     std::vector<std::vector<float>> activations(2, std::vector<float>(HIDDEN_NODES, 0.0f));
     for (int i = 0; i < hidden_nodes.size(); i++) {
         if (hidden_nodes[i]) {
