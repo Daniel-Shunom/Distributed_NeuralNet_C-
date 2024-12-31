@@ -41,7 +41,9 @@ std::vector<float> HyperParams::hidden_unit(std::vector<float> activations) {
 // nodes of the next layer.
 std::vector<std::vector<float>> HyperParams::hidden_layer(std::array<Node*, HIDDEN_NODES> &hidden_nodes,
                                                           std::array<Node*, HIDDEN_NODES> &next_nodes) {
+    //initializing hidden layer matrix
     std::vector<std::vector<float>> activations(2, std::vector<float>(HIDDEN_NODES, 0.0f));
+
     for (int i = 0; i < hidden_nodes.size(); i++) {
         if (hidden_nodes[i]) {
             for (int j = 0; j < next_nodes.size(); j++) {
@@ -73,11 +75,31 @@ std::vector<std::vector<float>> HyperParams::hidden_layer(std::vector<Node*> &hi
 //This constructs the deep net with all interconnected nodes
 std::vector<HyperParams::Node> HyperParams::deep_net_constructor(std::vector<
                                                                  std::array<Node*, 
-                                                                 HIDDEN_NODES>>& layers) {
+                                                                 HIDDEN_NODES>> &layers) {
     std::vector<Node> layer_activations;
     for (int i = 0; i < HIDDEN_LAYERS; i++) {
         std::vector<std::vector<float>> layer_activations = hidden_layer(layers[i], 
                                                                          layers[i+1]);
+    }
+    return layer_activations;
+}
+
+std::vector<HyperParams::Node> HyperParams::input_layer_constructor(std::vector<Node*> &input_nodes,
+                                                                    std::vector<Node*> &layers) {
+    std::vector<Node> layer_activations;
+    for (int i = 0; i < INPUT_NODES; i++) {
+        std::vector<std::vector<float>> layer_activations = hidden_layer(input_nodes, 
+                                                                         layers);
+    }
+    return layer_activations;
+}
+
+std::vector<HyperParams::Node> HyperParams::output_layer_constructor(std::vector<Node*> &layers,
+                                                                     std::vector<Node*> &output_nodes) {
+    std::vector<Node> layer_activations;
+    for (int i = 0; i < HIDDEN_LAYERS; i++) {
+        std::vector<std::vector<float>> layer_activations = hidden_layer(layers, 
+                                                                         output_nodes);
     }
     return layer_activations;
 }
