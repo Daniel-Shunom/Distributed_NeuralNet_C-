@@ -12,6 +12,8 @@ Instructions:
 - Ensure to follow the project guidelines for adding new functions.
 
 */
+#ifndef _MENU_CONSTRUCT_
+#define _MENU_CONSTRUCT_
 
 #include <iostream>
 #include <vector>
@@ -28,3 +30,6 @@ public:
     std::tuple<std::function<void(std::vector<HyperParams::Node*>)>> io_nodes_config();
     std::tuple<std::function<void(std::vector<HyperParams::Node*>)>> configure_deepnet();
 };
+
+
+#endif
