@@ -26,8 +26,14 @@ private:
 public:
     Propagation menu_props;
     HyperParams h_params;
+    
     std::function<void(std::vector<float>)> select_activation();
-    std::tuple<std::function<void(std::vector<HyperParams::Node*>)>> io_nodes_config();
+
+    std::tuple<std::function<void(std::vector<HyperParams::Node*>, 
+                                  std::vector<HyperParams::Node*>)>,
+               std::function<void(std::vector<HyperParams::Node*>, 
+                                  std::vector<HyperParams::Node*>)>> io_nodes_config();
+
     std::tuple<std::function<void(std::vector<HyperParams::Node*>)>> configure_deepnet();
 };
 
