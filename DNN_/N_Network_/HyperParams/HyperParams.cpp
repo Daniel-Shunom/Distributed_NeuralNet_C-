@@ -54,6 +54,22 @@ std::vector<std::vector<float>> HyperParams::hidden_layer(std::array<Node*, HIDD
     return activations;
 }
 
+//overloaded function using vectors
+std::vector<std::vector<float>> HyperParams::hidden_layer(std::vector<Node*> &hidden_nodes,
+                                                          std::vector<Node*> &next_nodes) {
+    std::vector<std::vector<float>> activations(2, std::vector<float>(HIDDEN_NODES, 0.0f));
+    for (int i = 0; i < hidden_nodes.size(); i++) {
+        if (hidden_nodes[i]) {
+            for (int j = 0; j < next_nodes.size(); j++) {
+                next_nodes[j]->computed_activations = node.computed_activations;
+                hidden_nodes[i]->hidden_nodes[j] = next_nodes[j];
+                activations[i][j] = hidden_nodes[i]->computed_activations[j];
+            }
+        }
+    }
+    return activations;
+}
+
 //This constructs the deep net with all interconnected nodes
 std::vector<HyperParams::Node> HyperParams::deep_net_constructor(std::vector<
                                                                  std::array<Node*, 
