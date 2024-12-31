@@ -70,14 +70,32 @@ public:
     
     std::array<float, HIDDEN_NODES> allocate_memory(std::array<Node*, HIDDEN_NODES> input_nodes,
                                                     std::array<Node*, HIDDEN_NODES> next_nodes);
+
     std::vector<float> hidden_unit(std::vector<float> activations);
     std::vector<std::vector<float>> hidden_layer(std::array<Node*, HIDDEN_NODES> &input_nodes, 
                                                  std::array<Node*, HIDDEN_NODES> &next_nodes);
-    std::vector<Node> deep_net_constructor(std::vector<std::array<Node*, HIDDEN_NODES>>& layers);
+
+    std::vector<std::vector<float>> hidden_layer(std::vector<Node*> &input_nodes, 
+                                                 std::vector<Node*> &next_nodes);
+    
+    //array form
+    std::vector<Node> input_layer_constructor(std::vector<std::array<Node*, INPUT_NODES>> &input_nodes,
+                                              std::vector<std::array<Node*, HIDDEN_NODES>> &hidden_nodes);
+    //vector form
+    std::vector<Node> input_layer_constructor(std::vector<Node*> &input_nodes,
+                                              std::vector<Node*> &hidden_nodes);
+
+    //array form
+    std::vector<Node> output_layer_constructor(std::vector<std::array<Node*, HIDDEN_NODES>> &layers, 
+                                               std::vector<std::array<Node*, OUTPUT_NODES>> &output_nodes);
+    //vector form
+    std::vector<Node> output_layer_constructor(std::vector<Node*> &layers, 
+                                               std::vector<Node*> &output_nodes);
+                 
+                                               
+    std::vector<Node> deep_net_constructor(std::vector<std::array<Node*, HIDDEN_NODES>> &layers);
     void change_learning_rate(float &learning_rate);
 
 };
-
-
 
 #endif
