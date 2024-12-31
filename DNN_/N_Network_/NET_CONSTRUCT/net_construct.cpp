@@ -77,3 +77,47 @@ std::tuple<std::function<void(std::vector<HyperParams::Node*>)>>
 
     return net_config;
 }
+
+std::tuple<std::function<void(std::vector<HyperParams::Node*>, 
+                              std::vector<HyperParams::Node*>)>,
+           std::function<void(std::vector<HyperParams::Node*>, 
+                              std::vector<HyperParams::Node*>)>> 
+MenuConstruct::io_nodes_config() {
+    int i_nodes;
+    int o_nodes;
+    std::cout << "Enter number of input nodes: ";
+    std::cin >> i_nodes;
+    std::cout << "Enter number of output nodes: ";
+    std::cin >> o_nodes;
+
+    std::tuple<std::function<void(std::vector<HyperParams::Node*>, 
+                                  std::vector<HyperParams::Node*>)>,
+               std::function<void(std::vector<HyperParams::Node*>, 
+                                  std::vector<HyperParams::Node*>)>> net_config;
+
+    std::function<void(std::vector<HyperParams::Node*>, 
+                       std::vector<HyperParams::Node*>)> layer_config;
+    
+    std::function<void(std::vector<HyperParams::Node*>, 
+                       std::vector<HyperParams::Node*>)> node_config;
+
+    layer_config = [this, i_nodes](std::vector<HyperParams::Node*> &input_layer,
+                                   std::vector<HyperParams::Node*> &hidden_layers) 
+    mutable {
+        input_layer.resize(i_nodes),
+        hidden_layers.resize(HIDDEN_NODES);
+        this->input_layer_constructor(input_layer, hidden_layers);
+    };
+
+    node_config = [this, o_nodes](std::vector<HyperParams::Node*> &hidden_layers,
+                                  std::vector<HyperParams::Node*> &output_nodes) 
+    mutable {
+        hidden_layers.resize(HIDDEN_NODES);
+        output_nodes.resize(o_nodes);
+        this->output_layer_constructor(hidden_layers, output_nodes);
+    };
+
+    net_config = std::make_tuple(layer_config, node_config);
+
+    return net_config;
+}
