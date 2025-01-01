@@ -121,3 +121,12 @@ MenuConstruct::io_nodes_config() {
 
     return net_config;
 }
+
+int menu_configuration() {
+    MenuConstruct menu;
+    menu.io_nodes_config();
+    menu.configure_deepnet();
+    menu.select_activation();
+    
+    return 0;
+}
