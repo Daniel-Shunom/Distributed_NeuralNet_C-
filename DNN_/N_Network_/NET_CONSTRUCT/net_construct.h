@@ -20,21 +20,31 @@ Instructions:
 #include <functional>
 #include "../Propagations/Propagation.h"
 #include "../HyperParams/HyperParams.h"
+#include <variant>
 
 class MenuConstruct: Propagation, HyperParams {
 private:
 public:
     Propagation menu_props;
     HyperParams h_params;
+
+    typedef std::function<void(std::vector<float>)> iAselect;
+    typedef std::tuple<std::function<void(std::vector<HyperParams::Node*>)>> deepNetTuple;
+    typedef std::tuple<std::function<void(std::vector<HyperParams::Node*>,
+                                          std::vector<HyperParams::Node*>)>, 
+                       std::function<void(std::vector<HyperParams::Node*>, 
+                                          std::vector<HyperParams::Node*>)>> ioTuple;
+
+    typedef std::vector<std::variant<ioTuple, deepNetTuple, iAselect>> iSet;
+    iSet instructions;
+
+    iAselect select_activation();
+    ioTuple io_nodes_config();
+    deepNetTuple configure_deepnet();
+
+    void instruction_eval(iSet A);
+                               
     
-    std::function<void(std::vector<float>)> select_activation();
-
-    std::tuple<std::function<void(std::vector<HyperParams::Node*>, 
-                                  std::vector<HyperParams::Node*>)>,
-               std::function<void(std::vector<HyperParams::Node*>, 
-                                  std::vector<HyperParams::Node*>)>> io_nodes_config();
-
-    std::tuple<std::function<void(std::vector<HyperParams::Node*>)>> configure_deepnet();
     int menu_configuration();
 };
 
