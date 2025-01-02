@@ -38,10 +38,10 @@ public:
     
     struct Initializer {
         std::string start_weight = "[INITIALIZING WEIGHTS....]\n";
-        std::string start_bias = "[INITIALIZING BIASES....]\n";
+        std::string start_bias =   "[INITIALIZING BIASES.....]\n\n";
 
         std::string init_weight = "[WEIGHTS INITIALIZED!]\n";
-        std::string init_bias = "[BIASES INITIALIZED!]\n";
+        std::string init_bias =   "[BIASES INITIALIZED! ]\n\n";
     };
 
 

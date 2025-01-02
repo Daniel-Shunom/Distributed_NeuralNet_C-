@@ -39,7 +39,7 @@ std::string Propagation::error_check(std::vector<float> _weights,
         return prop_error.bias_off;
     }
     else {
-        std::cout << "[GOOD TO GO!]\n";
+        std::cout << "[GOOD TO GO!]\n\n";
     }
     return "ok";
 }

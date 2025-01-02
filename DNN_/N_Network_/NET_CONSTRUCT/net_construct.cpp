@@ -55,6 +55,7 @@ std::tuple<std::function<void(std::vector<HyperParams::Node*>)>>
                               MenuConstruct::configure_deepnet() {
     int layers;
     int nodes;
+    std::cout << "[LAYER PARAMETER SELECTION!]";
     std::cout << "Enter number of hidden layers: ";
     std::cin >> layers;
     std::cout << "Enter number of hidden nodes: ";
@@ -122,11 +123,9 @@ MenuConstruct::io_nodes_config() {
     return net_config;
 }
 
-int menu_configuration() {
-    MenuConstruct menu;
-    menu.io_nodes_config();
-    menu.configure_deepnet();
-    menu.select_activation();
-    
+int MenuConstruct::menu_configuration() {
+    io_nodes_config();
+    configure_deepnet();
+    select_activation();
     return 0;
 }
