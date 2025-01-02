@@ -27,9 +27,9 @@ HyperParams::HyperParams() {
 }
 
 //To allocate memory at compile time
-std::array<float, HIDDEN_NODES> HyperParams::allocate_memory(std::array<Node*, HIDDEN_NODES> hidden_nodes,
-                                                             std::array<Node*, HIDDEN_NODES> next_nodes) {}
-
+//std::array<float, HIDDEN_NODES> HyperParams::allocate_memory(std::array<Node*, HIDDEN_NODES> hidden_nodes,
+//                                                             std::array<Node*, HIDDEN_NODES> next_nodes) {}
+//
 //returns the computed activations
 //might be too abstracted
 std::vector<float> HyperParams::hidden_unit(std::vector<float> activations) {
