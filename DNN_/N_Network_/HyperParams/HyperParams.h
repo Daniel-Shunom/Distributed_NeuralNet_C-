@@ -26,7 +26,6 @@ Instructions:
 #define EPOCHS 12
 #define LEARNING_RATE 0.01f
 
-#include "../Propagations/Propagation.cpp"
 #include "../Propagations/Propagation.h"
 #include <vector>
 #include <array>

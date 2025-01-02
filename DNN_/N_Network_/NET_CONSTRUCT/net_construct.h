@@ -18,8 +18,8 @@ Instructions:
 #include <iostream>
 #include <vector>
 #include <functional>
-#include "./Propagations/Propagation.h"
-#include "./HyperParams/HyperParams.h"
+#include "../Propagations/Propagation.h"
+#include "../HyperParams/HyperParams.h"
 
 class MenuConstruct: Propagation, HyperParams {
 private:
@@ -35,6 +35,7 @@ public:
                                   std::vector<HyperParams::Node*>)>> io_nodes_config();
 
     std::tuple<std::function<void(std::vector<HyperParams::Node*>)>> configure_deepnet();
+    int menu_configuration();
 };
 
 
