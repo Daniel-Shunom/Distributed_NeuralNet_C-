@@ -1,7 +1,8 @@
-#include "../NET_CONSTRUCT/net_construct.cpp"
+#include "./N_Network_/NET_CONSTRUCT/net_construct.h"
 #include <iostream>
 
 int main() {
-    menu_configuration();
+    MenuConstruct m;
+    m.menu_configuration();
     return 0;
 }
