@@ -1,17 +1,12 @@
 cmake_minimum_required(VERSION 3.24)
-project(DNN)
+project(DNN_)
 
 set(CMAKE_CXX_STANDARD 11)
 set(CMAKE_CXX_STANDARD_REQUIRED True)
 
-# source files
-set(SOURCE_FILES
-    net_construct.h
-    HyperParams.h
-    Propagation.h
-    net_construct.cpp
-    HyperParams.cpp
-    Propagation.cpp
-    main.cpp)
+include_directories(${PROJECT_SOURCE_DIR}/DNN_)
 
-add_executable(${PROJECT_NAME} ${SOURCE_FILES})
+# Add source files
+file(GLOB_RECURSE SOURCES "DNN_/*.cpp")
+
+add_executable(${PROJECT_NAME} ${SOURCES})
