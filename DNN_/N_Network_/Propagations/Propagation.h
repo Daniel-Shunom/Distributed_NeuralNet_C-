@@ -32,16 +32,16 @@ public:
     };
     
     struct Errors {
-        std::string weight_off = "WEIGHT VECTOR DOES NOT MATCH INPUT VECTOR\n";
-        std::string bias_off = "BIAS VECTOR DOES NOT MATCH INPUT VECTOR\n";
+        std::string weight_off   = "WEIGHT VECTOR DOES NOT MATCH INPUT VECTOR\n";
+        std::string bias_off     = "BIAS VECTOR DOES NOT MATCH INPUT VECTOR\n";
     };
     
     struct Initializer {
         std::string start_weight = "[INITIALIZING WEIGHTS....]\n";
-        std::string start_bias =   "[INITIALIZING BIASES.....]\n\n";
+        std::string start_bias   = "[INITIALIZING BIASES.....]\n\n";
 
-        std::string init_weight = "[WEIGHTS INITIALIZED!]\n";
-        std::string init_bias =   "[BIASES INITIALIZED! ]\n\n";
+        std::string init_weight  = "[WEIGHTS INITIALIZED!]\n";
+        std::string init_bias    = "[BIASES INITIALIZED! ]\n\n";
     };
 
 
@@ -49,23 +49,23 @@ public:
     Errors prop_error;
     Initializer _init;
     
-    std::string error_check(std::vector<float> _weights, 
-                            std::vector<float> _biases,
-                            std::vector<float> input);
+    std::string error_check(std::vector<float> &_weights, 
+                            std::vector<float> &_biases,
+                            std::vector<float> &input);
 
     Propagation();
     std::vector<float> forwardpass(std::vector<float> &_weights, 
                                    std::vector<float> &_biases, 
                                    std::vector<float> &input);
 
-    std::vector<float> sigmoid_activations(std::vector<float> Z);
-    std::vector<float> tanh_activations(std::vector<float> Z);
-    std::vector<float> relu_activations(std::vector<float> Z);
-    std::vector<float> leaky_relu_activations(std::vector<float> Z);
+    std::vector<float> sigmoid_activations(std::vector<float> &Z);
+    std::vector<float> tanh_activations(std::vector<float> &);
+    std::vector<float> relu_activations(std::vector<float> &);
+    std::vector<float> leaky_relu_activations(std::vector<float> &Z);
 
-    float cross_entropy_loss(float input_y, float label_yhat);
+    float cross_entropy_loss(float &input_y, float &label_yhat);
 
-    float cost_function(float cost);
+    float cost_function(float &cost);
 };
 
 #endif

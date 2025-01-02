@@ -28,9 +28,9 @@ Propagation::Propagation(){
 };
 
 //Ensuring input size mathces weight and bias size
-std::string Propagation::error_check(std::vector<float> _weights,
-                                     std::vector<float> _biases,
-                                     std::vector<float> input) 
+std::string Propagation::error_check(std::vector<float> &_weights,
+                                     std::vector<float> &_biases,
+                                     std::vector<float> &input) 
 {
     if(_weights.size() != input.size()) {
         return prop_error.weight_off;
@@ -63,7 +63,7 @@ std::vector<float> Propagation::forwardpass(std::vector<float> &_weights,
 }
 
 //Sample sigmoid Activation
-std::vector<float> Propagation::sigmoid_activations(std::vector<float> Z) {
+std::vector<float> Propagation::sigmoid_activations(std::vector<float> &Z) {
     Z = forwardpass(params.weights, params.biases, params.input);
     assert(Z.size() == params.input.size() && error_check(params.weights, 
                                                           params.biases, 
@@ -78,7 +78,7 @@ std::vector<float> Propagation::sigmoid_activations(std::vector<float> Z) {
 }
 
 //tanh activation function
-std::vector<float> Propagation::tanh_activations(std::vector<float> Z) {
+std::vector<float> Propagation::tanh_activations(std::vector<float> &Z) {
     Z = forwardpass(params.weights, params.biases, params.input);
     std::vector<float> A(Z.size());
 
@@ -90,7 +90,7 @@ std::vector<float> Propagation::tanh_activations(std::vector<float> Z) {
 }
 
 //relu activation functiuon
-std::vector<float> Propagation::relu_activations(std::vector<float> Z) {
+std::vector<float> Propagation::relu_activations(std::vector<float> &Z) {
     Z = forwardpass(params.weights, params.biases, params.input);
     std::vector<float> A(Z.size());
 
@@ -101,7 +101,7 @@ std::vector<float> Propagation::relu_activations(std::vector<float> Z) {
 }
 
 //leaky relu activation function
-std::vector<float> Propagation::leaky_relu_activations(std::vector<float> Z) {
+std::vector<float> Propagation::leaky_relu_activations(std::vector<float> &Z) {
     Z = forwardpass(params.weights, params.biases, params.input);
     std::vector<float> A(Z.size());
 
@@ -111,13 +111,13 @@ std::vector<float> Propagation::leaky_relu_activations(std::vector<float> Z) {
 }
 
 //cross entropy loss function
-float Propagation::cross_entropy_loss(float input_y, float input_yhat) {
+float Propagation::cross_entropy_loss(float &input_y, float &input_yhat) {
     float loss = -(input_y*log(input_yhat) + (1-input_y)*log(1-input_yhat));
     return loss;
 }
 
 //calculates cost
-float Propagation::cost_function(float cost) {
+float Propagation::cost_function(float &cost) {
     cost = cross_entropy_loss(params.input_y, params.input_yhat)/params.input.size();
     return cost;
 }
