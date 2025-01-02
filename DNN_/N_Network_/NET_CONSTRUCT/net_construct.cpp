@@ -51,17 +51,16 @@ std::function<void(std::vector<float>)> MenuConstruct::select_activation() {
     return selectedFunction;
 }
 
-std::tuple<std::function<void(std::vector<HyperParams::Node*>)>> 
-                              MenuConstruct::configure_deepnet() {
+MenuConstruct::deepNetTuple MenuConstruct::configure_deepnet() {
     int layers;
     int nodes;
-    std::cout << "[LAYER PARAMETER SELECTION!]";
+    std::cout << "\n\n[LAYER PARAMETER SELECTION!]\n";
     std::cout << "Enter number of hidden layers: ";
     std::cin >> layers;
     std::cout << "Enter number of hidden nodes: ";
     std::cin >> nodes;
 
-    std::tuple<std::function<void(std::vector<HyperParams::Node*>)>> net_config;
+    deepNetTuple net_config;
     std::function<void(std::vector<HyperParams::Node*>)> layer_config;
     std::function<void(std::vector<HyperParams::Node*>)> node_config;
 
@@ -79,11 +78,7 @@ std::tuple<std::function<void(std::vector<HyperParams::Node*>)>>
     return net_config;
 }
 
-std::tuple<std::function<void(std::vector<HyperParams::Node*>, 
-                              std::vector<HyperParams::Node*>)>,
-           std::function<void(std::vector<HyperParams::Node*>, 
-                              std::vector<HyperParams::Node*>)>> 
-MenuConstruct::io_nodes_config() {
+MenuConstruct::ioTuple MenuConstruct::io_nodes_config() {
     int i_nodes;
     int o_nodes;
     std::cout << "Enter number of input nodes: ";
@@ -91,10 +86,7 @@ MenuConstruct::io_nodes_config() {
     std::cout << "Enter number of output nodes: ";
     std::cin >> o_nodes;
 
-    std::tuple<std::function<void(std::vector<HyperParams::Node*>, 
-                                  std::vector<HyperParams::Node*>)>,
-               std::function<void(std::vector<HyperParams::Node*>, 
-                                  std::vector<HyperParams::Node*>)>> net_config;
+    ioTuple net_config;
 
     std::function<void(std::vector<HyperParams::Node*>, 
                        std::vector<HyperParams::Node*>)> layer_config;
@@ -123,9 +115,22 @@ MenuConstruct::io_nodes_config() {
     return net_config;
 }
 
+void MenuConstruct::instruction_eval(iSet x) {
+    int length = x.size();
+    std::cout << "\n[INSTRUCTION SET HAS "<< length <<" METHODS]\n";
+}
+
 int MenuConstruct::menu_configuration() {
-    io_nodes_config();
-    configure_deepnet();
-    select_activation();
+    auto config1 = io_nodes_config();
+    instructions.push_back(config1);
+
+    auto config2 = configure_deepnet();
+    instructions.push_back(config2);
+    
+    auto config3 = select_activation();
+    instructions.push_back(config3);
+
+    instruction_eval(instructions);
+
     return 0;
 }
