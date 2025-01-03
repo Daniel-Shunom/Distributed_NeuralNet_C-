@@ -10,7 +10,7 @@
 
 <br/>
 
-<img src="https://raw.githubusercontent.com/Daniel-Shunom/Distributed_NeuralNet_C-/main/assets/logo.png" alt="Project Logo" width="200"/>
+<img src="./Assets/n_net.png" alt="Project Logo" width="200"/>
 
 ### *Deep Neural Networks Implementation via Distributed Computing*
 
