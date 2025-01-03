@@ -68,7 +68,7 @@ MenuConstruct::deepNetTuple MenuConstruct::configure_deepnet() {
         this->hidden_layer(hidden_layers, hidden_layers);
     };
 
-    node_config = [this, nodes](std::vector<HyperParams::Node*> hidden_nodes){
+    node_config = [this, nodes](std::vector<HyperParams::Node*> hidden_nodes) {
         //correct with actual hidden node constructor
         this->hidden_layer(hidden_nodes, hidden_nodes);
     };
