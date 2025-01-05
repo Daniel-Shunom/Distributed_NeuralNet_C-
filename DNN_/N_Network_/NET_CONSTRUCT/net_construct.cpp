@@ -86,12 +86,12 @@ MenuConstruct::ioTuple MenuConstruct::io_nodes_config() {
     std::cout << "Enter number of output nodes: ";
     std::cin >> o_nodes;
     
-    std::cout << "[CURRENT WEIGHTS]\n";
+    std::cout << "\n[CURRENT WEIGHTS]\n";
     for (int i = 0; i < params.weights.size(); i++) {
         std::cout << params.weights[i] << "  ";
     }
     std::cout << "\n\n";
-    
+
     ioTuple net_config;
 
     std::function<void(std::vector<HyperParams::Node*>, 
@@ -122,7 +122,7 @@ MenuConstruct::ioTuple MenuConstruct::io_nodes_config() {
 }
 
 void MenuConstruct::instruction_eval(iSet x) {
-    int length = x.size();
+    auto length = x.size();
     std::cout << "\n[INSTRUCTION SET HAS "<< length <<" METHODS]\n";
 }
 
