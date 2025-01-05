@@ -36,8 +36,8 @@ Instructions:
 class HyperParams {
 public:
     struct Node {
-        std::vector<float> computed_activations;
-        float learning_rate;
+        std::vector<double> computed_activations;
+        double learning_rate;
 
         //Eight hidden_node instantiations
         //each insantiation has 20 nodes in it
@@ -50,14 +50,14 @@ public:
     struct H_Params {
         int layers;
         int nodes;
-        float learning_rate;
+        double learning_rate;
 
-        std::vector<float> weights;
+        std::vector<double> weights;
         std::vector<int> biases;
 
-        std::vector<float> input_x;
-        std::vector<float> x_hat;
-        std::array<float, HIDDEN_LAYERS> hidden_layers;
+        std::vector<double> input_x;
+        std::vector<double> x_hat;
+        std::array<double, HIDDEN_LAYERS> hidden_layers;
         H_Params *data;
     };
 
@@ -67,14 +67,14 @@ public:
     HyperParams();
     ~HyperParams();
     
-    std::array<float, HIDDEN_NODES> allocate_memory(std::array<Node*, HIDDEN_NODES> input_nodes,
+    std::array<double, HIDDEN_NODES> allocate_memory(std::array<Node*, HIDDEN_NODES> input_nodes,
                                                     std::array<Node*, HIDDEN_NODES> next_nodes);
 
-    std::vector<float> hidden_unit(std::vector<float> activations);
-    std::vector<std::vector<float>> hidden_layer(std::array<Node*, HIDDEN_NODES> &input_nodes, 
+    std::vector<double> hidden_unit(std::vector<double> activations);
+    std::vector<std::vector<double>> hidden_layer(std::array<Node*, HIDDEN_NODES> &input_nodes, 
                                                  std::array<Node*, HIDDEN_NODES> &next_nodes);
 
-    std::vector<std::vector<float>> hidden_layer(std::vector<Node*> &input_nodes, 
+    std::vector<std::vector<double>> hidden_layer(std::vector<Node*> &input_nodes, 
                                                  std::vector<Node*> &next_nodes);
     
     //array form
@@ -93,7 +93,7 @@ public:
                  
                                                
     std::vector<Node> deep_net_constructor(std::vector<std::array<Node*, HIDDEN_NODES>> &layers);
-    void change_learning_rate(float &learning_rate);
+    void change_learning_rate(double &learning_rate);
 
 };
 
