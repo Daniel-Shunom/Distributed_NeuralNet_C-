@@ -85,7 +85,13 @@ MenuConstruct::ioTuple MenuConstruct::io_nodes_config() {
     std::cin >> i_nodes;
     std::cout << "Enter number of output nodes: ";
     std::cin >> o_nodes;
-
+    
+    std::cout << "[CURRENT WEIGHTS]\n";
+    for (int i = 0; i < params.weights.size(); i++) {
+        std::cout << params.weights[i] << "  ";
+    }
+    std::cout << "\n\n";
+    
     ioTuple net_config;
 
     std::function<void(std::vector<HyperParams::Node*>, 
