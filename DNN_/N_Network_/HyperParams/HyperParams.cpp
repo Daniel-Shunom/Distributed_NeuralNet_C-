@@ -16,22 +16,14 @@ Instructions:
 #include <iostream>
 #include "HyperParams.h"
 
-//Instantion of Propagation class
-Propagation props;
-
 //HyperParams class constructor initializes Node struct members
 //with input parameters
 HyperParams::HyperParams() {
-    node.computed_activations = props.tanh_activations(props.params.input);
+    node.computed_activations = tanh_activations(params.input);
     node.learning_rate = LEARNING_RATE;
 }
 
-//To allocate memory at compile time
-//std::array<double, HIDDEN_NODES> HyperParams::allocate_memory(std::array<Node*, HIDDEN_NODES> hidden_nodes,
-//                                                             std::array<Node*, HIDDEN_NODES> next_nodes) {}
-//
 //returns the computed activations
-//might be too abstracted
 std::vector<double> HyperParams::hidden_unit(std::vector<double> activations) {
     return node.computed_activations;
 }
