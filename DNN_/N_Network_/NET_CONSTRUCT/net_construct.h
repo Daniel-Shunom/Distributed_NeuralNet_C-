@@ -22,7 +22,7 @@ Instructions:
 #include "../HyperParams/HyperParams.h"
 #include <variant>
 
-class MenuConstruct: Propagation, HyperParams {
+class MenuConstruct: public HyperParams {
 private:
 public:
     typedef std::function<void(std::vector<double>)> iAselect;

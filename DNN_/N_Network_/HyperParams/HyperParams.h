@@ -33,7 +33,7 @@ Instructions:
 #include <memory>
 #include <cmath>
 
-class HyperParams {
+class HyperParams: public Propagation {
 public:
     struct Node {
         std::vector<double> computed_activations;
