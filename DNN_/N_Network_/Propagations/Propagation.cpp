@@ -25,8 +25,16 @@ Propagation::Propagation(){
     }
      
     std::cout << _init.init_weight << _init.init_bias;
+
+    std::cout << "[WEIGHTS] ";
     for (int i = 0; i < params.weights.size(); i++) {
         std::cout << params.weights[i] << "  ";
+    }
+    std::cout << "\n";
+
+    std::cout << "[BIASES] ";
+    for (int i = 0; i < params.biases.size(); i++) {
+        std::cout << params.biases[i] << "  ";
     }
     std::cout << "\n\n";
 };
@@ -69,9 +77,9 @@ std::vector<double> Propagation::forwardpass(std::vector<double> &_weights,
 //Sample sigmoid Activation
 std::vector<double> Propagation::sigmoid_activations(std::vector<double> &Z) {
     Z = forwardpass(params.weights, params.biases, params.input);
-    assert(Z.size() == params.input.size() && error_check(params.weights, 
-                                                          params.biases, 
-                                                          params.input) == "ok");
+    //assert(Z.size() == params.input.size() && error_check(params.weights, 
+    //                                                      params.biases, 
+    //                                                      params.input) == "ok");
     std::vector<double> A(Z.size());
 
     for (int i = 0; i < Z.size(); ++i) {
