@@ -8,5 +8,6 @@ include_directories(${PROJECT_SOURCE_DIR}/DNN_)
 
 # Add source files
 file(GLOB_RECURSE SOURCES "DNN_/*.cpp")
+#file(GLOB_RECURSE SOURCES "DNN_/*.h")
 
 add_executable(${PROJECT_NAME} ${SOURCES})
