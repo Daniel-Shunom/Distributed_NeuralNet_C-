@@ -25,17 +25,14 @@ Instructions:
 class MenuConstruct: Propagation, HyperParams {
 private:
 public:
-    Propagation menu_props;
-    HyperParams h_params;
-
-    typedef std::function<void(std::vector<float>)> iAselect;
+    typedef std::function<void(std::vector<double>)> iAselect;
     typedef std::tuple<std::function<void(std::vector<HyperParams::Node*>)>> deepNetTuple;
     typedef std::tuple<std::function<void(std::vector<HyperParams::Node*>,
                                           std::vector<HyperParams::Node*>)>, 
                        std::function<void(std::vector<HyperParams::Node*>, 
                                           std::vector<HyperParams::Node*>)>> ioTuple;
-
     typedef std::vector<std::variant<ioTuple, deepNetTuple, iAselect>> iSet;
+
     iSet instructions;
 
     iAselect select_activation();

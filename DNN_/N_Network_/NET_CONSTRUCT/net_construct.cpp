@@ -16,7 +16,7 @@ Instructions:
 #include "./net_construct.h"
 #include <iostream>
 
-std::function<void(std::vector<float>)> MenuConstruct::select_activation() {
+std::function<void(std::vector<double>)> MenuConstruct::select_activation() {
     int selection;
     std::cout << "Select Activation function\n\n";
     std::cout << "[1. tanh        Activation ]\n";
@@ -26,22 +26,22 @@ std::function<void(std::vector<float>)> MenuConstruct::select_activation() {
     std::cout << "Enter Selection: ";
     std::cin >> selection;
     
-    std::function<void(std::vector<float>)> selectedFunction;
+    std::function<void(std::vector<double>)> selectedFunction;
     switch (selection) {
         case 1:
-            selectedFunction = [this](std::vector<float> input) {
+            selectedFunction = [this](std::vector<double> input) {
                 this->tanh_activations(input);};
             break;
         case 2:
-            selectedFunction = [this](std::vector<float> input) {
+            selectedFunction = [this](std::vector<double> input) {
                 this->relu_activations(input);};
             break;
         case 3:
-            selectedFunction = [this](std::vector<float> input) {
+            selectedFunction = [this](std::vector<double> input) {
                 this->leaky_relu_activations(input);};
             break;
         case 4:
-            selectedFunction = [this](std::vector<float> input) {
+            selectedFunction = [this](std::vector<double> input) {
                 this->sigmoid_activations(input);};
             break;
         default:

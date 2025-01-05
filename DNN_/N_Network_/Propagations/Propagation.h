@@ -24,11 +24,12 @@ Instructions:
 class Propagation {
 public: 
     struct Parameters {
-        std::vector<float> weights;
-        std::vector<float> biases;
-        std::vector<float> input;
-        float input_y;
-        float input_yhat;
+        std::vector<double> weights;
+        std::vector<double> biases;
+        std::vector<double> input;
+        double input_y;
+        double input_yhat;
+        Parameters(): weights(5), biases(5) {};
     };
     
     struct Errors {
@@ -49,23 +50,23 @@ public:
     Errors prop_error;
     Initializer _init;
     
-    std::string error_check(std::vector<float> &_weights, 
-                            std::vector<float> &_biases,
-                            std::vector<float> &input);
+    std::string error_check(std::vector<double> &_weights, 
+                            std::vector<double> &_biases,
+                            std::vector<double> &input);
 
     Propagation();
-    std::vector<float> forwardpass(std::vector<float> &_weights, 
-                                   std::vector<float> &_biases, 
-                                   std::vector<float> &input);
+    std::vector<double> forwardpass(std::vector<double> &_weights, 
+                                   std::vector<double> &_biases, 
+                                   std::vector<double> &input);
 
-    std::vector<float> sigmoid_activations(std::vector<float> &Z);
-    std::vector<float> tanh_activations(std::vector<float> &);
-    std::vector<float> relu_activations(std::vector<float> &);
-    std::vector<float> leaky_relu_activations(std::vector<float> &Z);
+    std::vector<double> sigmoid_activations(std::vector<double> &Z);
+    std::vector<double> tanh_activations(std::vector<double> &);
+    std::vector<double> relu_activations(std::vector<double> &);
+    std::vector<double> leaky_relu_activations(std::vector<double> &Z);
 
-    float cross_entropy_loss(float &input_y, float &label_yhat);
+    double cross_entropy_loss(double &input_y, double &label_yhat);
 
-    float cost_function(float &cost);
+    double cost_function(double &cost);
 };
 
 #endif
