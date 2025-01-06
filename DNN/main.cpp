@@ -13,7 +13,7 @@ Instructions:
 
 */
 
-#include "./N_Network_/NET_CONSTRUCT/net_construct.h"
+#include "./NET_CONSTRUCT/net_construct.h"
 #include <iostream>
 
 int main() {
