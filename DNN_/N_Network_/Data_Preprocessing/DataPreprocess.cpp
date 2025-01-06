@@ -82,3 +82,80 @@ void Data_Processor::matrix_save(Matrix* m, char* file_string) {
     std::cout << "Successfully saved matrix to " << file_string << std::endl; 
     file.close();
 }
+
+Data_Processor::Matrix* Data_Processor::matrix_load(char *file_string) {
+    std::ifstream file(file_string);
+    if (!file) {
+        std::cerr << "Error opening file: " << file_string << std::endl;
+        return nullptr;
+    }
+
+    int rows, cols;
+    file >> rows >> cols;
+
+    Matrix* m = matrix_create(rows, cols);
+    for (int i = 0; i < m->rows; i++) {
+        for (int j = 0; j < m->cols; j++) {
+            file >> m->entries[i][j];
+        }
+    }
+
+    std::cout << "LOADED MATRIX FROM" << file_string << std::endl;
+    return m;
+}
+
+double Data_Processor::uniform_distribution(double low, double high) {
+    double difference = high - low;
+    int scale = 10000;
+    int scaled_difference = difference * scale;
+    
+    return low + (1.0 * (rand() % scaled_difference)/scale);
+}
+
+void Data_Processor::matrix_randomize(Matrix* m, int n) {
+    double min = -1.0/sqrt(n);
+    double max = 1.0/sqrt(n);
+    for (int i = 0; i < m->rows; i++) {
+        for (int j = 0; j < m->cols; j++) {
+            m->entries[i][j] = uniform_distribution(min, max);
+        }
+    }
+}
+
+
+int Data_Processor::matrix_argmax (Matrix* m) {
+    double max_score = 0;
+    int max_idx = 0;
+    for (int i = 0; i < m->rows; i++) {
+        if (m->entries[i][0] > max_score) {
+            max_score = m->entries[i][0];
+            max_idx = i;
+        }
+    }
+    return max_idx;
+}
+
+Data_Processor::Matrix* Data_Processor::matrix_flatten(Matrix* m, int axis) { 
+    // Axis = 0 -> Column Vector, Axis = 1 -> Row Vector 
+    Matrix* mat; if (axis == 0) { 
+        mat = matrix_create(m->rows * m->cols, 1); 
+    } 
+    else if (axis == 1) { 
+        mat = matrix_create(1, m->rows * m->cols); 
+    } 
+    else { 
+        std::cerr << "Argument to matrix_flatten must be 0 or 1" << std::endl; 
+        exit(EXIT_FAILURE); 
+    } 
+    
+    for (int i = 0; i < m->rows; ++i) { 
+        for (int j = 0; j < m->cols; ++j) { 
+            if (axis == 0) { 
+                mat->entries[i * m->cols + j][0] = m->entries[i][j];
+            } 
+            else if (axis == 1) { 
+                mat->entries[0][i * m->cols + j] = m->entries[i][j];
+            } 
+        } 
+    }
+ }
