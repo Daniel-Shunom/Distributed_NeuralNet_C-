@@ -29,7 +29,7 @@ public:
         std::vector<double> input;
         double input_y;
         double input_yhat;
-        Parameters(): weights(5), biases(5) {};
+        Parameters(): weights(5), biases(5), input(5) {};
     };
     
     struct Errors {
