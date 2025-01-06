@@ -1,6 +1,6 @@
 /*
 Author: Daniel S. Jeremiah
-Date: December 31, 2024
+Date: January 6, 2024
 
 Description:
 This file contains the Matrix operation functions for the neural 
@@ -12,6 +12,7 @@ Instructions:
 - Ensure to follow the project guidelines for adding new functions.
 
 */
+
 #ifndef DATA_PREPROCESS
 #define DATA_PREPROCESS
 #define MAX_CHAR 100
