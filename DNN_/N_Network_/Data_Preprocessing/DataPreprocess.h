@@ -39,11 +39,13 @@ public:
     };
     typedef _input Matrix;
 
-    Matrix* matrix_load(Matrix *m, char *file_string);
+    Matrix* matrix_load(char *file_string);
     Matrix* matrix_flatten(Matrix *m, int axis);
     Matrix* matrix_create(int row, int col);
     Matrix* matrix_create(int row, int col);
     Matrix* matrix_copy(Matrix* m);
+
+    double uniform_distribution(double low, double high);
 
     void matrix_save(Matrix *m, char *file_String);
     void matrix_randomize(Matrix *m, int n);
@@ -51,7 +53,7 @@ public:
     void matrix_print(Matrix *m);
     void matrix_free(Matrix *m);
 
-    int matrix_argmax(Matrix *m, int n);
+    int matrix_argmax(Matrix *m);
 
 
     void weight_update();
