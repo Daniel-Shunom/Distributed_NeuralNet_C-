@@ -22,7 +22,7 @@ Instructions:
 #include <vector>
 #include <string>
 
-class Data_Processor { 
+class DataOps { 
 public:
     struct Input {
         std::vector<float> weights;
@@ -41,7 +41,6 @@ public:
 
     Matrix* matrix_load(char *file_string);
     Matrix* matrix_flatten(Matrix *m, int axis);
-    Matrix* matrix_create(int row, int col);
     Matrix* matrix_create(int row, int col);
     Matrix* matrix_copy(Matrix* m);
 
@@ -66,8 +65,8 @@ public:
     void input_format();
     void input_classify();
 
-    Data_Processor(/* args */);
-    ~Data_Processor();
+    DataOps(/* args */);
+    ~DataOps();
 };
 
 #endif

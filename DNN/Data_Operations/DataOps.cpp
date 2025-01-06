@@ -13,9 +13,9 @@ Instructions:
 
 */
 
-#include "DataPreprocess.h"
+#include "DataOps.h"
 
-Data_Processor::Matrix* Data_Processor::matrix_create(int row, int cols) {
+DataOps::Matrix* DataOps::matrix_create(int row, int cols) {
     Matrix *matrix = new Matrix;
     matrix->rows = row;
     matrix->cols = cols;
@@ -26,7 +26,7 @@ Data_Processor::Matrix* Data_Processor::matrix_create(int row, int cols) {
     return matrix;
 }
 
-void Data_Processor::matrix_fill(Matrix* m, int n) {
+void DataOps::matrix_fill(Matrix* m, int n) {
     for (int i = 0; i < m->rows; i++) {
         for (int j = 0; j < m->cols; j++) {
             m->entries[i][j] = n;
@@ -34,7 +34,7 @@ void Data_Processor::matrix_fill(Matrix* m, int n) {
     }
 }
 
-void Data_Processor::matrix_free(Matrix* m) {
+void DataOps::matrix_free(Matrix* m) {
     for (int i = 0; i < m->rows; i++) {
         delete m->entries[i];
     }
@@ -43,7 +43,7 @@ void Data_Processor::matrix_free(Matrix* m) {
     m = NULL;
 }
 
-void Data_Processor::matrix_print(Matrix* m) {
+void DataOps::matrix_print(Matrix* m) {
     std::cout << "[ROWS] " << m->rows << "[COLUMNS] " << m->cols << std::endl;
     for (int i = 0; i < m->rows; i++) {
         for (int j = 0; j < m->cols; j++) {
@@ -53,7 +53,7 @@ void Data_Processor::matrix_print(Matrix* m) {
     }
 }
 
-Data_Processor::Matrix* Data_Processor::matrix_copy(Matrix* m) {
+DataOps::Matrix* DataOps::matrix_copy(Matrix* m) {
     Matrix* mat = matrix_create(m->rows, m->cols);
     for (int i = 0; i < m->rows; i++) {
         for (int j = 0; j < m->cols; j++) {
@@ -63,7 +63,7 @@ Data_Processor::Matrix* Data_Processor::matrix_copy(Matrix* m) {
     return mat;
 }
 
-void Data_Processor::matrix_save(Matrix* m, char* file_string) {
+void DataOps::matrix_save(Matrix* m, char* file_string) {
     std::ofstream file(file_string); 
     if (!file) { 
         std::cerr << "Error opening file: " << file_string << std::endl; 
@@ -83,7 +83,7 @@ void Data_Processor::matrix_save(Matrix* m, char* file_string) {
     file.close();
 }
 
-Data_Processor::Matrix* Data_Processor::matrix_load(char *file_string) {
+DataOps::Matrix* DataOps::matrix_load(char *file_string) {
     std::ifstream file(file_string);
     if (!file) {
         std::cerr << "Error opening file: " << file_string << std::endl;
@@ -104,7 +104,7 @@ Data_Processor::Matrix* Data_Processor::matrix_load(char *file_string) {
     return m;
 }
 
-double Data_Processor::uniform_distribution(double low, double high) {
+double DataOps::uniform_distribution(double low, double high) {
     double difference = high - low;
     int scale = 10000;
     int scaled_difference = difference * scale;
@@ -112,7 +112,7 @@ double Data_Processor::uniform_distribution(double low, double high) {
     return low + (1.0 * (rand() % scaled_difference)/scale);
 }
 
-void Data_Processor::matrix_randomize(Matrix* m, int n) {
+void DataOps::matrix_randomize(Matrix* m, int n) {
     double min = -1.0/sqrt(n);
     double max = 1.0/sqrt(n);
     for (int i = 0; i < m->rows; i++) {
@@ -122,7 +122,7 @@ void Data_Processor::matrix_randomize(Matrix* m, int n) {
     }
 }
 
-int Data_Processor::matrix_argmax (Matrix* m) {
+int DataOps::matrix_argmax (Matrix* m) {
     double max_score = 0;
     int max_idx = 0;
     for (int i = 0; i < m->rows; i++) {
@@ -134,7 +134,7 @@ int Data_Processor::matrix_argmax (Matrix* m) {
     return max_idx;
 }
 
-Data_Processor::Matrix* Data_Processor::matrix_flatten(Matrix* m, int axis) { 
+DataOps::Matrix* DataOps::matrix_flatten(Matrix* m, int axis) { 
     // Axis = 0 -> Column Vector, Axis = 1 -> Row Vector 
     Matrix* mat; if (axis == 0) { 
         mat = matrix_create(m->rows * m->cols, 1); 
@@ -157,4 +157,5 @@ Data_Processor::Matrix* Data_Processor::matrix_flatten(Matrix* m, int axis) {
             } 
         } 
     }
+    return mat;
 }
