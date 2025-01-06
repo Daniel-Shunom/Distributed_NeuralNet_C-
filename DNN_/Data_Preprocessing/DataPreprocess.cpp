@@ -122,7 +122,6 @@ void Data_Processor::matrix_randomize(Matrix* m, int n) {
     }
 }
 
-
 int Data_Processor::matrix_argmax (Matrix* m) {
     double max_score = 0;
     int max_idx = 0;
@@ -158,4 +157,4 @@ Data_Processor::Matrix* Data_Processor::matrix_flatten(Matrix* m, int axis) {
             } 
         } 
     }
- }
+}
