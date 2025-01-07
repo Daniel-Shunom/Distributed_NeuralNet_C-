@@ -15,7 +15,7 @@ Instructions:
 
 #include "DataOps.h"
 
-DataOps::Matrix* DataOps::matrix_create(int row, int cols) {
+Matrix* DataOps::matrix_create(int row, int cols) {
     Matrix *matrix = new Matrix;
     matrix->rows = row;
     matrix->cols = cols;
@@ -53,7 +53,7 @@ void DataOps::matrix_print(Matrix* m) {
     }
 }
 
-DataOps::Matrix* DataOps::matrix_copy(Matrix* m) {
+Matrix* DataOps::matrix_copy(Matrix* m) {
     Matrix* mat = matrix_create(m->rows, m->cols);
     for (int i = 0; i < m->rows; i++) {
         for (int j = 0; j < m->cols; j++) {
@@ -83,7 +83,7 @@ void DataOps::matrix_save(Matrix* m, char* file_string) {
     file.close();
 }
 
-DataOps::Matrix* DataOps::matrix_load(char *file_string) {
+Matrix* DataOps::matrix_load(char *file_string) {
     std::ifstream file(file_string);
     if (!file) {
         std::cerr << "Error opening file: " << file_string << std::endl;
@@ -134,7 +134,7 @@ int DataOps::matrix_argmax (Matrix* m) {
     return max_idx;
 }
 
-DataOps::Matrix* DataOps::matrix_flatten(Matrix* m, int axis) { 
+Matrix* DataOps::matrix_flatten(Matrix* m, int axis) { 
     // Axis = 0 -> Column Vector, Axis = 1 -> Row Vector 
     Matrix* mat; if (axis == 0) { 
         mat = matrix_create(m->rows * m->cols, 1); 
