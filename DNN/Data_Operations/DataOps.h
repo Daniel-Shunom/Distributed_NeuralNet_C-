@@ -22,6 +22,12 @@ Instructions:
 #include <vector>
 #include <string>
 
+typedef struct {
+    double** entries;
+    int rows;
+    int cols;
+} Matrix;
+
 class DataOps { 
 public:
     struct Input {
@@ -32,12 +38,6 @@ public:
         float label_yhat;
     };
 
-    struct _input {
-        double** entries;
-        int rows;
-        int cols;
-    };
-    typedef _input Matrix;
 
     Matrix* matrix_load(char *file_string);
     Matrix* matrix_flatten(Matrix *m, int axis);
