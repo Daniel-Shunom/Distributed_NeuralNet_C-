@@ -38,7 +38,6 @@ public:
         float label_yhat;
     };
 
-
     Matrix* matrix_load(char *file_string);
     Matrix* matrix_flatten(Matrix *m, int axis);
     Matrix* matrix_create(int row, int col);
