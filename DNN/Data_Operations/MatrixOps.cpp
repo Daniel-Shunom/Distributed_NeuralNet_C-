@@ -14,3 +14,127 @@ Instructions:
 */
 
 #include "MatrixOps.h"
+
+bool MatrixOps::checkDimensions(Matrix* m1, Matrix* m2) {
+    return (m1->rows == m2->rows && m1->cols == m2->cols);
+}
+
+Matrix* MatrixOps::matrix_add(Matrix* m1, Matrix* m2) {
+    
+    if (!checkDimensions(m1, m2)) {
+        throw std::invalid_argument(
+            "Dimesion mismatch: "
+        );
+    }
+
+    Matrix* m =  matrix_create(m1->rows, m1->cols);
+    for (int i = 0; i < m->rows; i++) {
+        for (int j = 0; j < m->cols; j++) {
+            m->entries[i][j] = m1->entries[i][j] + m2->entries[i][j];
+        }
+    }
+
+    return m;
+}
+
+Matrix* MatrixOps::matrix_subtract(Matrix* m1, Matrix* m2) {
+    
+    if (!checkDimensions(m1, m2)) {
+        throw std::invalid_argument(
+            "Dimesion mismatch: "
+        );
+    }
+
+    Matrix* m =  matrix_create(m1->rows, m1->cols);
+    for (int i = 0; i < m->rows; i++) {
+        for (int j = 0; j < m->cols; j++) {
+            m->entries[i][j] = m1->entries[i][j] - m2->entries[i][j];
+        }
+    }
+
+    return m;
+}
+
+Matrix* MatrixOps::matrix_multiply(Matrix* m1, Matrix* m2) {
+    
+    if (!checkDimensions(m1, m2)) {
+        throw std::invalid_argument(
+            "Dimesion mismatch: "
+        );
+    }
+
+    Matrix* m =  matrix_create(m1->rows, m1->cols);
+    for (int i = 0; i < m->rows; i++) {
+        for (int j = 0; j < m->cols; j++) {
+            m->entries[i][j] = m1->entries[i][j] * m2->entries[i][j];
+        }
+    }
+
+    return m;
+}
+
+Matrix* MatrixOps::matrix_dot(Matrix* m1, Matrix* m2) {
+    
+    if (!checkDimensions(m1, m2)) {
+        throw std::invalid_argument(
+            "Dimesion mismatch: "
+        );
+    }
+
+    Matrix* m =  matrix_create(m1->rows, m1->cols);
+    for (int i = 0; i < m->rows; i++) {
+        for (int j = 0; j < m->cols; j++) {
+            double sum = 0;
+            for (int k = 0; k < m2->rows; m++) {
+                sum += m1->entries[i][j] * m2->entries[i][j];
+            }
+            m->entries[i][j] =sum;
+        }
+    }
+
+    return m;
+}
+
+Matrix* MatrixOps::matrix_scale(double n, Matrix* m) {
+    Matrix* mat = matrix_copy(m);
+    for (int i = 0; i < m->rows; i++) {
+        for (int j = 0; j < m->cols; j++) {
+            mat->entries[i][j] *= n;
+        }
+    }
+
+    return mat;
+}
+
+Matrix* MatrixOps::matrix_add_scalar(double n, Matrix* m) {
+    Matrix* mat = matrix_copy(m);
+    for (int i = 0; i < m->rows; i++) {
+        for (int j = 0; j < m->cols; j++) {
+            mat->entries[i][j] += n;
+        }
+    }
+
+    return mat;
+}
+
+Matrix* MatrixOps::matrix_apply(double (*func)(double), Matrix* m) {
+    Matrix *mat = matrix_copy(m);
+	for (int i = 0; i < m->rows; i++) {
+		for (int j = 0; j < m->cols; j++) {
+			mat->entries[i][j] = (*func)(m->entries[i][j]);
+		}
+	}
+    
+	return mat;
+}
+
+Matrix* MatrixOps::matrix_transpose(Matrix* m) {
+    Matrix* mat = matrix_copy(m);
+    for (int i = 0; i < m->rows; i++) {
+        for (int j = 0; j < m->cols; j++) {
+            mat->entries[i][j] = m->entries[i][j];
+        }
+    }
+
+    return mat;
+}
