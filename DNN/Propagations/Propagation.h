@@ -15,6 +15,7 @@ Instructions:
 
 #pragma once
 
+#include "../Data_Operations/DataOps.h"
 #include <iostream>
 #include <vector>
 #include <cmath>
