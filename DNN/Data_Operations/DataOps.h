@@ -28,6 +28,12 @@ typedef struct {
     int cols;
 } Matrix;
 
+typedef struct {
+    std::vector<std::vector<double>> entries;
+    int rows;
+    int cols;
+} vMatrix;
+
 class DataOps { 
 public:
     struct Input {
@@ -37,6 +43,17 @@ public:
         float input_y;
         float label_yhat;
     };
+    vMatrix* v_matrix_load(char *file_string);
+    vMatrix* v_matrix_create(int row, int col);
+    vMatrix* v_matrix_flatten(vMatrix *m, int axis);
+    vMatrix* v_matrix_copy(vMatrix* m);
+
+    void v_matrix_save(vMatrix *m, char *file_String);
+    void v_matrix_randomize(vMatrix *m, int n);
+    void v_matrix_fill(vMatrix *m, int n);
+    void v_matrix_print(vMatrix *m);
+    void v_matrix_free(vMatrix *m);
+
 
     Matrix* matrix_load(char *file_string);
     Matrix* matrix_flatten(Matrix *m, int axis);
@@ -52,7 +69,7 @@ public:
     void matrix_free(Matrix *m);
 
     int matrix_argmax(Matrix *m);
-
+    int matrix_argmax(vMatrix *m);
 
     void weight_update();
     void weight_cache();
@@ -67,4 +84,3 @@ public:
     DataOps(/* args */);
     ~DataOps();
 };
-
