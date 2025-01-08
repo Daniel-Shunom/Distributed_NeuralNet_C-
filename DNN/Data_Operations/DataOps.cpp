@@ -23,6 +23,7 @@ Matrix* DataOps::matrix_create(int row, int cols) {
     for (int i = 0; i < row; i++) {
         matrix->entries[i] = new double[cols];
     }
+    
     return matrix;
 }
 
@@ -60,6 +61,7 @@ Matrix* DataOps::matrix_copy(Matrix* m) {
             mat->entries[i][j] = m->entries[i][j];
         }
     }
+
     return mat;
 }
 
@@ -131,6 +133,7 @@ int DataOps::matrix_argmax (Matrix* m) {
             max_idx = i;
         }
     }
+
     return max_idx;
 }
 
@@ -157,5 +160,6 @@ Matrix* DataOps::matrix_flatten(Matrix* m, int axis) {
             } 
         } 
     }
+
     return mat;
 }
