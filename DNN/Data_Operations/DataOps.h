@@ -13,8 +13,8 @@ Instructions:
 
 */
 
-#ifndef DATA_PREPROCESS
-#define DATA_PREPROCESS
+#pragma once
+
 #define MAX_CHAR 100
 #include <iostream>
 #include <fstream>
@@ -68,4 +68,3 @@ public:
     ~DataOps();
 };
 
-#endif

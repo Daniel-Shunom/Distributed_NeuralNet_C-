@@ -12,8 +12,8 @@ Instructions:
 - Ensure to follow the project guidelines for adding new functions.
 
 */
-#ifndef PROPAGATION
-#define PROPAGATION
+
+#pragma once
 
 #include <iostream>
 #include <vector>
@@ -68,5 +68,3 @@ public:
 
     double cost_function(double &cost);
 };
-
-#endif

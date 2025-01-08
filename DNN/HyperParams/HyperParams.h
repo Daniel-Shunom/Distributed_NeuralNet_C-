@@ -13,8 +13,7 @@ Instructions:
 
 */
 
-#ifndef HYPER_PARAMS
-#define HYPER_PARAMS
+#pragma once
 
 #define INPUT_LAYERS 2
 #define HIDDEN_LAYERS 8
@@ -96,5 +95,3 @@ public:
     void change_learning_rate(double &learning_rate);
 
 };
-
-#endif

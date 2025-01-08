@@ -12,8 +12,7 @@ Instructions:
 - Ensure to follow the project guidelines for adding new functions.
 
 */
-#ifndef _MENU_CONSTRUCT_
-#define _MENU_CONSTRUCT_
+#pragma once
 
 #include <iostream>
 #include <vector>
@@ -44,6 +43,3 @@ public:
     
     int menu_configuration();
 };
-
-
-#endif
