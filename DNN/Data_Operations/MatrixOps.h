@@ -18,6 +18,7 @@ Instructions:
 
 #include "DataOps.h"
 #include <iostream>
+#include <variant>
 
 class MatrixOps: DataOps {
 private:
