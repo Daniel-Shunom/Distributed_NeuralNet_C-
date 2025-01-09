@@ -35,6 +35,7 @@ Instructions:
 class HyperParams: public Propagation {
 public:
     struct Node {
+        vMatrix* Activations;
         std::vector<double> computed_activations;
         double learning_rate;
 
@@ -67,14 +68,14 @@ public:
     ~HyperParams();
     
     std::array<double, HIDDEN_NODES> allocate_memory(std::array<Node*, HIDDEN_NODES> input_nodes,
-                                                    std::array<Node*, HIDDEN_NODES> next_nodes);
+                                                     std::array<Node*, HIDDEN_NODES> next_nodes);
 
     std::vector<double> hidden_unit(std::vector<double> activations);
     std::vector<std::vector<double>> hidden_layer(std::array<Node*, HIDDEN_NODES> &input_nodes, 
-                                                 std::array<Node*, HIDDEN_NODES> &next_nodes);
+                                                  std::array<Node*, HIDDEN_NODES> &next_nodes);
 
     std::vector<std::vector<double>> hidden_layer(std::vector<Node*> &input_nodes, 
-                                                 std::vector<Node*> &next_nodes);
+                                                  std::vector<Node*> &next_nodes);
     
     //array form
     std::vector<Node> input_layer_constructor(std::vector<std::array<Node*, INPUT_NODES>> &input_nodes,
