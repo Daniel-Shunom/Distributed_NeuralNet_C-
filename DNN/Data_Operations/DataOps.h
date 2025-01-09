@@ -34,6 +34,18 @@ typedef struct {
     int cols;
 } vMatrix;
 
+typedef struct {
+    std::vector<std::vector<double>> entries;
+    int rows;
+    int cols;
+} Weights;
+
+typedef struct {
+    std::vector<std::vector<double>> entries;
+    int rows;
+    int cols;
+} Bias;
+
 class DataOps { 
 public:
     struct Input {
@@ -71,15 +83,15 @@ public:
     int matrix_argmax(Matrix *m);
     int matrix_argmax(vMatrix *m);
 
-    void weight_update();
-    void weight_cache();
-    void bias_update();
-    void bias_cache();
+    //void weight_update();
+    //void weight_cache();
+    //void bias_update();
+    //void bias_cache();
 
-    void input_norm();
-    void input_sort();
-    void input_format();
-    void input_classify();
+    //void input_norm();
+    //void input_sort();
+    //void input_format();
+    //void input_classify();
 
     DataOps(/* args */);
     ~DataOps();
