@@ -99,6 +99,8 @@ vMatrix* Propagation::v_sigmoid_activation(vMatrix* Z) {
             Z->entries[i][j] = 1/(1+std::exp(-Z->entries[i][j]));;
         }
     }
+
+    return Z;
 }
 
 //tanh activation function
@@ -119,6 +121,8 @@ vMatrix* Propagation::v_tanh_activation(vMatrix* Z) {
             Z->entries[i][j] = tanh(Z->entries[i][j]);
         }
     }
+
+    return Z;
 }
 
 //relu activation functiuon
@@ -139,6 +143,8 @@ vMatrix* Propagation::v_relu_activation(vMatrix* Z) {
             Z->entries[i][j] = std::max(0, k);
         }
     }
+
+    return Z;
 }
 
 //leaky relu activation function
@@ -159,6 +165,8 @@ vMatrix* Propagation::v_leaky_relu_activation(vMatrix* Z) {
             Z->entries[i][j] = std::max(k1, k);
         }
     }
+
+    return Z;
 }
 
 //cross entropy loss function
