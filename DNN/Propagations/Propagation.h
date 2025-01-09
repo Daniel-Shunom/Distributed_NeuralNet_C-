@@ -53,11 +53,18 @@ public:
     Initializer _init;
     MatrixOps mp;
     
+    Propagation();
+    vMatrix* v_forwardpass(vMatrix* m, vMatrix* w, vMatrix* b);
+    vMatrix* v_sigmoid_activation(vMatrix* m);
+    vMatrix* v_tanh_activation(vMatrix* m);
+    vMatrix* v_relu_activation(vMatrix* m);
+    vMatrix* v_leaky_relu_activation(vMatrix* m);
+    double v_cross_entropy_loss(vMatrix* &input_y, vMatrix* &label_yhat);
+    
     std::string error_check(std::vector<double> &_weights, 
                             std::vector<double> &_biases,
                             std::vector<double> &input);
 
-    Propagation();
     std::vector<double> forwardpass(std::vector<double> &_weights, 
                                    std::vector<double> &_biases, 
                                    std::vector<double> &input);

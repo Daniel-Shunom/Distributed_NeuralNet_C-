@@ -74,6 +74,13 @@ std::vector<double> Propagation::forwardpass(std::vector<double> &_weights,
     return Z;
 }
 
+vMatrix* Propagation::v_forwardpass(vMatrix* m, vMatrix* w, vMatrix* b) {
+    vMatrix* mat = mp.v_matrix_multiply(m, w);
+    vMatrix* Z = mp.v_matrix_add(mat, b);
+
+    return Z;
+}
+
 //Sample sigmoid Activation
 std::vector<double> Propagation::sigmoid_activations(std::vector<double> &Z) {
     Z = forwardpass(params.weights, params.biases, params.input);
@@ -84,6 +91,14 @@ std::vector<double> Propagation::sigmoid_activations(std::vector<double> &Z) {
     }
     
     return Z;
+}
+
+vMatrix* Propagation::v_sigmoid_activation(vMatrix* Z) {
+    for (int i = 0; i < Z->rows; i++) {
+        for (int j = 0; j < Z->cols; j++) {
+            Z->entries[i][j] = 1/(1+std::exp(-Z->entries[i][j]));;
+        }
+    }
 }
 
 //tanh activation function
@@ -98,6 +113,14 @@ std::vector<double> Propagation::tanh_activations(std::vector<double> &Z) {
     return A;
 }
 
+vMatrix* Propagation::v_tanh_activation(vMatrix* Z) {
+    for (int i = 0; i < Z->rows; i++) {
+        for (int j = 0; j < Z->cols; j++) {
+            Z->entries[i][j] = tanh(Z->entries[i][j]);
+        }
+    }
+}
+
 //relu activation functiuon
 std::vector<double> Propagation::relu_activations(std::vector<double> &Z) {
     Z = forwardpass(params.weights, params.biases, params.input);
@@ -109,6 +132,15 @@ std::vector<double> Propagation::relu_activations(std::vector<double> &Z) {
     return A;
 }
 
+vMatrix* Propagation::v_relu_activation(vMatrix* Z) {
+    for (int i = 0; i < Z->rows; i++) {
+        for (int j = 0; j < Z->cols; j++) {
+            int k = Z->entries[i][j];
+            Z->entries[i][j] = std::max(0, k);
+        }
+    }
+}
+
 //leaky relu activation function
 std::vector<double> Propagation::leaky_relu_activations(std::vector<double> &Z) {
     Z = forwardpass(params.weights, params.biases, params.input);
@@ -117,6 +149,16 @@ std::vector<double> Propagation::leaky_relu_activations(std::vector<double> &Z) 
     std::transform(Z.begin(), Z.end(), A.begin(), 
                    [&](double x){return std::max(0.001f*x, x);});
     return A;
+}
+
+vMatrix* Propagation::v_leaky_relu_activation(vMatrix* Z) {
+    for (int i = 0; i < Z->rows; i++) {
+        for (int j = 0; j < Z->cols; j++) {
+            int k = Z->entries[i][j];
+            int k1 = Z->entries[i][j]*0.0001;
+            Z->entries[i][j] = std::max(k1, k);
+        }
+    }
 }
 
 //cross entropy loss function
