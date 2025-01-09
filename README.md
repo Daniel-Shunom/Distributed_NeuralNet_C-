@@ -15,7 +15,7 @@
 ### *Deep Neural Networks Implementation via Distributed Computing*
 
 <p align="center">
-    <b>A sophisticated implementation of distributed neural network architecture leveraging consensus mechanisms for robust and scalable forward-propagation</b>
+    <b>A sophisticated implementation of distributed neural network architecture leveraging consensus mechanisms for robust and scalable machine learning implementations</b>
 </p>
 
 <br/>
