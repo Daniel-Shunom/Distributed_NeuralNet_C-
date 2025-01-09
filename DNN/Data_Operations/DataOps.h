@@ -71,6 +71,6 @@ public:
     //void input_format();
     //void input_classify();
 
-    DataOps(/* args */);
-    ~DataOps();
+    //DataOps(/* args */);
+    //~DataOps();
 };
