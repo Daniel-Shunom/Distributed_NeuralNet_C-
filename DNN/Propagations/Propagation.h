@@ -16,6 +16,7 @@ Instructions:
 #pragma once
 
 #include "../Data_Operations/DataOps.h"
+#include "../Data_Operations/MatrixOps.h"
 #include <iostream>
 #include <vector>
 #include <cmath>
@@ -50,6 +51,7 @@ public:
     Parameters params;
     Errors prop_error;
     Initializer _init;
+    MatrixOps mp;
     
     std::string error_check(std::vector<double> &_weights, 
                             std::vector<double> &_biases,
