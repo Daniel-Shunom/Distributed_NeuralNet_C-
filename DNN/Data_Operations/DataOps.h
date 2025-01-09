@@ -16,35 +16,13 @@ Instructions:
 #pragma once
 
 #define MAX_CHAR 100
+
+#include "../Essential_Params/Params.h"
 #include <iostream>
 #include <fstream>
 #include <iomanip>
 #include <vector>
 #include <string>
-
-typedef struct {
-    double** entries;
-    int rows;
-    int cols;
-} Matrix;
-
-typedef struct {
-    std::vector<std::vector<double>> entries;
-    int rows;
-    int cols;
-} vMatrix;
-
-typedef struct {
-    std::vector<std::vector<double>> entries;
-    int rows;
-    int cols;
-} Weights;
-
-typedef struct {
-    std::vector<std::vector<double>> entries;
-    int rows;
-    int cols;
-} Bias;
 
 class DataOps { 
 public:
