@@ -31,33 +31,37 @@ std::vector<double> HyperParams::hidden_unit(std::vector<double> activations) {
 //This is designed to iterate over h_params.hidden_nodes, and for each outer iteration
 // an innner iteration is performed to connect the nodes of that current layer to the 
 // nodes of the next layer.
-std::vector<std::vector<double>> HyperParams::hidden_layer(std::array<Node*, HIDDEN_NODES> &hidden_nodes,
-                                                          std::array<Node*, HIDDEN_NODES> &next_nodes) {
+std::vector<std::vector<double>> HyperParams::hidden_layer(std::array<Node*, HIDDEN_NODES> &h_nodes,
+                                                           std::array<Node*, HIDDEN_NODES> &n_nodes) {
     //initializing hidden layer matrix
     std::vector<std::vector<double>> activations(2, std::vector<double>(HIDDEN_NODES, 0.0f));
 
-    for (int i = 0; i < hidden_nodes.size(); i++) {
-        if (hidden_nodes[i]) {
-            for (int j = 0; j < next_nodes.size(); j++) {
-                next_nodes[j]->computed_activations = node.computed_activations;
-                hidden_nodes[i]->hidden_nodes[j] = next_nodes[j];
-                activations[i][j] = hidden_nodes[i]->computed_activations[j];
+    for (int i = 0; i < h_nodes.size(); i++) {
+        if (h_nodes[i]) {
+            for (int j = 0; j < n_nodes.size(); j++) {
+                n_nodes[j]->Activations->entries = node.Activations->entries;
+                h_nodes[i]->hidden_nodes[j] = n_nodes[j];
+                activations[i][j] = h_nodes[i]->computed_activations[j];
             }
         }
     }
+
+    //we will cache this in a map
+    //for calculating backpropagation
+    //in the
     return activations;
 }
 
 //overloaded function using vectors
-std::vector<std::vector<double>> HyperParams::hidden_layer(std::vector<Node*> &hidden_nodes,
-                                                          std::vector<Node*> &next_nodes) {
+std::vector<std::vector<double>> HyperParams::hidden_layer(std::vector<Node*> &h_nodes,
+                                                          std::vector<Node*> &n_nodes) {
     std::vector<std::vector<double>> activations(2, std::vector<double>(HIDDEN_NODES, 0.0f));
-    for (int i = 0; i < hidden_nodes.size(); i++) {
-        if (hidden_nodes[i]) {
-            for (int j = 0; j < next_nodes.size(); j++) {
-                next_nodes[j]->computed_activations = node.computed_activations;
-                hidden_nodes[i]->hidden_nodes[j] = next_nodes[j];
-                activations[i][j] = hidden_nodes[i]->computed_activations[j];
+    for (int i = 0; i < h_nodes.size(); i++) {
+        if (h_nodes[i]) {
+            for (int j = 0; j < n_nodes.size(); j++) {
+                n_nodes[j]->Activations->entries = node.Activations->entries;
+                h_nodes[i]->hidden_nodes[j] = n_nodes[j];
+                activations[i][j] = h_nodes[i]->computed_activations[j];
             }
         }
     }
