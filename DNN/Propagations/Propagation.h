@@ -23,7 +23,7 @@ Instructions:
 #include <algorithm>
 #include <cassert>
 
-class Propagation {
+class Propagation: public MatrixOps {
 public: 
     struct Parameters {
         std::vector<double> weights;

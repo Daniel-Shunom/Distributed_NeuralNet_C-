@@ -20,12 +20,13 @@ Instructions:
 #include <iostream>
 #include <variant>
 
-class MatrixOps: DataOps {
+class MatrixOps: public DataOps {
 private:
-    static bool checkDimensions(Matrix* m1, Matrix* m2);
-    static bool checkDimensions(vMatrix* m1, vMatrix* m2);
     /* data */
 public:
+    static bool checkDimensions(Matrix* m1, Matrix* m2);
+    static bool checkDimensions(vMatrix* m1, vMatrix* m2);
+
     Matrix* matrix_add(Matrix* m1, Matrix* m2);
     Matrix* matrix_subtract(Matrix* m1, Matrix* m2);
     Matrix* matrix_multiply(Matrix* m1, Matrix* m2);
@@ -46,6 +47,6 @@ public:
     vMatrix* v_matrix_transpose(vMatrix* m1);
     vMatrix* v_matrix_add_scalar(double n, vMatrix* m);
     
-    MatrixOps(/* args */);
-    ~MatrixOps();
+    //MatrixOps(/* args */);
+    //~MatrixOps();
 };
