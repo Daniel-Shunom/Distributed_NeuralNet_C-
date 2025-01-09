@@ -19,6 +19,10 @@ bool MatrixOps::checkDimensions(Matrix* m1, Matrix* m2) {
     return (m1->rows == m2->rows && m1->cols == m2->cols);
 }
 
+bool MatrixOps::checkDimensions(vMatrix* m1, vMatrix* m2) {
+    return (m1->rows == m2->cols && m1->cols == m2->cols);
+}
+
 Matrix* MatrixOps::matrix_add(Matrix* m1, Matrix* m2) {
     
     if (!checkDimensions(m1, m2)) {
@@ -100,8 +104,8 @@ Matrix* MatrixOps::matrix_multiply(Matrix* m1, Matrix* m2) {
     }
 
     Matrix* m =  matrix_create(m1->rows, m1->cols);
-    for (int i = 0; i < m->rows; i++) {
-        for (int j = 0; j < m->cols; j++) {
+    for (int i = 0; i < m1->rows; i++) {
+        for (int j = 0; j < m2->cols; j++) {
             m->entries[i][j] = m1->entries[i][j] * m2->entries[i][j];
         }
     }
@@ -118,8 +122,8 @@ vMatrix* MatrixOps::v_matrix_multiply(vMatrix* m1, vMatrix* m2) {
     }
 
     vMatrix* m =  v_matrix_create(m1->rows, m1->cols);
-    for (int i = 0; i < m->rows; i++) {
-        for (int j = 0; j < m->cols; j++) {
+    for (int i = 0; i < m1->rows; i++) {
+        for (int j = 0; j < m2->cols; j++) {
             m->entries[i][j] = m1->entries[i][j] * m2->entries[i][j];
         }
     }
@@ -129,18 +133,18 @@ vMatrix* MatrixOps::v_matrix_multiply(vMatrix* m1, vMatrix* m2) {
 
 Matrix* MatrixOps::matrix_dot(Matrix* m1, Matrix* m2) {
     
-    if (!checkDimensions(m1, m2)) {
+    if (m1->rows != m2->cols) {
         throw std::invalid_argument(
             "Dimesion mismatch: "
         );
     }
 
     Matrix* m =  matrix_create(m1->rows, m1->cols);
-    for (int i = 0; i < m->rows; i++) {
-        for (int j = 0; j < m->cols; j++) {
+    for (int i = 0; i < m1->rows; i++) {
+        for (int j = 0; j < m2->cols; j++) {
             double sum = 0;
             for (int k = 0; k < m2->rows; m++) {
-                sum += m1->entries[i][j] * m2->entries[i][j];
+                sum += m1->entries[i][k] * m2->entries[k][j];
             }
             m->entries[i][j] =sum;
         }
@@ -151,17 +155,18 @@ Matrix* MatrixOps::matrix_dot(Matrix* m1, Matrix* m2) {
 
 vMatrix* MatrixOps::v_matrix_dot(vMatrix* m1, vMatrix* m2) {
     
-    if (!checkDimensions(m1, m2)) {
+    if (m1->rows != m2->cols) {
         throw std::invalid_argument(
             "Dimesion mismatch: "
         );
     }
-    vMatrix* m = v_matrix_create(m1->rows, m1->cols);
-    for (int i = 0; i < m->rows; i++) {
-        for (int j = 0; j < m->cols; j++) {
+
+    vMatrix* m =  v_matrix_create(m1->rows, m1->cols);
+    for (int i = 0; i < m1->rows; i++) {
+        for (int j = 0; j < m2->cols; j++) {
             double sum = 0;
             for (int k = 0; k < m2->rows; m++) {
-                sum += m1->entries[i][j] * m2->entries[i][j];
+                sum += m1->entries[i][k] * m2->entries[k][j];
             }
             m->entries[i][j] =sum;
         }
