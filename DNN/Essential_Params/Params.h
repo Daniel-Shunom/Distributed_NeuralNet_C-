@@ -33,7 +33,7 @@ typedef struct {
     std::vector<std::vector<double>> entries;
     int rows;
     int cols;
-} Weights;
+} Weight;
 
 typedef struct {
     std::vector<std::vector<double>> entries;
