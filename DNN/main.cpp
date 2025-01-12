@@ -56,8 +56,9 @@ int main() {
     std::cout << "\n\n";
 
 
-    vMatrix* m5 = mp.v_matrix_create(m1->rows, m2->cols);
-    m5 = mp.v_matrix_dot(m3, m4);
-    mp.v_matrix_print(m5);
+    //vMatrix* m5; 
+    //m5 = 
+    mp.v_matrix_multiply(m4, m3);
+    //mp.v_matrix_print(m5);
     return 0;
 }
