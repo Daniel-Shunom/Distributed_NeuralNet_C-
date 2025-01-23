@@ -40,3 +40,8 @@ typedef struct {
     int rows;
     int cols;
 } Bias;
+
+typedef struct {
+    vMatrix* img_data;
+    int label;
+} Img;
