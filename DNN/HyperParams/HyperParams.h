@@ -76,7 +76,13 @@ public:
 
     std::vector<std::vector<double>> hidden_layer(std::vector<Node*> &input_nodes, 
                                                   std::vector<Node*> &next_nodes);
+
+    void hidden_layer_destructor(std::vector<Node*> &input_nodes, 
+                                 std::vector<Node*> &next_nodes);
     
+    void hidden_layer_destructor(std::array<Node*, HIDDEN_NODES> &input_nodes, 
+                                 std::array<Node*, HIDDEN_NODES> &next_nodes);
+
     //array form
     std::vector<Node> input_layer_constructor(std::vector<std::array<Node*, INPUT_NODES>> &input_nodes,
                                               std::vector<std::array<Node*, HIDDEN_NODES>> &hidden_nodes);
