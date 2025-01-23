@@ -15,8 +15,8 @@ Instructions:
 
 #include "ImgOps.h"
 
-Img** Image::csv_to_imgs(char* file_string, int num_imgs) {
-    std::ifstream file(file_string);
+Img** Image::csv_to_imgs(std::string file_string, int num_imgs) {
+    std::ifstream file(file_string, std::ios::in);
     if(!file.is_open()) {
         std::cerr << "Error: Could not open file" << std::endl;
         return nullptr;

@@ -20,16 +20,11 @@ Instructions:
 #include "../Data_Operations/DataOps.h"
 #include <sstream>
 
-typedef struct {
-    vMatrix* img_data;
-    int label;
-} Img;
-
 class Image {
 public:
     DataOps dp;
 
-    Img** csv_to_imgs(char* file_string, int num_imgs);
+    Img** csv_to_imgs(std::string file_string, int num_imgs);
     void img_print(Img* img);
     void img_free(Img *img);
     void imgs_free(Img **imgs, int n);
