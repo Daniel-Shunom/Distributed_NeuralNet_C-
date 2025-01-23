@@ -19,7 +19,7 @@ Instructions:
 //HyperParams class constructor initializes Node struct members
 //with input parameters
 HyperParams::HyperParams() {
-    node.computed_activations = tanh_activations(params.input);
+    //node.computed_activations = tanh_activations(params.input);
     node.learning_rate = LEARNING_RATE;
 }
 
@@ -50,6 +50,15 @@ std::vector<std::vector<double>> HyperParams::hidden_layer(std::array<Node*, HID
     //for calculating backpropagation
     //in the
     return activations;
+}
+
+void HyperParams::hidden_layer_destructor(std::vector<Node*> &hidden_nodes, std::vector<Node*> &next_nodes) {
+    for (int i = 0; i < hidden_nodes.size(); i++) {
+        for (int j = 0; j < next_nodes.size(); j++) {
+            delete next_nodes[j];
+        }
+        delete hidden_nodes[i];
+    }
 }
 
 //overloaded function using vectors
