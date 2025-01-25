@@ -65,11 +65,11 @@ std::vector<double> Propagation::forwardpass(std::vector<double> &_weights,
 
     if (input.size() != _weights.size() || input.size() != _biases.size()) {
         std::cerr << "[ERROR]: " << Err;
-    }
+    };
 
     for (int i = 0; i < input.size(); ++i) {
         Z[i] = _weights[i]*input[i] + _biases[i];
-    }
+    };
 
     return Z;
 }
