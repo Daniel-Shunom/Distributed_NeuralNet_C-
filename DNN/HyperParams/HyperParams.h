@@ -36,6 +36,9 @@ class HyperParams: public Propagation {
 public:
     struct Node {
         vMatrix* Activations;
+        vMatrix* Weights;
+        vMatrix* Biases;
+        
         std::vector<double> computed_activations;
         double learning_rate;
 
