@@ -54,23 +54,26 @@ MenuConstruct::iAselect MenuConstruct::select_activation() {
 MenuConstruct::deepNetTuple MenuConstruct::configure_deepnet() {
     int layers;
     int nodes;
+    int depth;
     std::cout << "\n\n[LAYER PARAMETER SELECTION!]\n";
     std::cout << "Enter number of hidden layers: ";
     std::cin >> layers;
+    std::cout << "Enter hidden layer depth: ";
+    std::cin >> depth;
     std::cout << "Enter number of hidden nodes: ";
     std::cin >> nodes;
 
     deepNetTuple net_config;
-    std::function<void(std::vector<HyperParams::Node*>)> layer_config;
-    std::function<void(std::vector<HyperParams::Node*>)> node_config;
+    std::function<void(std::vector<Node*>)> layer_config;
+    std::function<void(std::vector<Node*>)> node_config;
 
-    layer_config = [this, layers](std::vector<HyperParams::Node*> hidden_layers){
-        this->hidden_layer(hidden_layers, hidden_layers);
+    layer_config = [this, layers, depth](std::vector<Node*> hidden_layers){
+        this->hidden_layer(hidden_layers, hidden_layers, depth);
     };
 
-    node_config = [this, nodes](std::vector<HyperParams::Node*> hidden_nodes) {
+    node_config = [this, nodes, depth](std::vector<Node*> hidden_nodes) {
         //correct with actual hidden node constructor
-        this->hidden_layer(hidden_nodes, hidden_nodes);
+        this->hidden_layer(hidden_nodes, hidden_nodes, depth);
     };
 
     net_config = layer_config, node_config;
@@ -94,22 +97,22 @@ MenuConstruct::ioTuple MenuConstruct::io_nodes_config() {
 
     ioTuple net_config;
 
-    std::function<void(std::vector<HyperParams::Node*>, 
-                       std::vector<HyperParams::Node*>)> layer_config;
+    std::function<void(std::vector<Node*>, 
+                       std::vector<Node*>)> layer_config;
     
-    std::function<void(std::vector<HyperParams::Node*>, 
-                       std::vector<HyperParams::Node*>)> node_config;
+    std::function<void(std::vector<Node*>, 
+                       std::vector<Node*>)> node_config;
 
-    layer_config = [this, i_nodes](std::vector<HyperParams::Node*> &input_layer,
-                                   std::vector<HyperParams::Node*> &hidden_layers) 
+    layer_config = [this, i_nodes](std::vector<Node*> &input_layer,
+                                   std::vector<Node*> &hidden_layers) 
     mutable {
         input_layer.resize(i_nodes),
         hidden_layers.resize(HIDDEN_NODES);
         this->input_layer_constructor(input_layer, hidden_layers);
     };
 
-    node_config = [this, o_nodes](std::vector<HyperParams::Node*> &hidden_layers,
-                                  std::vector<HyperParams::Node*> &output_nodes) 
+    node_config = [this, o_nodes](std::vector<Node*> &hidden_layers,
+                                  std::vector<Node*> &output_nodes) 
     mutable {
         hidden_layers.resize(HIDDEN_NODES);
         output_nodes.resize(o_nodes);

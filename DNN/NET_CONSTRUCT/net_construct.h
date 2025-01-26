@@ -25,11 +25,11 @@ class MenuConstruct: public HyperParams {
 private:
 public:
     typedef std::function<void(vMatrix*)> iAselect;
-    typedef std::tuple<std::function<void(std::vector<HyperParams::Node*>)>> deepNetTuple;
-    typedef std::tuple<std::function<void(std::vector<HyperParams::Node*>,
-                                          std::vector<HyperParams::Node*>)>, 
-                       std::function<void(std::vector<HyperParams::Node*>, 
-                                          std::vector<HyperParams::Node*>)>> ioTuple;
+    typedef std::tuple<std::function<void(std::vector<Node*>)>> deepNetTuple;
+    typedef std::tuple<std::function<void(std::vector<Node*>,
+                                          std::vector<Node*>)>, 
+                       std::function<void(std::vector<Node*>, 
+                                          std::vector<Node*>)>> ioTuple;
     typedef std::vector<std::variant<ioTuple, deepNetTuple, iAselect>> iSet;
 
     iSet instructions;
