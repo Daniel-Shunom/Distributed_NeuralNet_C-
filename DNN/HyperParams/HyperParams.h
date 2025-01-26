@@ -34,22 +34,6 @@ Instructions:
 
 class HyperParams: public Propagation {
 public:
-    struct Node {
-        vMatrix* Activations;
-        vMatrix* Weights;
-        vMatrix* Biases;
-        
-        std::vector<double> computed_activations;
-        double learning_rate;
-
-        //Eight hidden_node instantiations
-        //each insantiation has 20 nodes in it
-        //each node
-        std::array<Node*, OUTPUT_NODES> input_nodes;
-        std::array<Node*, HIDDEN_NODES> hidden_nodes;
-        std::array<Node*, OUTPUT_NODES> output_nodes;
-    };
-
     struct H_Params {
         int layers;
         int nodes;
@@ -74,11 +58,14 @@ public:
                                                      std::array<Node*, HIDDEN_NODES> next_nodes);
 
     std::vector<double> hidden_unit(std::vector<double> activations);
-    std::vector<std::vector<double>> hidden_layer(std::array<Node*, HIDDEN_NODES> &input_nodes, 
-                                                  std::array<Node*, HIDDEN_NODES> &next_nodes);
 
-    std::vector<std::vector<double>> hidden_layer(std::vector<Node*> &input_nodes, 
-                                                  std::vector<Node*> &next_nodes);
+    void hidden_layer(std::array<Node*, HIDDEN_NODES> &input_nodes, 
+                      std::array<Node*, HIDDEN_NODES> &next_nodes,
+                      int depth);
+
+    void hidden_layer(std::vector<Node*> &input_nodes, 
+                      std::vector<Node*> &next_nodes,
+                      int depth);
 
     void hidden_layer_destructor(std::vector<Node*> &input_nodes, 
                                  std::vector<Node*> &next_nodes);

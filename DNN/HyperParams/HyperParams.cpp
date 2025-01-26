@@ -31,25 +31,38 @@ std::vector<double> HyperParams::hidden_unit(std::vector<double> activations) {
 //This is designed to iterate over h_params.hidden_nodes, and for each outer iteration
 // an innner iteration is performed to connect the nodes of that current layer to the 
 // nodes of the next layer.
-std::vector<std::vector<double>> HyperParams::hidden_layer(std::array<Node*, HIDDEN_NODES> &h_nodes,
-                                                           std::array<Node*, HIDDEN_NODES> &n_nodes) {
-    //initializing hidden layer matrix
-    std::vector<std::vector<double>> activations(2, std::vector<double>(HIDDEN_NODES, 0.0f));
+void HyperParams::hidden_layer(std::array<Node*, HIDDEN_NODES> &h_nodes,
+                               std::array<Node*, HIDDEN_NODES> &n_nodes,
+                               int depth) {
+    
+    if (depth == 0 || h_nodes.empty() || n_nodes.empty()) {
+        return;
+    }
 
-    for (int i = 0; i < h_nodes.size(); i++) {
-        if (h_nodes[i]) {
-            for (int j = 0; j < n_nodes.size(); j++) {
-                n_nodes[j]->Activations->entries = node.Activations->entries;
-                h_nodes[i]->hidden_nodes[j] = n_nodes[j];
-                activations[i][j] = h_nodes[i]->computed_activations[j];
-            }
+    for (Node* &n: h_nodes) {
+        n = new Node();
+        for (int i = 0; i < n_nodes.size(); i++) {
+            n->next_node.push_back(new Node());
         }
     }
 
-    //we will cache this in a map
-    //for calculating backpropagation
-    //in the
-    return activations;
+    for (Node* n: n_nodes) {
+        n = new Node();
+        for (int i = 0; i < n_nodes.size(); i++) {
+            n->next_node.push_back(new Node());
+        }
+    }
+
+    for (int i = 0; i < h_nodes.size(); i++) {
+        for (int j = 0; j < n_nodes.size(); j++) {
+            h_nodes[i]->next_node[j] = n_nodes[j];
+        }
+    }
+
+    std::array<Node*, HIDDEN_NODES> new_layer;
+
+    hidden_layer(n_nodes, new_layer, depth-1);
+    std::cout << "LAYER BUILDER FUNCTION CALLED\n";
 }
 
 void HyperParams::hidden_layer_destructor(std::vector<Node*> &hidden_nodes, std::vector<Node*> &next_nodes) {
@@ -62,49 +75,75 @@ void HyperParams::hidden_layer_destructor(std::vector<Node*> &hidden_nodes, std:
 }
 
 //overloaded function using vectors
-std::vector<std::vector<double>> HyperParams::hidden_layer(std::vector<Node*> &h_nodes,
-                                                          std::vector<Node*> &n_nodes) {
-    std::vector<std::vector<double>> activations(2, std::vector<double>(HIDDEN_NODES, 0.0f));
+void HyperParams::hidden_layer(std::vector<Node*> &h_nodes,
+                               std::vector<Node*> &n_nodes, 
+                               int depth) {
+
+    if (depth == 0 || h_nodes.empty() || n_nodes.empty()) {
+        return;
+    }
+    std::cout << "LAYER BUILDER FUNCTION CALLED\n";
+
+    for (Node* &n: h_nodes) {
+        n = new Node();
+        for (int i = 0; i < n_nodes.size(); i++) {
+            n->next_node.push_back(new Node());
+        }
+    };
+    std::cout << "h_nodes->next_node contains: " << h_nodes[0]->next_node.size() << " items\n";
+
+    for (Node* &n: n_nodes) {
+        n = new Node();
+        for (int i = 0; i < n_nodes.size(); i++) {
+            n->next_node.push_back(new Node());
+        }
+    };
+    std::cout << "n_nodes->next_node contains: " << n_nodes[0]->next_node.size() << " items\n";
+    std::cout << std::endl;
+
     for (int i = 0; i < h_nodes.size(); i++) {
-        if (h_nodes[i]) {
-            for (int j = 0; j < n_nodes.size(); j++) {
-                n_nodes[j]->Activations->entries = node.Activations->entries;
-                h_nodes[i]->hidden_nodes[j] = n_nodes[j];
-                activations[i][j] = h_nodes[i]->computed_activations[j];
-            }
+        for (int j = 0; j < n_nodes.size(); j++) {
+            h_nodes[i]->next_node[j] = n_nodes[j];
         }
     }
-    return activations;
+
+    for (int i = 0; i < h_nodes.size(); i++) {
+        std::cout << "pointer h_node " << h_nodes[i] << " is pointing to: \n" ;
+        for (auto const n: n_nodes) {
+            std::cout << n << '\n';
+        }
+        std::cout << std::endl;
+    }
+
+    std::vector<Node*> new_layer(n_nodes.size());
+    hidden_layer(n_nodes, new_layer, depth-1);
 }
 
 //This constructs the deep net with all interconnected nodes
-std::vector<HyperParams::Node> HyperParams::deep_net_constructor(std::vector<
+std::vector<Node> HyperParams::deep_net_constructor(std::vector<
                                                                  std::array<Node*, 
                                                                  HIDDEN_NODES>> &layers) {
     std::vector<Node> layer_activations;
     for (int i = 0; i < HIDDEN_LAYERS; i++) {
-        std::vector<std::vector<double>> layer_activations = hidden_layer(layers[i], 
-                                                                         layers[i+1]);
+        std::vector<std::vector<double>> layer_activations;
     }
     return layer_activations;
 }
 
-std::vector<HyperParams::Node> HyperParams::input_layer_constructor(std::vector<Node*> &input_nodes,
+std::vector<Node> HyperParams::input_layer_constructor(std::vector<Node*> &input_nodes,
                                                                     std::vector<Node*> &layers) {
     std::vector<Node> layer_activations;
     for (int i = 0; i < INPUT_NODES; i++) {
-        std::vector<std::vector<double>> layer_activations = hidden_layer(input_nodes, 
-                                                                         layers);
+        std::vector<std::vector<double>> layer_activations;
     }
     return layer_activations;
 }
 
-std::vector<HyperParams::Node> HyperParams::output_layer_constructor(std::vector<Node*> &layers,
+std::vector<Node> HyperParams::output_layer_constructor(std::vector<Node*> &layers,
                                                                      std::vector<Node*> &output_nodes) {
     std::vector<Node> layer_activations;
     for (int i = 0; i < HIDDEN_LAYERS; i++) {
-        std::vector<std::vector<double>> layer_activations = hidden_layer(layers, 
-                                                                         output_nodes);
+        std::vector<std::vector<double>> layer_activations;
     }
     return layer_activations;
 }
@@ -116,7 +155,7 @@ void HyperParams::change_learning_rate(double &new_rate) {
 
 HyperParams::~HyperParams() {
     std::string Deallocator = "[DESTRUCTOR CALLED!]\n[DEALLOCATING MEMORY...]\n";
-    for (int i = 0; i < HIDDEN_NODES; i++) {
-        delete node.hidden_nodes[i];
-    }
+    //for (int i = 0; i < HIDDEN_NODES; i++) {
+    //    delete node.hidden_nodes[i];
+    //}
 }
