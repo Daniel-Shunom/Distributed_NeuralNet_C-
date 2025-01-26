@@ -45,3 +45,14 @@ typedef struct {
     vMatrix* img_data;
     int label;
 } Img;
+
+struct Node {
+    vMatrix* inputs;
+    vMatrix* Weights;
+    vMatrix* Biases;
+    vMatrix* Activations;
+    
+    std::vector<double> computed_activations;
+    double learning_rate;
+    std::vector<Node*> next_node;
+};
