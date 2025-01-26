@@ -69,11 +69,6 @@ public:
                                    std::vector<double> &_biases, 
                                    std::vector<double> &input);
 
-    std::vector<double> sigmoid_activations(std::vector<double> &Z);
-    std::vector<double> tanh_activations(std::vector<double> &);
-    std::vector<double> relu_activations(std::vector<double> &);
-    std::vector<double> leaky_relu_activations(std::vector<double> &Z);
-
     double cross_entropy_loss(double &input_y, double &label_yhat);
 
     double cost_function(double &cost);
