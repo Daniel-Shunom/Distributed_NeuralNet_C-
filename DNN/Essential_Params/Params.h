@@ -56,3 +56,5 @@ struct Node {
     double learning_rate;
     std::vector<Node*> next_node;
 };
+
+typedef std::vector<std::vector<Node*>> LyrCntr;
