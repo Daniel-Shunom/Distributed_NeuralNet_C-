@@ -25,14 +25,14 @@ class MenuConstruct: public HyperParams {
 private:
 public:
     typedef std::function<void(vMatrix*)> iAselect;
-    typedef std::tuple<std::function<void(std::vector<Node*>)>> deepNetTuple;
-    typedef std::tuple<std::function<void(std::vector<Node*>,
-                                          std::vector<Node*>)>, 
-                       std::function<void(std::vector<Node*>, 
-                                          std::vector<Node*>)>> ioTuple;
+    typedef std::tuple<std::function<void(Nd, Nd)>> deepNetTuple;
+    typedef std::tuple<std::function<void(Nd, Nd)>, 
+                       std::function<void(Nd, Nd)>> ioTuple;
     typedef std::vector<std::variant<ioTuple, deepNetTuple, iAselect>> iSet;
 
     iSet instructions;
+    int depth;
+    LC layer_cache;
 
     iAselect select_activation();
     ioTuple io_nodes_config();

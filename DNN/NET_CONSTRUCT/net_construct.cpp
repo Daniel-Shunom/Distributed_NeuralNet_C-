@@ -64,16 +64,16 @@ MenuConstruct::deepNetTuple MenuConstruct::configure_deepnet() {
     std::cin >> nodes;
 
     deepNetTuple net_config;
-    std::function<void(std::vector<Node*>)> layer_config;
-    std::function<void(std::vector<Node*>)> node_config;
+    std::function<void(Nd, Nd)> layer_config;
+    std::function<void(Nd, Nd)> node_config;
 
-    layer_config = [this, layers, depth](std::vector<Node*> hidden_layers){
-        this->hidden_layer(hidden_layers, hidden_layers, depth);
+    layer_config = [this, layers, depth](Nd hidden_layers, Nd next_layer){
+        this->hidden_layer(hidden_layers, next_layer, layer_cache, depth);
     };
 
-    node_config = [this, nodes, depth](std::vector<Node*> hidden_nodes) {
+    node_config = [this, nodes, depth](Nd hidden_nodes, Nd next_layer) {
         //correct with actual hidden node constructor
-        this->hidden_layer(hidden_nodes, hidden_nodes, depth);
+        this->hidden_layer(hidden_nodes, next_layer, layer_cache, depth);
     };
 
     net_config = layer_config, node_config;
@@ -97,26 +97,22 @@ MenuConstruct::ioTuple MenuConstruct::io_nodes_config() {
 
     ioTuple net_config;
 
-    std::function<void(std::vector<Node*>, 
-                       std::vector<Node*>)> layer_config;
+    std::function<void(Nd, Nd)> layer_config;
     
-    std::function<void(std::vector<Node*>, 
-                       std::vector<Node*>)> node_config;
+    std::function<void(Nd, Nd)> node_config;
 
-    layer_config = [this, i_nodes](std::vector<Node*> &input_layer,
-                                   std::vector<Node*> &hidden_layers) 
+    layer_config = [this, i_nodes](Nd &input_layer, Nd &hidden_layers) 
     mutable {
         input_layer.resize(i_nodes),
         hidden_layers.resize(HIDDEN_NODES);
-        this->input_layer_constructor(input_layer, hidden_layers);
+        this->hidden_layer(input_layer, hidden_layers, layer_cache, depth);
     };
 
-    node_config = [this, o_nodes](std::vector<Node*> &hidden_layers,
-                                  std::vector<Node*> &output_nodes) 
+    node_config = [this, o_nodes](Nd &hidden_layers, Nd &output_nodes) 
     mutable {
         hidden_layers.resize(HIDDEN_NODES);
         output_nodes.resize(o_nodes);
-        this->output_layer_constructor(hidden_layers, output_nodes);
+        this->hidden_layer(hidden_layers, output_nodes, layer_cache, depth);
     };
 
     net_config = std::make_tuple(layer_config, node_config);
