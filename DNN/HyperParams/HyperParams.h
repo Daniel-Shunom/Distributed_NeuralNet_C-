@@ -63,29 +63,30 @@ public:
                       std::array<Node*, HIDDEN_NODES> &next_nodes,
                       int depth);
 
-    void hidden_layer(std::vector<Node*> &input_nodes, 
-                      std::vector<Node*> &next_nodes,
-                      int depth);
+    void hidden_layer(Nd &input_nodes, Nd &next_nodes, LC &cache, int depth);
 
-    void hidden_layer_destructor(std::vector<Node*> &input_nodes, 
-                                 std::vector<Node*> &next_nodes);
+    void hidden_layer_destructor(Nd &input_nodes, 
+                                 Nd &next_nodes, 
+                                 int depth);
     
     void hidden_layer_destructor(std::array<Node*, HIDDEN_NODES> &input_nodes, 
                                  std::array<Node*, HIDDEN_NODES> &next_nodes);
+
+    void parameter_initializer(Nd &input, vMatrix* m1);
+    void cache_initializer(LC &input, vMatrix* m1);
+
 
     //array form
     std::vector<Node> input_layer_constructor(std::vector<std::array<Node*, INPUT_NODES>> &input_nodes,
                                               std::vector<std::array<Node*, HIDDEN_NODES>> &hidden_nodes);
     //vector form
-    std::vector<Node> input_layer_constructor(std::vector<Node*> &input_nodes,
-                                              std::vector<Node*> &hidden_nodes);
+    std::vector<Node> input_layer_constructor(Nd &input_nodes, Nd &hidden_nodes);
 
     //array form
     std::vector<Node> output_layer_constructor(std::vector<std::array<Node*, HIDDEN_NODES>> &layers, 
                                                std::vector<std::array<Node*, OUTPUT_NODES>> &output_nodes);
     //vector form
-    std::vector<Node> output_layer_constructor(std::vector<Node*> &layers, 
-                                               std::vector<Node*> &output_nodes);
+    std::vector<Node> output_layer_constructor(Nd &layers, Nd &output_nodes);
                  
                                                
     std::vector<Node> deep_net_constructor(std::vector<std::array<Node*, HIDDEN_NODES>> &layers);

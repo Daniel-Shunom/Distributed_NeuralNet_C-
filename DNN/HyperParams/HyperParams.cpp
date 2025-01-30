@@ -14,6 +14,7 @@ Instructions:
 */
 
 #include <iostream>
+#include <stdexcept>
 #include "HyperParams.h"
 
 //HyperParams class constructor initializes Node struct members
@@ -65,82 +66,100 @@ void HyperParams::hidden_layer(std::array<Node*, HIDDEN_NODES> &h_nodes,
     std::cout << "LAYER BUILDER FUNCTION CALLED\n";
 }
 
-void HyperParams::hidden_layer_destructor(std::vector<Node*> &hidden_nodes, std::vector<Node*> &next_nodes) {
+void HyperParams::hidden_layer_destructor(Nd &hidden_nodes, Nd &next_nodes, int depth) {
+    
     for (int i = 0; i < hidden_nodes.size(); i++) {
         for (int j = 0; j < next_nodes.size(); j++) {
-            delete next_nodes[j];
+            std::cout << &next_nodes[j];
         }
-        delete hidden_nodes[i];
+        std::cout << &hidden_nodes[i];
     }
 }
 
 //overloaded function using vectors
-void HyperParams::hidden_layer(std::vector<Node*> &h_nodes,
-                               std::vector<Node*> &n_nodes, 
-                               int depth) {
+void HyperParams::hidden_layer(Nd &h_nodes, Nd &n_nodes, LC &cache, int depth) {
+    std::cout << "LAYER BUILDER FUNCTION CALLED\n";
+    static int count = 0;
+
+    for (auto &n: h_nodes) {
+        n.next_node.resize(n_nodes.size());
+    };
+
+    for (int i = 0; i < h_nodes.size(); i++) {
+        for (int j = 0; j < n_nodes.size(); j++) {
+            h_nodes[i].next_node[j] = &n_nodes[j];
+        }
+    }
+
+    count++;
+    cache.push_back(h_nodes);
+
+    std::cout << "[LAYER: " << count << " ] " <<"h_nodes-> contains: " << h_nodes.size() << " pointers\n";
+    std::cout << "[LAYER: " << count << " ] " << "n_nodes-> contains: " << n_nodes.size() << " items\n";
+
+    std::cout << "[LAYER CACHE ITEMS: " << cache.size() << ']' << std::endl;
+    std::cout << std::endl;
+
+    if (depth > 1) {
+        Nd new_layer(n_nodes.size());
+        
+        hidden_layer(n_nodes, new_layer, cache, depth-1);
+    }
 
     if (depth == 0 || h_nodes.empty() || n_nodes.empty()) {
         return;
     }
-    std::cout << "LAYER BUILDER FUNCTION CALLED\n";
-
-    for (Node* &n: h_nodes) {
-        n = new Node();
-        for (int i = 0; i < n_nodes.size(); i++) {
-            n->next_node.push_back(new Node());
-        }
-    };
-    std::cout << "h_nodes->next_node contains: " << h_nodes[0]->next_node.size() << " items\n";
-
-    for (Node* &n: n_nodes) {
-        n = new Node();
-        for (int i = 0; i < n_nodes.size(); i++) {
-            n->next_node.push_back(new Node());
-        }
-    };
-    std::cout << "n_nodes->next_node contains: " << n_nodes[0]->next_node.size() << " items\n";
-    std::cout << std::endl;
-
-    for (int i = 0; i < h_nodes.size(); i++) {
-        for (int j = 0; j < n_nodes.size(); j++) {
-            h_nodes[i]->next_node[j] = n_nodes[j];
-        }
-    }
-
-    for (int i = 0; i < h_nodes.size(); i++) {
-        std::cout << "pointer h_node " << h_nodes[i] << " is pointing to: \n" ;
-        for (auto const n: n_nodes) {
-            std::cout << n << '\n';
-        }
-        std::cout << std::endl;
-    }
-
-    std::vector<Node*> new_layer(n_nodes.size());
-    hidden_layer(n_nodes, new_layer, depth-1);
 }
 
-//This constructs the deep net with all interconnected nodes
-std::vector<Node> HyperParams::deep_net_constructor(std::vector<
-                                                                 std::array<Node*, 
-                                                                 HIDDEN_NODES>> &layers) {
-    std::vector<Node> layer_activations;
-    for (int i = 0; i < HIDDEN_LAYERS; i++) {
-        std::vector<std::vector<double>> layer_activations;
+void HyperParams::parameter_initializer(Nd &input, vMatrix* m1) {
+    static int count = 0;
+
+    std::tuple dims = returnDimensions(m1); 
+    auto rows = std::get<0>(dims);
+    auto cols = std::get<1>(dims);
+     
+    for (int i = 0; i < input.size(); i++) {
+        for (auto &next_n: input[i].next_node) {
+            if (!next_n) {
+                std::cout<< "Creating new node...\n"; 
+                next_n = new Node();
+            }
+        }
+        input[i].Weights = v_matrix_create(rows, cols);
+        input[i].Biases = v_matrix_create(rows, 1);
+
+        v_matrix_randomize(input[i].Weights, 2);
+        v_matrix_randomize(input[i].Biases, 2);
+
     }
-    return layer_activations;
+
+    count++;
+    std::cout << "Initialized parameters for layer: " << count << std::endl;
 }
 
-std::vector<Node> HyperParams::input_layer_constructor(std::vector<Node*> &input_nodes,
-                                                                    std::vector<Node*> &layers) {
-    std::vector<Node> layer_activations;
-    for (int i = 0; i < INPUT_NODES; i++) {
-        std::vector<std::vector<double>> layer_activations;
+void HyperParams::cache_initializer(LC &cache, vMatrix* m1) {
+    std::cout << "\n\n[CACHE WEIGHTS INTIALIZER CALLED!]" << std::endl;
+    std::cout<< "[CACHE SIZE: " << cache.size() << "]\n" << std::endl;
+    if (!m1 || cache.empty()) {
+        std::cout << "[ERROR: INVALID PARAMETERS!]" << std::endl;
+        return;
     }
-    return layer_activations;
+
+    int static count = 0;
+
+    for (int i = 0; i < cache.size(); i++) {
+        parameter_initializer(cache[i], m1);
+        count++;
+        std::cout << "[CACHE WEIGHTS INTIALIZED AT LAYER: " << count << ']' <<std::endl;
+    }
+
+    std::cout << "[CACHED LAYERS: " << count << ']' << std::endl;
+    std::cout << "[CACHE WEIGHTS INTIALIZED!]" <<std::endl;
 }
 
-std::vector<Node> HyperParams::output_layer_constructor(std::vector<Node*> &layers,
-                                                                     std::vector<Node*> &output_nodes) {
+std::vector<Node> HyperParams::output_layer_constructor(Nd &layers,
+                                                        Nd &output_nodes) 
+                                                        {
     std::vector<Node> layer_activations;
     for (int i = 0; i < HIDDEN_LAYERS; i++) {
         std::vector<std::vector<double>> layer_activations;
