@@ -59,17 +59,13 @@ public:
     vMatrix* v_tanh_activation(vMatrix* m);
     vMatrix* v_relu_activation(vMatrix* m);
     vMatrix* v_leaky_relu_activation(vMatrix* m);
+    
     double v_cross_entropy_loss(vMatrix* &input_y, vMatrix* &label_yhat);
+    double cross_entropy_loss(double &input_y, double &label_yhat);
+    double cost_function(double &cost);
     
     std::string error_check(std::vector<double> &_weights, 
                             std::vector<double> &_biases,
                             std::vector<double> &input);
 
-    std::vector<double> forwardpass(std::vector<double> &_weights, 
-                                   std::vector<double> &_biases, 
-                                   std::vector<double> &input);
-
-    double cross_entropy_loss(double &input_y, double &label_yhat);
-
-    double cost_function(double &cost);
 };
