@@ -57,4 +57,6 @@ struct Node {
     std::vector<Node*> next_node;
 };
 
-typedef std::vector<std::vector<Node*>> LyrCntr;
+typedef std::vector<Node> Nd;
+typedef std::vector<Node*> P_Nd;
+typedef std::vector<Nd> LC;
