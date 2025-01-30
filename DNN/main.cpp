@@ -17,28 +17,30 @@ Instructions:
 #include "./Data_Operations/MatrixOps.h"
 #include "./Image_Operations/ImgOps.h"
 #include <iostream>
-//#include "../F_MNIST/fashion-mnist_test.csv"
 
 int main() {
-    //MenuConstruct m;
-    //m.menu_configuration();
+    MenuConstruct mc;
     MatrixOps mp;
     Image img;
+
+    //m.menu_configuration();
+
     vMatrix* m1 = mp.v_matrix_create(10, 10);
     vMatrix* m2 = mp.v_matrix_create(10, 10);
 
     vMatrix* m3 = mp.v_matrix_create(4, 2);
     vMatrix* m4 = mp.v_matrix_create(2, 4);
 
-    int val = 2;
-    Img** image = img.csv_to_imgs(
-        "C:/Users/danie/OneDrive/Desktop/C++/F_MNIST/fashion-mnist_test.csv", 
-        val
-    );
-    
-    for (int i = 0; i < val; i++) {
-        img.img_print(image[i]);
-    }
-    //mp.v_matrix_print(image[0]->img_data);
+    Nd input_nodes(2);
+    Nd next_nodes(3);
+
+    int depth = 7;
+    LC layer_cache;
+    mc.hidden_layer(input_nodes, next_nodes, layer_cache, depth);
+    Img** x = img.csv_to_imgs("C:/Users/danie/Distributed_NeuralNet_C-/F_MNIST/fashion-mnist_test.csv", 30);
+    //img.img_print(x[12]);
+
+    mc.cache_initializer(layer_cache, x[0]->img_data);
+
     return 0;
 }
