@@ -19,6 +19,7 @@ Instructions:
 #include "DataOps.h"
 #include <iostream>
 #include <variant>
+#include <tuple>
 
 class MatrixOps: public DataOps {
 private:
@@ -26,6 +27,7 @@ private:
 public:
     static bool checkDimensions(Matrix* m1, Matrix* m2);
     static bool checkDimensions(vMatrix* m1, vMatrix* m2);
+    static std::tuple<int, int> returnDimensions(vMatrix* m1);
 
     Matrix* matrix_add(Matrix* m1, Matrix* m2);
     Matrix* matrix_subtract(Matrix* m1, Matrix* m2);

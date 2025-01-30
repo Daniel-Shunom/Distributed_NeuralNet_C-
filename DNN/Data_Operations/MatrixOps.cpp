@@ -23,6 +23,13 @@ bool MatrixOps::checkDimensions(vMatrix* m1, vMatrix* m2) {
     return (m1->rows == m2->cols && m1->cols == m2->cols);
 }
 
+std::tuple<int, int> MatrixOps::returnDimensions(vMatrix* m1) {
+    int rows = m1->rows;
+    int cols = m1->rows;
+
+    return std::make_tuple(rows, cols);
+}
+
 Matrix* MatrixOps::matrix_add(Matrix* m1, Matrix* m2) {
     
     if (!checkDimensions(m1, m2)) {
