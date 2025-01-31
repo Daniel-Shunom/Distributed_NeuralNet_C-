@@ -39,7 +39,6 @@ Propagation::Propagation(){
     std::cout << "\n\n";
 };
 
-//Ensuring input size mathces weight and bias size
 std::string Propagation::error_check(std::vector<double> &_weights,
                                      std::vector<double> &_biases,
                                      std::vector<double> &input) 
@@ -56,7 +55,6 @@ std::string Propagation::error_check(std::vector<double> &_weights,
     return "ok";
 }
 
-//Forward propagation
 std::shared_ptr<vMatrix> Propagation::v_forwardpass(std::shared_ptr<vMatrix> m, std::shared_ptr<vMatrix> w, std::shared_ptr<vMatrix> b) {
     std::shared_ptr<vMatrix> mat = mp.v_matrix_multiply(m, w);
     std::shared_ptr<vMatrix> Z = mp.v_matrix_add(mat, b);
@@ -64,7 +62,6 @@ std::shared_ptr<vMatrix> Propagation::v_forwardpass(std::shared_ptr<vMatrix> m, 
     return Z;
 }
 
-//Sample sigmoid Activation
 std::shared_ptr<vMatrix> Propagation::v_sigmoid_activation(std::shared_ptr<vMatrix> Z) {
     for (int i = 0; i < Z->rows; i++) {
         for (int j = 0; j < Z->cols; j++) {
@@ -75,7 +72,6 @@ std::shared_ptr<vMatrix> Propagation::v_sigmoid_activation(std::shared_ptr<vMatr
     return Z;
 }
 
-//tanh activation function
 std::shared_ptr<vMatrix> Propagation::v_tanh_activation(std::shared_ptr<vMatrix> Z) {
     for (int i = 0; i < Z->rows; i++) {
         for (int j = 0; j < Z->cols; j++) {
@@ -86,7 +82,6 @@ std::shared_ptr<vMatrix> Propagation::v_tanh_activation(std::shared_ptr<vMatrix>
     return Z;
 }
 
-//relu activation functiuon
 std::shared_ptr<vMatrix> Propagation::v_relu_activation(std::shared_ptr<vMatrix> Z) {
     for (int i = 0; i < Z->rows; i++) {
         for (int j = 0; j < Z->cols; j++) {
@@ -98,7 +93,6 @@ std::shared_ptr<vMatrix> Propagation::v_relu_activation(std::shared_ptr<vMatrix>
     return Z;
 }
 
-//leaky relu activation function
 std::shared_ptr<vMatrix> Propagation::v_leaky_relu_activation(std::shared_ptr<vMatrix> Z) {
     for (int i = 0; i < Z->rows; i++) {
         for (int j = 0; j < Z->cols; j++) {
@@ -111,13 +105,11 @@ std::shared_ptr<vMatrix> Propagation::v_leaky_relu_activation(std::shared_ptr<vM
     return Z;
 }
 
-//cross entropy loss function
 double Propagation::cross_entropy_loss(double &input_y, double &input_yhat) {
     double loss = -(input_y*log(input_yhat) + (1-input_y)*log(1-input_yhat));
     return loss;
 }
 
-//calculates cost
 double Propagation::cost_function(double &cost) {
     cost = cross_entropy_loss(params.input_y, params.input_yhat)/params.input.size();
     return cost;

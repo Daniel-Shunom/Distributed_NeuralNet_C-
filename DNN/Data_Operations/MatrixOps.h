@@ -26,27 +26,122 @@ private:
     /* data */
 public:
     static bool checkDimensions(Matrix* m1, Matrix* m2);
+
+    /// @brief Compares the dimensions of two vector matrices
+    /// @param m1 matrix 1
+    /// @param m2 matrix 2
+    /// @return bool
     static bool checkDimensions(std::shared_ptr<vMatrix> m1, std::shared_ptr<vMatrix> m2);
+
+    /// @brief Returns the dimensions of a vector matrix
+    /// @param m1 Reference image matrix
+    /// @return Row and column dimensions
     static std::tuple<int, int> returnDimensions(std::shared_ptr<vMatrix> m1);
 
+    /// @brief Overloaded add function with array matrices
+    /// @param m1 matrix 1
+    /// @param m2 matrix 2
+    /// @return sum of the two matrices
     Matrix* matrix_add(Matrix* m1, Matrix* m2);
+
+    /// @brief Subtracts two array matrices
+    /// @param m1 matrix 1
+    /// @param m2 matrix 2
+    /// @return difference of the two matrices
     Matrix* matrix_subtract(Matrix* m1, Matrix* m2);
+    
+    /// @brief Multiplies two array matrices
+    /// @param m1 matrix 1
+    /// @param m2 matrix 2
+    /// @return product of the two matrices
     Matrix* matrix_multiply(Matrix* m1, Matrix* m2);
+
+    /// @brief Divides two array matrices
+    /// @param m1 matrix 1
+    /// @param m2 matrix 2
+    /// @return division of the two matrices
     Matrix* matrix_divide(Matrix* m1, Matrix* m2);
+
+    /// @brief Scales an array matrix
+    /// @param n matrix 1
+    /// @param m matrix 2
+    /// @return scaled matrix
     Matrix* matrix_scale(double n, Matrix* m);
+
+    /// @brief Computes the dot product of two array matrices
+    /// @param m1 matrix 1
+    /// @param m2 matrix 2
+    /// @return dot product of the two matrices
     Matrix* matrix_dot(Matrix* m1, Matrix* m2);
+
+    /// @brief Applies a function to an array matrix
+    /// @param func pointer to function
+    /// @param m input matrix
+    /// @return resulting matrix
     Matrix* matrix_apply(double (*func)(double), Matrix* m);
+
+    /// @brief Transposes an array matrix
+    /// @param m1 input matrix
+    /// @return transposed matrix
     Matrix* matrix_transpose(Matrix* m1);
+
+    /// @brief Adds a scalar to an array matrix
+    /// @param n scalar value
+    /// @param m input matrix
+    /// @return resulting matrix
     Matrix* matrix_add_scalar(double n, Matrix* m);
 
+    /// @brief Adds two vector matrices
+    /// @param m1 matrix 1
+    /// @param m2 matrix 2
+    /// @return sum of the two matrices
     std::shared_ptr<vMatrix> v_matrix_add(std::shared_ptr<vMatrix> m1, std::shared_ptr<vMatrix> m2);
+
+    /// @brief Subtracts two vector matrices
+    /// @param m1 matrix 1
+    /// @param m2 matrix 2
+    /// @return difference of the two matrices
     std::shared_ptr<vMatrix> v_matrix_subtract(std::shared_ptr<vMatrix> m1, std::shared_ptr<vMatrix> m2);
+
+    /// @brief Multiplies two vector matrices
+    /// @param m1 matrix 1
+    /// @param m2 matrix 2
+    /// @return product of the two matrices
     std::shared_ptr<vMatrix> v_matrix_multiply(std::shared_ptr<vMatrix> m1, std::shared_ptr<vMatrix> m2);
+    
+    /// @brief Divides two vector matrices
+    /// @param m1 matrix 1
+    /// @param m2 matrix 2
+    /// @return division of the two matrices
     std::shared_ptr<vMatrix> v_matrix_divide(std::shared_ptr<vMatrix> m1, std::shared_ptr<vMatrix> m2);
+
+    /// @brief Scales a vector matrix
+    /// @param n value to scale by
+    /// @param m input matrix
+    /// @return scaled matrix
     std::shared_ptr<vMatrix> v_matrix_scale(double n, std::shared_ptr<vMatrix> m);
+
+    /// @brief Computes the dot product of two vector matrices
+    /// @param m1 matrix 1
+    /// @param m2 matrix 2
+    /// @return dot product of the two matrices
     std::shared_ptr<vMatrix> v_matrix_dot(std::shared_ptr<vMatrix> m1, std::shared_ptr<vMatrix> m2);
+
+    /// @brief Applies a function to a vector matrix
+    /// @param func function pointer
+    /// @param m input matrix
+    /// @return resulting matrix
     std::shared_ptr<vMatrix> v_matrix_apply(double (*func)(double), std::shared_ptr<vMatrix> m);
+
+    /// @brief Transposes a vector matrix
+    /// @param m1 input matrix
+    /// @return transposed matrix
     std::shared_ptr<vMatrix> v_matrix_transpose(std::shared_ptr<vMatrix> m1);
+
+    /// @brief adds a scalar to a vector matrix
+    /// @param n scalar value
+    /// @param m input matrix
+    /// @return resulting matrix
     std::shared_ptr<vMatrix> v_matrix_add_scalar(double n, std::shared_ptr<vMatrix> m);
     
     //MatrixOps(/* args */);

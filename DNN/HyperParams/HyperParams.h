@@ -48,12 +48,42 @@ public:
 
     std::vector<double> hidden_unit(std::vector<double> activations);
 
+    /// @brief Constructs hidden layer and connects nodes
+    /// @param input_nodes Input vector of nodes
+    /// @param next_nodes vector with Size of next layer
+    /// @param cache Vector to store parameters and nodes
+    /// @param depth depth of the hidden layer
     void hidden_layer(Nd &input_nodes, Nd &next_nodes, LC &cache, int depth);
+
+    /// @brief Frees up memory consumed by hidden layer
+    /// @param input_nodes Input vector of nodes
+    /// @param next_nodes vector with Size of next layer
+    /// @param depth depth of the hidden layer
     void hidden_layer_destructor(Nd &input_nodes, Nd &next_nodes, int depth);
+
+    /// @brief Overloaded hidden_layer function with templatized arrays
+    /// @param input_nodes input array of nodes
+    /// @param next_nodes input array of next layer nodes
+    /// @param depth depth of the hidden layer
     void hidden_layer(rP_Nd &input_nodes, rP_Nd &next_nodes, int depth);
+
+    /// @brief overloaded hidden_layer_destructor with templatized arrays
+    /// @param input_nodes input array of nodes
+    /// @param next_nodes input array of next layer nodes
     void hidden_layer_destructor(rP_Nd &input_nodes, rP_Nd &next_nodes);
+
+    /// @brief Intializes weights and biases for each Node
+    /// @param input input node
+    /// @param m1 Matrix pointer to image reference
     void parameter_initializer(Nd &input, std::shared_ptr<vMatrix> m1);
+
+    /// @brief Intializes Node parameters for each layer in cache
+    /// @param input Layer cache vector
+    /// @param m1 Image refrence 
     void cache_initializer(LC &input, std::shared_ptr<vMatrix> m1);
+
+    /// @brief To change the learning rate
+    /// @param learning_rate new learning rate
     void change_learning_rate(double &learning_rate);
 
     //array form
