@@ -3,7 +3,7 @@ Author: Daniel S. Jeremiah
 Date: January 1, 2025 
 
 Description:
-This file contains the propagation functions for the neural network. 
+This file contains the entrypoint for the program. 
 Note that not all possible functions have been defined here. 
 Additional functions will be included as the project scales.
 
@@ -34,13 +34,20 @@ int main() {
     Nd input_nodes(2);
     Nd next_nodes(3);
 
-    int depth = 7;
+    int depth = 3;
     LC layer_cache;
     mc.hidden_layer(input_nodes, next_nodes, layer_cache, depth);
     Img** x = img.csv_to_imgs("C:/Users/danie/Distributed_NeuralNet_C-/F_MNIST/fashion-mnist_test.csv", 30);
     //img.img_print(x[12]);
 
     mc.cache_initializer(layer_cache, x[0]->img_data);
+
+    std::tuple<int, int> pos = mp.returnDimensions(input_nodes[0].Weights);
+    std::cout << "Row: " <<std::get<0>(pos) <<std::endl;
+    std::cout << "Col: " <<std::get<1>(pos) <<std::endl;
+
+    mp.v_matrix_print(input_nodes[0].Weights);
+    mp.v_matrix_multiply(input_nodes[0].Weights, next_nodes[0].Weights);
 
     return 0;
 }
