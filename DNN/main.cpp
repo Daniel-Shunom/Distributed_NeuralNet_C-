@@ -25,19 +25,22 @@ int main() {
 
     //m.menu_configuration();
 
-    vMatrix* m1 = mp.v_matrix_create(10, 10);
-    vMatrix* m2 = mp.v_matrix_create(10, 10);
+    std::shared_ptr<vMatrix> m1 = mp.v_matrix_create(10, 10);
+    std::shared_ptr<vMatrix> m2 = mp.v_matrix_create(10, 10);
 
-    vMatrix* m3 = mp.v_matrix_create(4, 2);
-    vMatrix* m4 = mp.v_matrix_create(2, 4);
+    std::shared_ptr<vMatrix> m3 = mp.v_matrix_create(4, 2);
+    std::shared_ptr<vMatrix> m4 = mp.v_matrix_create(2, 4);
 
     Nd input_nodes(2);
     Nd next_nodes(3);
 
-    int depth = 3;
+    int depth = 437;
     LC layer_cache;
     mc.hidden_layer(input_nodes, next_nodes, layer_cache, depth);
-    Img** x = img.csv_to_imgs("C:/Users/danie/Distributed_NeuralNet_C-/F_MNIST/fashion-mnist_test.csv", 30);
+
+    //ifstream pathing is relative from the location of the executable
+    std::vector<std::shared_ptr<Img>> x = img.csv_to_imgs("../../F_MNIST/fashion-mnist_test.csv", 30);
+
     //img.img_print(x[12]);
 
     mc.cache_initializer(layer_cache, x[0]->img_data);

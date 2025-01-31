@@ -26,22 +26,22 @@ MenuConstruct::iAselect MenuConstruct::select_activation() {
     std::cout << "Enter Selection: ";
     std::cin >> selection;
     
-    std::function<void(vMatrix*)> selectedFunction;
+    std::function<void(std::shared_ptr<vMatrix>)> selectedFunction;
     switch (selection) {
         case 1:
-            selectedFunction = [this](vMatrix* input) {
+            selectedFunction = [this](std::shared_ptr<vMatrix> input) {
                 this->v_tanh_activation(input);};
             break;
         case 2:
-            selectedFunction = [this](vMatrix* input) {
+            selectedFunction = [this](std::shared_ptr<vMatrix> input) {
                 this->v_relu_activation(input);};
             break;
         case 3:
-            selectedFunction = [this](vMatrix* input) {
+            selectedFunction = [this](std::shared_ptr<vMatrix> input) {
                 this->v_leaky_relu_activation(input);};
             break;
         case 4:
-            selectedFunction = [this](vMatrix* input) {
+            selectedFunction = [this](std::shared_ptr<vMatrix> input) {
                 this->v_sigmoid_activation(input);};
             break;
         default:

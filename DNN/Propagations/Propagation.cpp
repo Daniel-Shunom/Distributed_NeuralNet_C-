@@ -57,15 +57,15 @@ std::string Propagation::error_check(std::vector<double> &_weights,
 }
 
 //Forward propagation
-vMatrix* Propagation::v_forwardpass(vMatrix* m, vMatrix* w, vMatrix* b) {
-    vMatrix* mat = mp.v_matrix_multiply(m, w);
-    vMatrix* Z = mp.v_matrix_add(mat, b);
+std::shared_ptr<vMatrix> Propagation::v_forwardpass(std::shared_ptr<vMatrix> m, std::shared_ptr<vMatrix> w, std::shared_ptr<vMatrix> b) {
+    std::shared_ptr<vMatrix> mat = mp.v_matrix_multiply(m, w);
+    std::shared_ptr<vMatrix> Z = mp.v_matrix_add(mat, b);
 
     return Z;
 }
 
 //Sample sigmoid Activation
-vMatrix* Propagation::v_sigmoid_activation(vMatrix* Z) {
+std::shared_ptr<vMatrix> Propagation::v_sigmoid_activation(std::shared_ptr<vMatrix> Z) {
     for (int i = 0; i < Z->rows; i++) {
         for (int j = 0; j < Z->cols; j++) {
             Z->entries[i][j] = 1/(1+std::exp(-Z->entries[i][j]));;
@@ -76,7 +76,7 @@ vMatrix* Propagation::v_sigmoid_activation(vMatrix* Z) {
 }
 
 //tanh activation function
-vMatrix* Propagation::v_tanh_activation(vMatrix* Z) {
+std::shared_ptr<vMatrix> Propagation::v_tanh_activation(std::shared_ptr<vMatrix> Z) {
     for (int i = 0; i < Z->rows; i++) {
         for (int j = 0; j < Z->cols; j++) {
             Z->entries[i][j] = tanh(Z->entries[i][j]);
@@ -87,7 +87,7 @@ vMatrix* Propagation::v_tanh_activation(vMatrix* Z) {
 }
 
 //relu activation functiuon
-vMatrix* Propagation::v_relu_activation(vMatrix* Z) {
+std::shared_ptr<vMatrix> Propagation::v_relu_activation(std::shared_ptr<vMatrix> Z) {
     for (int i = 0; i < Z->rows; i++) {
         for (int j = 0; j < Z->cols; j++) {
             int k = Z->entries[i][j];
@@ -99,7 +99,7 @@ vMatrix* Propagation::v_relu_activation(vMatrix* Z) {
 }
 
 //leaky relu activation function
-vMatrix* Propagation::v_leaky_relu_activation(vMatrix* Z) {
+std::shared_ptr<vMatrix> Propagation::v_leaky_relu_activation(std::shared_ptr<vMatrix> Z) {
     for (int i = 0; i < Z->rows; i++) {
         for (int j = 0; j < Z->cols; j++) {
             int k = Z->entries[i][j];

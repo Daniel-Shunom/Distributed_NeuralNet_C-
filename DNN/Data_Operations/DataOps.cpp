@@ -29,8 +29,8 @@ Matrix* DataOps::matrix_create(int row, int cols) {
 }
 
 //Creates a vector matrix with (int row) rows and (int cols) columns
-vMatrix* DataOps::v_matrix_create(int row, int cols) {
-    vMatrix *matrix = new vMatrix;
+std::shared_ptr<vMatrix> DataOps::v_matrix_create(int row, int cols) {
+    std::shared_ptr<vMatrix> matrix = std::make_shared<vMatrix>();
     matrix->rows = row;
     matrix->cols = cols;
     matrix->entries.resize(row, std::vector<double>(cols));
@@ -48,7 +48,7 @@ void DataOps::matrix_fill(Matrix* m, int n) {
 }
 
 //Fillsl a vector matrix with values of (int n)
-void DataOps::v_matrix_fill(vMatrix* m, int n) {
+void DataOps::v_matrix_fill(std::shared_ptr<vMatrix> m, int n) {
     for (int i = 0; i < m->rows; i++) {
         for (int j = 0; j < m->cols; j++) {
             m->entries[i][j] = n;
@@ -67,12 +67,12 @@ void DataOps::matrix_free(Matrix* m) {
 }
 
 //Frees a vector matrix from heap
-void DataOps::v_matrix_free(vMatrix *m) {
+void DataOps::v_matrix_free(std::shared_ptr<vMatrix> m) {
     for (int i = 0; i < m->rows; i++) {
         delete &m->entries[i];
     }
     delete &m->entries;
-    delete m;
+    //delete m;
     m = NULL;
 }
 
@@ -88,7 +88,7 @@ void DataOps::matrix_print(Matrix* m) {
 }
 
 //Prints a vector matrix
-void DataOps::v_matrix_print(vMatrix* m) {
+void DataOps::v_matrix_print(std::shared_ptr<vMatrix> m) {
     std::cout << "[ROWS] " << m->rows << "  ||  [COLUMNS] " << m->cols << std::endl;
     for (int i = 0; i < m->rows; i++) {
         for (int j = 0; j < m->cols; j++) {
@@ -113,8 +113,8 @@ Matrix* DataOps::matrix_copy(Matrix* m) {
 }
 
 //Copies a vector matrix
-vMatrix* DataOps::v_matrix_copy(vMatrix* m) {
-    vMatrix* mat = v_matrix_create(m->rows, m->cols);
+std::shared_ptr<vMatrix> DataOps::v_matrix_copy(std::shared_ptr<vMatrix> m) {
+    std::shared_ptr<vMatrix> mat = v_matrix_create(m->rows, m->cols);
     for (int i = 0; i < m->rows; i++) {
         for (int j = 0; j < m->cols; j++) {
             mat->entries[i][j] = m->entries[i][j];
@@ -125,7 +125,7 @@ vMatrix* DataOps::v_matrix_copy(vMatrix* m) {
 }
 
 //Saves an array matrix
-void DataOps::matrix_save(Matrix* m, char* file_string) {
+void DataOps::matrix_save(Matrix* m, std::string file_string) {
     std::ofstream file(file_string); 
     if (!file) { 
         std::cerr << "Error opening file: " << file_string << std::endl; 
@@ -146,7 +146,7 @@ void DataOps::matrix_save(Matrix* m, char* file_string) {
 }
 
 //Saves a vector matrix
-void DataOps::v_matrix_save(vMatrix* m, char* file_string) {
+void DataOps::v_matrix_save(std::shared_ptr<vMatrix> m, std::string file_string) {
     std::ofstream file(file_string); 
     if (!file) { 
         std::cerr << "Error opening file: " << file_string << std::endl; 
@@ -167,7 +167,7 @@ void DataOps::v_matrix_save(vMatrix* m, char* file_string) {
 }
 
 //Loads and array matrix
-Matrix* DataOps::matrix_load(char *file_string) {
+Matrix* DataOps::matrix_load(std::string file_string) {
     std::ifstream file(file_string);
     if (!file) {
         std::cerr << "Error opening file: " << file_string << std::endl;
@@ -189,7 +189,7 @@ Matrix* DataOps::matrix_load(char *file_string) {
 }
 
 //Loads a vector matrix
-vMatrix* DataOps::v_matrix_load(char *file_string) {
+std::shared_ptr<vMatrix> DataOps::v_matrix_load(std::string file_string) {
     std::ifstream file(file_string);
     if (!file) {
         std::cerr << "Error opening file: " << file_string << std::endl;
@@ -199,7 +199,7 @@ vMatrix* DataOps::v_matrix_load(char *file_string) {
     int rows, cols;
     file >> rows >> cols;
 
-    vMatrix* m = v_matrix_create(rows, cols);
+    std::shared_ptr<vMatrix> m = v_matrix_create(rows, cols);
     for (int i = 0; i < m->rows; i++) {
         for (int j = 0; j < m->cols; j++) {
             file >> m->entries[i][j];
@@ -231,7 +231,7 @@ void DataOps::matrix_randomize(Matrix* m, int n) {
 }
 
 //Randomizes vector matrix with values seeded by (int n)
-void DataOps::v_matrix_randomize(vMatrix* m, int n) {
+void DataOps::v_matrix_randomize(std::shared_ptr<vMatrix> m, int n) {
     double min = -1.0/sqrt(n);
     double max = 1.0/sqrt(n);
     for (int i = 0; i < m->rows; i++) {
@@ -256,7 +256,7 @@ int DataOps::matrix_argmax (Matrix* m) {
 }
 
 //Performs argmax on vector matrix
-int DataOps::matrix_argmax (vMatrix* m) {
+int DataOps::matrix_argmax (std::shared_ptr<vMatrix> m) {
     double max_score = 0;
     int max_idx = 0;
     for (int i = 0; i < m->rows; i++) {
@@ -300,9 +300,9 @@ Matrix* DataOps::matrix_flatten(Matrix* m, int axis) {
 
 
 //Flattens vector matrix into one dimension 
-vMatrix* DataOps::v_matrix_flatten(vMatrix* m, int axis) { 
+std::shared_ptr<vMatrix> DataOps::v_matrix_flatten(std::shared_ptr<vMatrix> m, int axis) { 
     // Axis = 0 -> Column Vector, Axis = 1 -> Row Vector 
-    vMatrix* mat; if (axis == 0) { 
+    std::shared_ptr<vMatrix> mat; if (axis == 0) { 
         mat = v_matrix_create(m->rows * m->cols, 1); 
     } 
     else if (axis == 1) { 

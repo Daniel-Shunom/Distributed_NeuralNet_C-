@@ -15,21 +15,21 @@ Instructions:
 
 #include "ImgOps.h"
 
-//Converts MNIST csv doc to images with pixel values between 0 and 1
-Img** Image::csv_to_imgs(std::string file_string, int num_imgs) {
+std::vector<std::shared_ptr<Img>> Image::csv_to_imgs(std::string file_string, int num_imgs) {
     std::ifstream file(file_string, std::ios::in);
     if(!file.is_open()) {
         std::cerr << "Error: Could not open file" << std::endl;
-        return nullptr;
+        return {};
     }
 
-    Img** imgs = new Img* [num_imgs];
+    std::vector<std::shared_ptr<Img>> imgs;// = new std::shared_ptr<Img> [num_imgs];
+    imgs.reserve(num_imgs);
     std::string row;
 
     std::getline(file, row);
     int i = 0;
     while (std::getline(file, row) && i < num_imgs) {
-        imgs[i] = new Img; 
+        imgs[i] = std::make_shared<Img>(); 
         imgs[i]->img_data = dp.v_matrix_create(28, 28);
 
         std::istringstream ss(row);
@@ -51,23 +51,17 @@ Img** Image::csv_to_imgs(std::string file_string, int num_imgs) {
     return imgs;
 }
 
-//Prints image to terminal
-void Image::img_print(Img* img) {
+void Image::img_print(std::shared_ptr<Img> img) {
     dp.v_matrix_print(img->img_data);
     std::cout << "Image Label: " << img->label << std::endl;
 }
 
-//Deletes image from heap storage
-void Image::img_free(Img* img) {
+void Image::img_free(std::shared_ptr<Img> img) {
     dp.v_matrix_free(img->img_data);
-    delete img;
 }
 
-//Deletes (int n) images from heap storage
-void Image::imgs_free(Img **imgs, int n) {
+void Image::imgs_free(std::vector<std::shared_ptr<Img>> imgs, int n) {
     for (int i = 0; i < n; i++) {
         img_free(imgs[i]);
     }
-
-    delete[] imgs;
 }

@@ -32,25 +32,22 @@ std::vector<double> HyperParams::hidden_unit(std::vector<double> activations) {
 //This is designed to iterate over h_params.hidden_nodes, and for each outer iteration
 // an innner iteration is performed to connect the nodes of that current layer to the 
 // nodes of the next layer.
-void HyperParams::hidden_layer(rP_Nd &h_nodes,
-                               rP_Nd &n_nodes,
-                               int depth) {
-    
+void HyperParams::hidden_layer(rP_Nd &h_nodes, rP_Nd &n_nodes, int depth) {
     if (depth == 0 || h_nodes.empty() || n_nodes.empty()) {
         return;
     }
 
-    for (Node* &n: h_nodes) {
-        n = new Node();
+    for (std::shared_ptr<Node> &n: h_nodes) {
+        n = std::make_shared<Node>();
         for (int i = 0; i < n_nodes.size(); i++) {
-            n->next_node.push_back(new Node());
+            n->next_node.push_back(std::make_shared<Node>());
         }
     }
 
-    for (Node* n: n_nodes) {
-        n = new Node();
+    for (std::shared_ptr<Node> n: n_nodes) {
+        n = std::make_shared<Node>();
         for (int i = 0; i < n_nodes.size(); i++) {
-            n->next_node.push_back(new Node());
+            n->next_node.push_back(std::make_shared<Node>());
         }
     }
 
@@ -87,7 +84,7 @@ void HyperParams::hidden_layer(Nd &h_nodes, Nd &n_nodes, LC &cache, int depth) {
 
     for (int i = 0; i < h_nodes.size(); i++) {
         for (int j = 0; j < n_nodes.size(); j++) {
-            h_nodes[i].next_node[j] = &n_nodes[j];
+            h_nodes[i].next_node[j] = std::make_shared<Node>(n_nodes[j]);
         }
     }
 
@@ -107,13 +104,14 @@ void HyperParams::hidden_layer(Nd &h_nodes, Nd &n_nodes, LC &cache, int depth) {
     }
 
     if (depth == 0 || h_nodes.empty() || n_nodes.empty()) {
+        std::cout << "Exiting...\n";
         return;
     }
 }
 
 
 //Intializes Node Weights and Biases with random Floats
-void HyperParams::parameter_initializer(Nd &input, vMatrix* m1) {
+void HyperParams::parameter_initializer(Nd &input, std::shared_ptr<vMatrix> m1) {
     static int count = 0;
 
     std::tuple dims = returnDimensions(m1); 
@@ -124,7 +122,7 @@ void HyperParams::parameter_initializer(Nd &input, vMatrix* m1) {
         for (auto &next_n: input[i].next_node) {
             if (!next_n) {
                 std::cout<< "Creating new node...\n"; 
-                next_n = new Node();
+                next_n = std::make_shared<Node>();
             }
         }
 
@@ -140,7 +138,7 @@ void HyperParams::parameter_initializer(Nd &input, vMatrix* m1) {
 }
 
 //Calls parameter_intializer on each layer stored in the cache
-void HyperParams::cache_initializer(LC &cache, vMatrix* m1) {
+void HyperParams::cache_initializer(LC &cache, std::shared_ptr<vMatrix> m1) {
     std::cout << "\n\n[CACHE WEIGHTS INTIALIZER CALLED!]" << std::endl;
     std::cout<< "[CACHE SIZE: " << cache.size() << "]\n" << std::endl;
     if (!m1 || cache.empty()) {

@@ -54,13 +54,16 @@ public:
     MatrixOps mp;
     
     Propagation();
-    vMatrix* v_forwardpass(vMatrix* m, vMatrix* w, vMatrix* b);
-    vMatrix* v_sigmoid_activation(vMatrix* m);
-    vMatrix* v_tanh_activation(vMatrix* m);
-    vMatrix* v_relu_activation(vMatrix* m);
-    vMatrix* v_leaky_relu_activation(vMatrix* m);
     
-    double v_cross_entropy_loss(vMatrix* &input_y, vMatrix* &label_yhat);
+
+    std::shared_ptr<vMatrix> v_forwardpass(std::shared_ptr<vMatrix> m, std::shared_ptr<vMatrix> w, std::shared_ptr<vMatrix> b);
+
+    std::shared_ptr<vMatrix> v_sigmoid_activation(std::shared_ptr<vMatrix> m);
+    std::shared_ptr<vMatrix> v_tanh_activation(std::shared_ptr<vMatrix> m);
+    std::shared_ptr<vMatrix> v_relu_activation(std::shared_ptr<vMatrix> m);
+    std::shared_ptr<vMatrix> v_leaky_relu_activation(std::shared_ptr<vMatrix> m);
+    
+    double v_cross_entropy_loss(std::shared_ptr<vMatrix> &input_y, std::shared_ptr<vMatrix> &label_yhat);
     double cross_entropy_loss(double &input_y, double &label_yhat);
     double cost_function(double &cost);
     

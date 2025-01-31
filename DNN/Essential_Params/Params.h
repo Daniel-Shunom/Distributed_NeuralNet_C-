@@ -27,6 +27,7 @@ Instructions:
 
 
 #include <vector>
+#include <memory>
 
 typedef struct {
     double** entries;
@@ -53,24 +54,24 @@ typedef struct {
 } Bias;
 
 typedef struct {
-    vMatrix* img_data;
+    std::shared_ptr<vMatrix> img_data;
     int label;
 } Img;
 
 struct Node {
-    vMatrix* inputs;
-    vMatrix* Weights;
-    vMatrix* Biases;
-    vMatrix* Activations;
+    std::shared_ptr<vMatrix> inputs;
+    std::shared_ptr<vMatrix> Weights;
+    std::shared_ptr<vMatrix> Biases;
+    std::shared_ptr<vMatrix> Activations;
     
     std::vector<double> computed_activations;
     double learning_rate;
-    std::vector<Node*> next_node;
+    std::vector<std::shared_ptr<Node>> next_node;
 };
 
-typedef std::array<Node*, INPUT_NODES> rI_Nd;
-typedef std::array<Node*, HIDDEN_NODES> rP_Nd;
-typedef std::array<Node*, OUTPUT_NODES> rO_Nd;
+typedef std::array<std::shared_ptr<Node>, INPUT_NODES> rI_Nd;
+typedef std::array<std::shared_ptr<Node>, HIDDEN_NODES> rP_Nd;
+typedef std::array<std::shared_ptr<Node>, OUTPUT_NODES> rO_Nd;
 typedef std::vector<Node> Nd;
-typedef std::vector<Node*> P_Nd;
+typedef std::vector<std::shared_ptr<Node>> P_Nd;
 typedef std::vector<Nd> LC;

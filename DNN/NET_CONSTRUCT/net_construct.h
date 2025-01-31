@@ -24,7 +24,7 @@ Instructions:
 class MenuConstruct: public HyperParams {
 private:
 public:
-    typedef std::function<void(vMatrix*)> iAselect;
+    typedef std::function<void(std::shared_ptr<vMatrix>)> iAselect;
     typedef std::tuple<std::function<void(Nd, Nd)>> deepNetTuple;
     typedef std::tuple<std::function<void(Nd, Nd)>, 
                        std::function<void(Nd, Nd)>> ioTuple;

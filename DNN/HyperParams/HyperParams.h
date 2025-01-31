@@ -52,8 +52,8 @@ public:
     void hidden_layer_destructor(Nd &input_nodes, Nd &next_nodes, int depth);
     void hidden_layer(rP_Nd &input_nodes, rP_Nd &next_nodes, int depth);
     void hidden_layer_destructor(rP_Nd &input_nodes, rP_Nd &next_nodes);
-    void parameter_initializer(Nd &input, vMatrix* m1);
-    void cache_initializer(LC &input, vMatrix* m1);
+    void parameter_initializer(Nd &input, std::shared_ptr<vMatrix> m1);
+    void cache_initializer(LC &input, std::shared_ptr<vMatrix> m1);
     void change_learning_rate(double &learning_rate);
 
     //array form

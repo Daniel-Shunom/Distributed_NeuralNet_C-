@@ -18,14 +18,16 @@ Instructions:
 
 #include "../Data_Operations/MatrixOps.h"
 #include "../Data_Operations/DataOps.h"
+#include "../Essential_Params/Params.h"
 #include <sstream>
+#include <memory>
 
 class Image {
 public:
     DataOps dp;
 
-    Img** csv_to_imgs(std::string file_string, int num_imgs);
-    void img_print(Img* img);
-    void img_free(Img *img);
-    void imgs_free(Img **imgs, int n);
+    std::vector<std::shared_ptr<Img>> csv_to_imgs(std::string file_string, int num_imgs);
+    void img_print(std::shared_ptr<Img> img);
+    void img_free(std::shared_ptr<Img>img);
+    void imgs_free(std::vector<std::shared_ptr<Img>>imgs, int n);
 };

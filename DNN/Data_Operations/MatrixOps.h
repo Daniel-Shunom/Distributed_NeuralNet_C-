@@ -26,8 +26,8 @@ private:
     /* data */
 public:
     static bool checkDimensions(Matrix* m1, Matrix* m2);
-    static bool checkDimensions(vMatrix* m1, vMatrix* m2);
-    static std::tuple<int, int> returnDimensions(vMatrix* m1);
+    static bool checkDimensions(std::shared_ptr<vMatrix> m1, std::shared_ptr<vMatrix> m2);
+    static std::tuple<int, int> returnDimensions(std::shared_ptr<vMatrix> m1);
 
     Matrix* matrix_add(Matrix* m1, Matrix* m2);
     Matrix* matrix_subtract(Matrix* m1, Matrix* m2);
@@ -39,15 +39,15 @@ public:
     Matrix* matrix_transpose(Matrix* m1);
     Matrix* matrix_add_scalar(double n, Matrix* m);
 
-    vMatrix* v_matrix_add(vMatrix* m1, vMatrix* m2);
-    vMatrix* v_matrix_subtract(vMatrix* m1, vMatrix* m2);
-    vMatrix* v_matrix_multiply(vMatrix* m1, vMatrix* m2);
-    vMatrix* v_matrix_divide(vMatrix* m1, vMatrix* m2);
-    vMatrix* v_matrix_scale(double n, vMatrix* m);
-    vMatrix* v_matrix_dot(vMatrix* m1, vMatrix* m2);
-    vMatrix* v_matrix_apply(double (*func)(double), vMatrix* m);
-    vMatrix* v_matrix_transpose(vMatrix* m1);
-    vMatrix* v_matrix_add_scalar(double n, vMatrix* m);
+    std::shared_ptr<vMatrix> v_matrix_add(std::shared_ptr<vMatrix> m1, std::shared_ptr<vMatrix> m2);
+    std::shared_ptr<vMatrix> v_matrix_subtract(std::shared_ptr<vMatrix> m1, std::shared_ptr<vMatrix> m2);
+    std::shared_ptr<vMatrix> v_matrix_multiply(std::shared_ptr<vMatrix> m1, std::shared_ptr<vMatrix> m2);
+    std::shared_ptr<vMatrix> v_matrix_divide(std::shared_ptr<vMatrix> m1, std::shared_ptr<vMatrix> m2);
+    std::shared_ptr<vMatrix> v_matrix_scale(double n, std::shared_ptr<vMatrix> m);
+    std::shared_ptr<vMatrix> v_matrix_dot(std::shared_ptr<vMatrix> m1, std::shared_ptr<vMatrix> m2);
+    std::shared_ptr<vMatrix> v_matrix_apply(double (*func)(double), std::shared_ptr<vMatrix> m);
+    std::shared_ptr<vMatrix> v_matrix_transpose(std::shared_ptr<vMatrix> m1);
+    std::shared_ptr<vMatrix> v_matrix_add_scalar(double n, std::shared_ptr<vMatrix> m);
     
     //MatrixOps(/* args */);
     //~MatrixOps();

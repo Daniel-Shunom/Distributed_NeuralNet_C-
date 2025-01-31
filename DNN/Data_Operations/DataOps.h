@@ -23,6 +23,7 @@ Instructions:
 #include <iomanip>
 #include <vector>
 #include <string>
+#include <memory>
 
 class DataOps { 
 public:
@@ -33,33 +34,33 @@ public:
         float input_y;
         float label_yhat;
     };
-    vMatrix* v_matrix_load(char *file_string);
-    vMatrix* v_matrix_create(int row, int col);
-    vMatrix* v_matrix_flatten(vMatrix *m, int axis);
-    vMatrix* v_matrix_copy(vMatrix* m);
+    std::shared_ptr<vMatrix> v_matrix_load(std::string file_string);
+    std::shared_ptr<vMatrix> v_matrix_create(int row, int col);
+    std::shared_ptr<vMatrix> v_matrix_flatten(std::shared_ptr<vMatrix> m, int axis);
+    std::shared_ptr<vMatrix> v_matrix_copy(std::shared_ptr<vMatrix> m);
 
-    void v_matrix_save(vMatrix *m, char *file_String);
-    void v_matrix_randomize(vMatrix *m, int n);
-    void v_matrix_fill(vMatrix *m, int n);
-    void v_matrix_print(vMatrix *m);
-    void v_matrix_free(vMatrix *m);
+    void v_matrix_save(std::shared_ptr<vMatrix> m, std::string file_String);
+    void v_matrix_randomize(std::shared_ptr<vMatrix> m, int n);
+    void v_matrix_fill(std::shared_ptr<vMatrix> m, int n);
+    void v_matrix_print(std::shared_ptr<vMatrix> m);
+    void v_matrix_free(std::shared_ptr<vMatrix> m);
 
 
-    Matrix* matrix_load(char *file_string);
+    Matrix* matrix_load(std::string file_string);
     Matrix* matrix_flatten(Matrix *m, int axis);
     Matrix* matrix_create(int row, int col);
     Matrix* matrix_copy(Matrix* m);
 
     double uniform_distribution(double low, double high);
 
-    void matrix_save(Matrix *m, char *file_String);
+    void matrix_save(Matrix *m, std::string file_String);
     void matrix_randomize(Matrix *m, int n);
     void matrix_fill(Matrix *m, int n);
     void matrix_print(Matrix *m);
     void matrix_free(Matrix *m);
 
     int matrix_argmax(Matrix *m);
-    int matrix_argmax(vMatrix *m);
+    int matrix_argmax(std::shared_ptr<vMatrix> m);
 
     //void weight_update();
     //void weight_cache();
