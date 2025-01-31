@@ -15,6 +15,7 @@ Instructions:
 
 #include "ImgOps.h"
 
+//Converts MNIST csv doc to images with pixel values between 0 and 1
 Img** Image::csv_to_imgs(std::string file_string, int num_imgs) {
     std::ifstream file(file_string, std::ios::in);
     if(!file.is_open()) {
@@ -50,16 +51,19 @@ Img** Image::csv_to_imgs(std::string file_string, int num_imgs) {
     return imgs;
 }
 
+//Prints image to terminal
 void Image::img_print(Img* img) {
     dp.v_matrix_print(img->img_data);
     std::cout << "Image Label: " << img->label << std::endl;
 }
 
+//Deletes image from heap storage
 void Image::img_free(Img* img) {
     dp.v_matrix_free(img->img_data);
     delete img;
 }
 
+//Deletes (int n) images from heap storage
 void Image::imgs_free(Img **imgs, int n) {
     for (int i = 0; i < n; i++) {
         img_free(imgs[i]);
