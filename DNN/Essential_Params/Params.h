@@ -15,6 +15,17 @@ Instructions:
 
 #pragma once
 
+#define INPUT_LAYERS 2
+#define HIDDEN_LAYERS 8
+#define OUTPUT_LAYERS 2
+
+#define INPUT_NODES 4
+#define HIDDEN_NODES 20
+#define OUTPUT_NODES 2
+#define EPOCHS 12
+#define LEARNING_RATE 0.01f
+
+
 #include <vector>
 
 typedef struct {
@@ -57,6 +68,9 @@ struct Node {
     std::vector<Node*> next_node;
 };
 
+typedef std::array<Node*, INPUT_NODES> rI_Nd;
+typedef std::array<Node*, HIDDEN_NODES> rP_Nd;
+typedef std::array<Node*, OUTPUT_NODES> rO_Nd;
 typedef std::vector<Node> Nd;
 typedef std::vector<Node*> P_Nd;
 typedef std::vector<Nd> LC;

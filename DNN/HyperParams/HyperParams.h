@@ -15,16 +15,6 @@ Instructions:
 
 #pragma once
 
-#define INPUT_LAYERS 2
-#define HIDDEN_LAYERS 8
-#define OUTPUT_LAYERS 2
-
-#define INPUT_NODES 4
-#define HIDDEN_NODES 20
-#define OUTPUT_NODES 2
-#define EPOCHS 12
-#define LEARNING_RATE 0.01f
-
 #include "../Propagations/Propagation.h"
 #include <vector>
 #include <array>
@@ -54,42 +44,25 @@ public:
     HyperParams();
     ~HyperParams();
     
-    std::array<double, HIDDEN_NODES> allocate_memory(std::array<Node*, HIDDEN_NODES> input_nodes,
-                                                     std::array<Node*, HIDDEN_NODES> next_nodes);
+    std::array<double, HIDDEN_NODES> allocate_memory(rP_Nd input_nodes, rP_Nd next_nodes);
 
     std::vector<double> hidden_unit(std::vector<double> activations);
 
-    void hidden_layer(std::array<Node*, HIDDEN_NODES> &input_nodes, 
-                      std::array<Node*, HIDDEN_NODES> &next_nodes,
-                      int depth);
-
     void hidden_layer(Nd &input_nodes, Nd &next_nodes, LC &cache, int depth);
-
-    void hidden_layer_destructor(Nd &input_nodes, 
-                                 Nd &next_nodes, 
-                                 int depth);
-    
-    void hidden_layer_destructor(std::array<Node*, HIDDEN_NODES> &input_nodes, 
-                                 std::array<Node*, HIDDEN_NODES> &next_nodes);
-
+    void hidden_layer_destructor(Nd &input_nodes, Nd &next_nodes, int depth);
+    void hidden_layer(rP_Nd &input_nodes, rP_Nd &next_nodes, int depth);
+    void hidden_layer_destructor(rP_Nd &input_nodes, rP_Nd &next_nodes);
     void parameter_initializer(Nd &input, vMatrix* m1);
     void cache_initializer(LC &input, vMatrix* m1);
-
-
-    //array form
-    std::vector<Node> input_layer_constructor(std::vector<std::array<Node*, INPUT_NODES>> &input_nodes,
-                                              std::vector<std::array<Node*, HIDDEN_NODES>> &hidden_nodes);
-    //vector form
-    std::vector<Node> input_layer_constructor(Nd &input_nodes, Nd &hidden_nodes);
-
-    //array form
-    std::vector<Node> output_layer_constructor(std::vector<std::array<Node*, HIDDEN_NODES>> &layers, 
-                                               std::vector<std::array<Node*, OUTPUT_NODES>> &output_nodes);
-    //vector form
-    std::vector<Node> output_layer_constructor(Nd &layers, Nd &output_nodes);
-                 
-                                               
-    std::vector<Node> deep_net_constructor(std::vector<std::array<Node*, HIDDEN_NODES>> &layers);
     void change_learning_rate(double &learning_rate);
 
+    //array form
+    std::vector<Node> input_layer_constructor(std::vector<rI_Nd> &input_nodes, std::vector<rP_Nd> &hidden_nodes);
+    std::vector<Node> output_layer_constructor(std::vector<rP_Nd> &layers, std::vector<rO_Nd> &output_nodes);
+    
+    //vector form
+    std::vector<Node> input_layer_constructor(Nd &input_nodes, Nd &hidden_nodes);
+    std::vector<Node> output_layer_constructor(Nd &layers, Nd &output_nodes);
+                                               
+    std::vector<Node> deep_net_constructor(std::vector<rP_Nd> &layers);
 };
