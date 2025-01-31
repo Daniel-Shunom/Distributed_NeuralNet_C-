@@ -71,6 +71,7 @@
         "xlocmon": "cpp",
         "xloctime": "cpp",
         "functional": "cpp",
-        "*.csv": "cpp"
+        "*.csv": "cpp",
+        "cassert": "cpp"
     }
 }
