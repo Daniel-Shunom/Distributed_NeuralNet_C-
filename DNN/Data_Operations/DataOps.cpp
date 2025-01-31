@@ -15,6 +15,7 @@ Instructions:
 
 #include "DataOps.h"
 
+//Creates an array matrix with (int row) rows and (int cols) columns
 Matrix* DataOps::matrix_create(int row, int cols) {
     Matrix *matrix = new Matrix;
     matrix->rows = row;
@@ -27,6 +28,7 @@ Matrix* DataOps::matrix_create(int row, int cols) {
     return matrix;
 }
 
+//Creates a vector matrix with (int row) rows and (int cols) columns
 vMatrix* DataOps::v_matrix_create(int row, int cols) {
     vMatrix *matrix = new vMatrix;
     matrix->rows = row;
@@ -36,6 +38,7 @@ vMatrix* DataOps::v_matrix_create(int row, int cols) {
     return matrix;
 }
 
+//Fills an array matrix with values of (int n)
 void DataOps::matrix_fill(Matrix* m, int n) {
     for (int i = 0; i < m->rows; i++) {
         for (int j = 0; j < m->cols; j++) {
@@ -44,6 +47,7 @@ void DataOps::matrix_fill(Matrix* m, int n) {
     }
 }
 
+//Fillsl a vector matrix with values of (int n)
 void DataOps::v_matrix_fill(vMatrix* m, int n) {
     for (int i = 0; i < m->rows; i++) {
         for (int j = 0; j < m->cols; j++) {
@@ -52,6 +56,7 @@ void DataOps::v_matrix_fill(vMatrix* m, int n) {
     }
 }
 
+//Frees an array matrix from heap*
 void DataOps::matrix_free(Matrix* m) {
     for (int i = 0; i < m->rows; i++) {
         delete m->entries[i];
@@ -61,6 +66,7 @@ void DataOps::matrix_free(Matrix* m) {
     m = NULL;
 }
 
+//Frees a vector matrix from heap
 void DataOps::v_matrix_free(vMatrix *m) {
     for (int i = 0; i < m->rows; i++) {
         delete &m->entries[i];
@@ -70,6 +76,7 @@ void DataOps::v_matrix_free(vMatrix *m) {
     m = NULL;
 }
 
+//Prints an array matrix
 void DataOps::matrix_print(Matrix* m) {
     std::cout << "[ROWS] " << m->rows << "[COLUMNS] " << m->cols << std::endl;
     for (int i = 0; i < m->rows; i++) {
@@ -80,16 +87,20 @@ void DataOps::matrix_print(Matrix* m) {
     }
 }
 
+//Prints a vector matrix
 void DataOps::v_matrix_print(vMatrix* m) {
-    std::cout << "[ROWS] " << m->rows << "[COLUMNS] " << m->cols << std::endl;
+    std::cout << "[ROWS] " << m->rows << "  ||  [COLUMNS] " << m->cols << std::endl;
     for (int i = 0; i < m->rows; i++) {
         for (int j = 0; j < m->cols; j++) {
             std::cout << std::fixed << std::setprecision(3) << m->entries[i][j] << " ";
         }
         std::cout << std::endl;
     }
+    std::cout << std::endl;
+    std::cout << std::endl;
 }
 
+//Copies an array matrix
 Matrix* DataOps::matrix_copy(Matrix* m) {
     Matrix* mat = matrix_create(m->rows, m->cols);
     for (int i = 0; i < m->rows; i++) {
@@ -101,6 +112,7 @@ Matrix* DataOps::matrix_copy(Matrix* m) {
     return mat;
 }
 
+//Copies a vector matrix
 vMatrix* DataOps::v_matrix_copy(vMatrix* m) {
     vMatrix* mat = v_matrix_create(m->rows, m->cols);
     for (int i = 0; i < m->rows; i++) {
@@ -112,6 +124,7 @@ vMatrix* DataOps::v_matrix_copy(vMatrix* m) {
     return mat;
 }
 
+//Saves an array matrix
 void DataOps::matrix_save(Matrix* m, char* file_string) {
     std::ofstream file(file_string); 
     if (!file) { 
@@ -132,6 +145,7 @@ void DataOps::matrix_save(Matrix* m, char* file_string) {
     file.close();
 }
 
+//Saves a vector matrix
 void DataOps::v_matrix_save(vMatrix* m, char* file_string) {
     std::ofstream file(file_string); 
     if (!file) { 
@@ -152,6 +166,7 @@ void DataOps::v_matrix_save(vMatrix* m, char* file_string) {
     file.close();
 }
 
+//Loads and array matrix
 Matrix* DataOps::matrix_load(char *file_string) {
     std::ifstream file(file_string);
     if (!file) {
@@ -173,6 +188,7 @@ Matrix* DataOps::matrix_load(char *file_string) {
     return m;
 }
 
+//Loads a vector matrix
 vMatrix* DataOps::v_matrix_load(char *file_string) {
     std::ifstream file(file_string);
     if (!file) {
@@ -194,6 +210,7 @@ vMatrix* DataOps::v_matrix_load(char *file_string) {
     return m;
 }
 
+//Finds a uniform distribution 
 double DataOps::uniform_distribution(double low, double high) {
     double difference = high - low;
     int scale = 10000;
@@ -202,6 +219,7 @@ double DataOps::uniform_distribution(double low, double high) {
     return low + (1.0 * (rand() % scaled_difference)/scale);
 }
 
+//Randomizes vector matrix with values seeded by (int n)
 void DataOps::matrix_randomize(Matrix* m, int n) {
     double min = -1.0/sqrt(n);
     double max = 1.0/sqrt(n);
@@ -212,6 +230,7 @@ void DataOps::matrix_randomize(Matrix* m, int n) {
     }
 }
 
+//Randomizes vector matrix with values seeded by (int n)
 void DataOps::v_matrix_randomize(vMatrix* m, int n) {
     double min = -1.0/sqrt(n);
     double max = 1.0/sqrt(n);
@@ -222,6 +241,7 @@ void DataOps::v_matrix_randomize(vMatrix* m, int n) {
     }
 }
 
+//Performs argmax on array matrix
 int DataOps::matrix_argmax (Matrix* m) {
     double max_score = 0;
     int max_idx = 0;
@@ -235,6 +255,7 @@ int DataOps::matrix_argmax (Matrix* m) {
     return max_idx;
 }
 
+//Performs argmax on vector matrix
 int DataOps::matrix_argmax (vMatrix* m) {
     double max_score = 0;
     int max_idx = 0;
@@ -248,6 +269,8 @@ int DataOps::matrix_argmax (vMatrix* m) {
     return max_idx;
 }
 
+
+//flattens array matrix into one dimension
 Matrix* DataOps::matrix_flatten(Matrix* m, int axis) { 
     // Axis = 0 -> Column Vector, Axis = 1 -> Row Vector 
     Matrix* mat; if (axis == 0) { 
@@ -275,6 +298,8 @@ Matrix* DataOps::matrix_flatten(Matrix* m, int axis) {
     return mat;
 }
 
+
+//Flattens vector matrix into one dimension 
 vMatrix* DataOps::v_matrix_flatten(vMatrix* m, int axis) { 
     // Axis = 0 -> Column Vector, Axis = 1 -> Row Vector 
     vMatrix* mat; if (axis == 0) { 
