@@ -33,7 +33,7 @@ public:
     std::vector<std::shared_ptr<Img>> csv_to_imgs(std::string file_string, int num_imgs);
 
     /// @brief Prints image data
-    /// @param img innput image
+    /// @param img input image
     void img_print(std::shared_ptr<Img> img);
 
     /// @brief deletes image data from memory
