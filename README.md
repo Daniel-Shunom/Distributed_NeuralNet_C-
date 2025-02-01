@@ -35,8 +35,8 @@
 
 Welcome to the Distributed Neural Network Architecture project! This innovative implementation brings together:
 
-- **Distributed Computing**: Each neural network layer operates independently
-- **Consensus Mechanisms**: Ensures computational integrity across nodes
+- **Distributed Computing**: Each neural network layer is computed accross the network
+- **Consensus Mechanisms**: Validates computed layer packets accross network
 - **Scalable Architecture**: Designed for horizontal scaling and high performance
 - **Smart Propagation**: Optimized forward propagation with validation checkpoints
 
@@ -48,19 +48,22 @@ Welcome to the Distributed Neural Network Architecture project! This innovative 
 
 Get up and running with these simple steps:
 
-```bash
+```Powershell
 # Clone the latest version of the repository
 git clone https://github.com/Daniel-Shunom/Distributed_NeuralNet_C-.git
 
 # Navigate to the project directory
-cd DNN_
+cd DNN
 
-# Build and install dependencies
-cmake .
-make install
+# Build and Run with CMake 
+mkdir build
+cd build
+cmake ..
+cmake --build . --clean-first
 
-# Verify installation
-make test
+#To run executable
+cd build/Debug
+./DNN.exe
 
 ## 💻 Usage
 
@@ -81,23 +84,26 @@ int main() {
 
 ### Core Components
 
-- **Advanced Activation Functions**
-  - Hyperbolic Tangent (tanh)
+- **MNIST Matrix Library**
+  - CSV to Img Methods
   - Rectified Linear Unit (ReLU)
   - Sigmoid
   - Leaky ReLU
 
 - **Neural Network Essentials**
   - Weight Initialization System
-  - Hidden Layer Constructor with Macro Definitions
-  - Smart Memory Management
-  - Modular Architecture Design
+  - Network Layer Cache or smoother intialization
+  - Configurable network paramters and hyperparameters
+  - Modular Network Architecture
+
+- **Server Essentials (Coming soon)**
+  - Coming Soon
 
 > 📝 *Note: Additional features and components will be added as the project evolves.*
 
 ## 🤝 Contributing
 
-We welcome contributions! Guidelines for contributing will be established once core functionalities are completed.
+I always welcome contributions! Guidelines for contributing will be established once core functionalities are completed.
 
 Stay tuned for:
 - Coding standards
