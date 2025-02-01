@@ -89,7 +89,6 @@ void DataOps::v_matrix_print(std::shared_ptr<vMatrix> m) {
         std::cout << std::endl;
     }
     std::cout << std::endl;
-    std::cout << std::endl;
 }
 
 Matrix* DataOps::matrix_copy(Matrix* m) {
