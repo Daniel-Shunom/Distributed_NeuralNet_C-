@@ -24,7 +24,6 @@ int main() {
     Image img;
 
     //m.menu_configuration();
-
     std::shared_ptr<vMatrix> m1 = mp.v_matrix_create(10, 10);
     std::shared_ptr<vMatrix> m2 = mp.v_matrix_create(10, 10);
 
@@ -34,17 +33,16 @@ int main() {
     Nd input_nodes(2);
     Nd next_nodes(3);
 
-    int depth = 437;
+    int depth = 12;
     LC layer_cache;
     mc.hidden_layer(input_nodes, next_nodes, layer_cache, depth);
 
     //ifstream pathing is relative from the location of the executable
     std::vector<std::shared_ptr<Img>> x = img.csv_to_imgs("../../F_MNIST/fashion-mnist_test.csv", 30);
 
-    //img.img_print(x[12]);
+    img.img_print(x[12]);
 
     mc.cache_initializer(layer_cache, x[0]->img_data);
-
     std::tuple<int, int> pos = mp.returnDimensions(input_nodes[0].Weights);
     std::cout << "Row: " <<std::get<0>(pos) <<std::endl;
     std::cout << "Col: " <<std::get<1>(pos) <<std::endl;
