@@ -22,8 +22,7 @@ std::vector<std::shared_ptr<Img>> Image::csv_to_imgs(std::string file_string, in
         return {};
     }
 
-    std::vector<std::shared_ptr<Img>> imgs;// = new std::shared_ptr<Img> [num_imgs];
-    imgs.reserve(num_imgs);
+    std::vector<std::shared_ptr<Img>> imgs(num_imgs);
     std::string row;
 
     std::getline(file, row);
@@ -54,6 +53,7 @@ std::vector<std::shared_ptr<Img>> Image::csv_to_imgs(std::string file_string, in
 void Image::img_print(std::shared_ptr<Img> img) {
     dp.v_matrix_print(img->img_data);
     std::cout << "Image Label: " << img->label << std::endl;
+    std::cout << std::endl;
 }
 
 void Image::img_free(std::shared_ptr<Img> img) {
