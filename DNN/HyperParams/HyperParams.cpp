@@ -17,21 +17,15 @@ Instructions:
 #include <stdexcept>
 #include "HyperParams.h"
 
-//HyperParams class constructor initializes Node struct members
-//with input parameters
 HyperParams::HyperParams() {
     //node.computed_activations = tanh_activations(params.input);
     node.learning_rate = LEARNING_RATE;
 }
 
-//returns the computed activations
 std::vector<double> HyperParams::hidden_unit(std::vector<double> activations) {
     return node.computed_activations;
 }
 
-//This is designed to iterate over h_params.hidden_nodes, and for each outer iteration
-// an innner iteration is performed to connect the nodes of that current layer to the 
-// nodes of the next layer.
 void HyperParams::hidden_layer(rP_Nd &h_nodes, rP_Nd &n_nodes, int depth) {
     if (depth == 0 || h_nodes.empty() || n_nodes.empty()) {
         return;
@@ -73,7 +67,6 @@ void HyperParams::hidden_layer_destructor(Nd &hidden_nodes, Nd &next_nodes, int 
     }
 }
 
-//Constructs a fully connected Neural Network with (int depth) layers
 void HyperParams::hidden_layer(Nd &h_nodes, Nd &n_nodes, LC &cache, int depth) {
     std::cout << "LAYER BUILDER FUNCTION CALLED\n";
     static int count = 0;
@@ -109,8 +102,6 @@ void HyperParams::hidden_layer(Nd &h_nodes, Nd &n_nodes, LC &cache, int depth) {
     }
 }
 
-
-//Intializes Node Weights and Biases with random Floats
 void HyperParams::parameter_initializer(Nd &input, std::shared_ptr<vMatrix> m1) {
     static int count = 0;
 

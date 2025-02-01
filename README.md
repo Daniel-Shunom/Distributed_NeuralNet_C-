@@ -1,6 +1,6 @@
 <div align="center">
 
-# 🧠 Distributed Deep Neural Network Architecture
+# 🧠 'Distributed' Deep Neural Network
 
 [![MIT License](https://img.shields.io/badge/License-MIT-green.svg)](https://choosealicense.com/licenses/mit/)
 [![C++](https://img.shields.io/badge/C++-17-blue.svg?style=flat&logo=c%2B%2B)](http://www.cplusplus.org/)
