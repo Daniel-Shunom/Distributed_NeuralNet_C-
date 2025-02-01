@@ -41,7 +41,7 @@ given system and puts a lot of load on the processors and computers involved. Fo
 are easier to fix and monitor, given more extensive access to the necessary capital. This is not the same for 
 smaller companies that want to build their own models but cannot afford the required infrastructure.
 
-Matrix operations are expensive. What's more expensive is a hundred thousand tons spread across multiple layers
+Matrix operations are expensive. What's more expensive is a hundred thousand more, spread across multiple layers
 and compute blocks. The big idea here is to distribute these compute operations across a network of participating 
 computers across the globe, layer by layer, and return calculated values to be used in the network, effectively 
 distributing the network layers and compute blocks across multiple devices.
@@ -136,7 +136,7 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 
 Let's connect! Reach out on any of these platforms:
 
-[![Email](https://img.shields.io/badge/Email-your.email%40example.com-red)](mailto:your.email@example.com)
+[![Email](https://img.shields.io/badge/Email-danielshunom2%40gmail.com-red)](mailto:danielshunom2@gmail.com)
 [![GitHub](https://img.shields.io/badge/GitHub-Daniel--Shunom-black)](https://github.com/Daniel-shunom)
 [![LinkedIn](https://img.shields.io/badge/LinkedIn-Daniel--Jeremiah-blue)](https://www.linkedin.com/in/daniel-jeremiah-177416245/)
 
