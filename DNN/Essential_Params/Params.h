@@ -28,6 +28,7 @@ Instructions:
 
 #include <vector>
 #include <memory>
+#include <variant>
 
 typedef struct {
     double** entries;
@@ -75,3 +76,5 @@ typedef std::array<std::shared_ptr<Node>, OUTPUT_NODES> rO_Nd;
 typedef std::vector<Node> Nd;
 typedef std::vector<std::shared_ptr<Node>> P_Nd;
 typedef std::vector<Nd> LC;
+
+using bucket = std::variant<Nd, P_Nd, LC, rI_Nd, rP_Nd, rO_Nd, std::shared_ptr<vMatrix>> ;

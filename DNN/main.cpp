@@ -16,39 +16,57 @@ Instructions:
 #include "./NET_CONSTRUCT/net_construct.h"
 #include "./Data_Operations/MatrixOps.h"
 #include "./Image_Operations/ImgOps.h"
+#include "./HyperParams/MemManager.h"
 #include <iostream>
 
 int main() {
-    MenuConstruct mc;
-    MatrixOps mp;
-    Image img;
+    using tub = std::variant<std::shared_ptr<Image>, 
+                std::shared_ptr<MatrixOps>, 
+                std::shared_ptr<MenuConstruct>, 
+                std::shared_ptr<MemManager>>;
+    std::vector<tub> tubby;
+ 
+    MemManager& manager = MemManager::getInstance();
+    std::shared_ptr<MenuConstruct> mc = std::make_shared<MenuConstruct>();
+    std::shared_ptr<MatrixOps> mp = std::make_shared<MatrixOps>();
+    std::shared_ptr<Image> img = std::make_shared<Image>();
 
-    //m.menu_configuration();
-    std::shared_ptr<vMatrix> m1 = mp.v_matrix_create(10, 10);
-    std::shared_ptr<vMatrix> m2 = mp.v_matrix_create(10, 10);
+    std::shared_ptr<MenuConstruct> mcc = mc;
+    std::shared_ptr<MatrixOps> mpp = mp;
+    std::shared_ptr<Image> imgg = img;
 
-    std::shared_ptr<vMatrix> m3 = mp.v_matrix_create(4, 2);
-    std::shared_ptr<vMatrix> m4 = mp.v_matrix_create(2, 4);
+    tubby.push_back(imgg);
+    tubby.push_back(mpp);
+    tubby.push_back(mcc);
 
     Nd input_nodes(2);
     Nd next_nodes(3);
 
-    int depth = 12;
+    int depth = 2;
     LC layer_cache;
-    mc.hidden_layer(input_nodes, next_nodes, layer_cache, depth);
 
     //ifstream pathing is relative from the location of the executable
-    std::vector<std::shared_ptr<Img>> x = img.csv_to_imgs("../../F_MNIST/fashion-mnist_test.csv", 30);
+    std::vector<std::shared_ptr<Img>> x = img->csv_to_imgs("../../F_MNIST/fashion-mnist_test.csv", 30);
+    img->img_print(x[12]);
 
-    img.img_print(x[12]);
+    mc->hidden_layer(input_nodes, next_nodes, layer_cache, depth);
+    mc->cache_initializer(layer_cache, x[0]->img_data);
+    
+    if (!input_nodes[0].Weights) {
+        std::cout << "WEIGHT OBJECT DOES NOT EXIST\n";
+    } else {
+        std::cout << "ALL GOOD\n";
+    }
+    
+    manager.mem_size();
+    std::tuple<int, int> pos = mp->returnDimensions(input_nodes[0].Weights);
+    std::cout << "Row: " <<std::get<0>(pos) << '\n';
+    std::cout << "Col: " <<std::get<1>(pos) << '\n';
 
-    mc.cache_initializer(layer_cache, x[0]->img_data);
-    std::tuple<int, int> pos = mp.returnDimensions(input_nodes[0].Weights);
-    std::cout << "Row: " <<std::get<0>(pos) <<std::endl;
-    std::cout << "Col: " <<std::get<1>(pos) <<std::endl;
+    mp->v_matrix_print(input_nodes[0].Weights);
+    mp->v_matrix_multiply(input_nodes[0].Weights, next_nodes[0].Weights);
 
-    mp.v_matrix_print(input_nodes[0].Weights);
-    mp.v_matrix_multiply(input_nodes[0].Weights, next_nodes[0].Weights);
-
+    manager.ptr_release();
+    tubby.clear();
     return 0;
 }

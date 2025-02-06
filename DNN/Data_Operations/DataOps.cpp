@@ -32,7 +32,7 @@ std::shared_ptr<vMatrix> DataOps::v_matrix_create(int row, int cols) {
     matrix->rows = row;
     matrix->cols = cols;
     matrix->entries.resize(row, std::vector<double>(cols));
-      
+    mem.ptr_freeze(matrix);
     return matrix;
 }
 
@@ -44,7 +44,7 @@ void DataOps::matrix_fill(Matrix* m, int n) {
     }
 }
 
-void DataOps::v_matrix_fill(std::shared_ptr<vMatrix> m, int n) {
+void DataOps::v_matrix_fill(std::shared_ptr<vMatrix> &m, int n) {
     for (int i = 0; i < m->rows; i++) {
         for (int j = 0; j < m->cols; j++) {
             m->entries[i][j] = n;
@@ -61,7 +61,7 @@ void DataOps::matrix_free(Matrix* m) {
     m = NULL;
 }
 
-void DataOps::v_matrix_free(std::shared_ptr<vMatrix> m) {
+void DataOps::v_matrix_free(std::shared_ptr<vMatrix> &m) {
     for (int i = 0; i < m->rows; i++) {
         delete &m->entries[i];
     }
@@ -80,7 +80,11 @@ void DataOps::matrix_print(Matrix* m) {
     }
 }
 
-void DataOps::v_matrix_print(std::shared_ptr<vMatrix> m) {
+void DataOps::v_matrix_print(std::shared_ptr<vMatrix> &m) {
+    if (!m) {
+        std::cerr << "Matrix is empty" << std::endl;
+        return;
+    }
     std::cout << "[ROWS] " << m->rows << "  ||  [COLUMNS] " << m->cols << std::endl;
     for (int i = 0; i < m->rows; i++) {
         for (int j = 0; j < m->cols; j++) {
@@ -102,7 +106,7 @@ Matrix* DataOps::matrix_copy(Matrix* m) {
     return mat;
 }
 
-std::shared_ptr<vMatrix> DataOps::v_matrix_copy(std::shared_ptr<vMatrix> m) {
+std::shared_ptr<vMatrix> DataOps::v_matrix_copy(std::shared_ptr<vMatrix> &m) {
     std::shared_ptr<vMatrix> mat = v_matrix_create(m->rows, m->cols);
     for (int i = 0; i < m->rows; i++) {
         for (int j = 0; j < m->cols; j++) {
@@ -213,7 +217,7 @@ void DataOps::matrix_randomize(Matrix* m, int n) {
     }
 }
 
-void DataOps::v_matrix_randomize(std::shared_ptr<vMatrix> m, int n) {
+void DataOps::v_matrix_randomize(std::shared_ptr<vMatrix> &m, int n) {
     double min = -1.0/sqrt(n);
     double max = 1.0/sqrt(n);
     for (int i = 0; i < m->rows; i++) {
@@ -278,7 +282,7 @@ Matrix* DataOps::matrix_flatten(Matrix* m, int axis) {
 }
 
 
-std::shared_ptr<vMatrix> DataOps::v_matrix_flatten(std::shared_ptr<vMatrix> m, int axis) { 
+std::shared_ptr<vMatrix> DataOps::v_matrix_flatten(std::shared_ptr<vMatrix> &m, int axis) { 
     // Axis = 0 -> Column Vector, Axis = 1 -> Row Vector 
     std::shared_ptr<vMatrix> mat; if (axis == 0) { 
         mat = v_matrix_create(m->rows * m->cols, 1); 
