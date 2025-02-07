@@ -28,7 +28,7 @@ bool MatrixOps::checkDimensions(std::shared_ptr<vMatrix> m1, std::shared_ptr<vMa
 std::tuple<int, int> MatrixOps::returnDimensions(std::shared_ptr<vMatrix> m1) {
     int rows = m1->rows;
     int cols = m1->rows;
-    std::cout <<"[DIMENSIONs: " << rows << " rows, " << cols << " columns]" << std::endl;
+    std::cout <<"[DIMENSIONs: " << rows << " rows, " << cols << " columns]" << '\n';
 
     return std::make_tuple(rows, cols);
 }

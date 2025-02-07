@@ -71,28 +71,28 @@ void DataOps::v_matrix_free(std::shared_ptr<vMatrix> &m) {
 }
 
 void DataOps::matrix_print(Matrix* m) {
-    std::cout << "[ROWS] " << m->rows << "[COLUMNS] " << m->cols << std::endl;
+    std::cout << "[ROWS] " << m->rows << "[COLUMNS] " << m->cols << '\n';
     for (int i = 0; i < m->rows; i++) {
         for (int j = 0; j < m->cols; j++) {
             std::cout << std::fixed << std::setprecision(3) << m->entries[i][j] << " ";
         }
-        std::cout << std::endl;
+        std::cout << '\n';
     }
 }
 
 void DataOps::v_matrix_print(std::shared_ptr<vMatrix> &m) {
     if (!m) {
-        std::cerr << "Matrix is empty" << std::endl;
+        std::cerr << "Matrix is empty" << '\n';
         return;
     }
-    std::cout << "[ROWS] " << m->rows << "  ||  [COLUMNS] " << m->cols << std::endl;
+    std::cout << "[ROWS] " << m->rows << "  ||  [COLUMNS] " << m->cols << '\n';
     for (int i = 0; i < m->rows; i++) {
         for (int j = 0; j < m->cols; j++) {
             std::cout << std::fixed << std::setprecision(3) << m->entries[i][j] << " ";
         }
-        std::cout << std::endl;
+        std::cout << '\n';
     }
-    std::cout << std::endl;
+    std::cout << '\n';
 }
 
 Matrix* DataOps::matrix_copy(Matrix* m) {
@@ -120,47 +120,47 @@ std::shared_ptr<vMatrix> DataOps::v_matrix_copy(std::shared_ptr<vMatrix> &m) {
 void DataOps::matrix_save(Matrix* m, std::string file_string) {
     std::ofstream file(file_string); 
     if (!file) { 
-        std::cerr << "Error opening file: " << file_string << std::endl; 
+        std::cerr << "Error opening file: " << file_string << '\n'; 
         return; 
     } 
 
-    file << m->rows << std::endl; 
-    file << m->cols << std::endl; 
+    file << m->rows << '\n'; 
+    file << m->cols << '\n'; 
 
     for (int i = 0; i < m->rows; ++i) { 
         for (int j = 0; j < m->cols; ++j) { 
-            file << std::fixed << std::setprecision(6) << m->entries[i][j] << std::endl; 
+            file << std::fixed << std::setprecision(6) << m->entries[i][j] << '\n'; 
         } 
     } 
 
-    std::cout << "Successfully saved matrix to " << file_string << std::endl; 
+    std::cout << "Successfully saved matrix to " << file_string << '\n'; 
     file.close();
 }
 
 void DataOps::v_matrix_save(std::shared_ptr<vMatrix> m, std::string file_string) {
     std::ofstream file(file_string); 
     if (!file) { 
-        std::cerr << "Error opening file: " << file_string << std::endl; 
+        std::cerr << "Error opening file: " << file_string << '\n'; 
         return; 
     } 
 
-    file << m->rows << std::endl; 
-    file << m->cols << std::endl; 
+    file << m->rows << '\n'; 
+    file << m->cols << '\n'; 
 
     for (int i = 0; i < m->rows; ++i) { 
         for (int j = 0; j < m->cols; ++j) { 
-            file << std::fixed << std::setprecision(6) << m->entries[i][j] << std::endl; 
+            file << std::fixed << std::setprecision(6) << m->entries[i][j] << '\n'; 
         } 
     } 
 
-    std::cout << "Successfully saved matrix to " << file_string << std::endl; 
+    std::cout << "Successfully saved matrix to " << file_string << '\n'; 
     file.close();
 }
 
 Matrix* DataOps::matrix_load(std::string file_string) {
     std::ifstream file(file_string);
     if (!file) {
-        std::cerr << "Error opening file: " << file_string << std::endl;
+        std::cerr << "Error opening file: " << file_string << '\n';
         return nullptr;
     }
 
@@ -174,14 +174,14 @@ Matrix* DataOps::matrix_load(std::string file_string) {
         }
     }
 
-    std::cout << "LOADED MATRIX FROM" << file_string << std::endl;
+    std::cout << "LOADED MATRIX FROM" << file_string << '\n';
     return m;
 }
 
 std::shared_ptr<vMatrix> DataOps::v_matrix_load(std::string file_string) {
     std::ifstream file(file_string);
     if (!file) {
-        std::cerr << "Error opening file: " << file_string << std::endl;
+        std::cerr << "Error opening file: " << file_string << '\n';
         return nullptr;
     }
 
@@ -195,7 +195,7 @@ std::shared_ptr<vMatrix> DataOps::v_matrix_load(std::string file_string) {
         }
     }
 
-    std::cout << "LOADED MATRIX FROM" << file_string << std::endl;
+    std::cout << "LOADED MATRIX FROM" << file_string << '\n';
     return m;
 }
 
@@ -263,7 +263,7 @@ Matrix* DataOps::matrix_flatten(Matrix* m, int axis) {
         mat = matrix_create(1, m->rows * m->cols); 
     } 
     else { 
-        std::cerr << "Argument to matrix_flatten must be 0 or 1" << std::endl; 
+        std::cerr << "Argument to matrix_flatten must be 0 or 1" << '\n'; 
         exit(EXIT_FAILURE); 
     } 
     
@@ -291,7 +291,7 @@ std::shared_ptr<vMatrix> DataOps::v_matrix_flatten(std::shared_ptr<vMatrix> &m, 
         mat = v_matrix_create(1, m->rows * m->cols); 
     } 
     else { 
-        std::cerr << "Argument to matrix_flatten must be 0 or 1" << std::endl; 
+        std::cerr << "Argument to matrix_flatten must be 0 or 1" << '\n'; 
         exit(EXIT_FAILURE); 
     } 
     
