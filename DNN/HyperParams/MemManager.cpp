@@ -8,7 +8,7 @@ MemManager& MemManager::getInstance() {
     return my_instance;
 }
 
-void MemManager::ptr_freeze(std::shared_ptr<vMatrix> object1) {
+void MemManager::ptr_freeze(std::shared_ptr<vMatrix> &object1) {
     MemCache.push_back(object1);
 }
 
@@ -17,5 +17,5 @@ void MemManager::ptr_release() {
 }
 
 void MemManager::mem_size() {
-    std::cout << "Memory Cache Size: " << MemCache.size() << std::endl;
+    std::cout << "Memory Cache Size: " << MemCache.size() << '\n';
 }
