@@ -31,8 +31,9 @@ void HyperParams::hidden_layer(rP_Nd &h_nodes, rP_Nd &n_nodes, int depth) {
         return;
     }
 
-    for (std::shared_ptr<Node> &n: h_nodes) {
+    for (auto &n: h_nodes) {
         n = std::make_shared<Node>();
+        n->next_node.resize(n_nodes.size());
         for (int i = 0; i < n_nodes.size(); i++) {
             n->next_node.push_back(std::make_shared<Node>());
         }
@@ -84,11 +85,10 @@ void HyperParams::hidden_layer(Nd &h_nodes, Nd &n_nodes, LC &cache, int depth) {
     cache.push_back(h_nodes);
     count++;
 
-    std::cout << "[LAYER: " << count << " ] " << "h_nodes-> contains: " << h_nodes.size() << " pointers\n";
-    std::cout << "[LAYER: " << count << " ] " << "n_nodes-> contains: " << n_nodes.size() << " pointers\n";
+    std::cout << "[LAYER: " << count << " ] " << "h_nodes-> contains: " << h_nodes.size() << " pointers\t";
+    std::cout << "[LAYER: " << count << " ] " << "n_nodes-> contains: " << n_nodes.size() << " pointers\t";
 
-    std::cout << "[LAYER CACHE ITEMS: " << cache.size() << ']' << std::endl;
-    std::cout << std::endl;
+    std::cout << "[LAYER CACHE ITEMS: " << cache.size() << ']' << '\n';
 
     if (depth > 1) {
         Nd new_layer(n_nodes.size());
@@ -109,50 +109,58 @@ void HyperParams::parameter_initializer(Nd &input, std::shared_ptr<vMatrix> &m1)
     std::tuple dims = returnDimensions(m1); 
     auto rows = std::get<0>(dims);
     auto cols = std::get<1>(dims);
-     
-    for (int i = 0; i < input.size(); i++) {
-        for (auto &next_n: input[i].next_node) {
-            if (!next_n) {
-                std::cout<< "Creating new node...\n"; 
-                next_n = std::make_shared<Node>();
-            }
-        }
+    
+    for (auto &node: input) {
+        node.Weights = v_matrix_create(rows, cols);
+        mem.ptr_freeze(node.Weights);
+        v_matrix_randomize(node.Weights, 2);
+        std::cout << "Node weight address: " << node.Weights << '\t';
+        //v_matrix_print(node.Weights);
 
-        input[i].Weights = v_matrix_create(rows, cols);
-        mem.ptr_freeze(input[i].Weights);
-
-        input[i].Biases = v_matrix_create(rows, 1);
-        mem.ptr_freeze(input[i].Biases);
-
-        v_matrix_randomize(input[i].Weights, 2);
-        v_matrix_randomize(input[i].Biases, 2);
+        node.Biases = v_matrix_create(rows, 1);
+        mem.ptr_freeze(node.Biases);
+        v_matrix_randomize(node.Biases, 2);
+        //v_matrix_print(node.Biases);
+        std::cout << "Node Bias address: " << node.Biases << "\n";
 
         weight_count++;
     }
 
     count++;
-    std::cout << "Initialized parameters for layer: " << count << std::endl;
-    std::cout << "No of Weights: " << weight_count << std::endl << std::endl;
+    std::cout << "Initialized parameters for layer: " << count << '\n';
+    std::cout << "No of Weights: " << weight_count << '\n' << '\n';
 }
 
 void HyperParams::cache_initializer(LC &cache, std::shared_ptr<vMatrix> &m1) {
-    std::cout << "\n\n[CACHE WEIGHTS INTIALIZER CALLED!]" << std::endl;
-    std::cout<< "[CACHE SIZE: " << cache.size() << "]\n" << std::endl;
+    std::cout << "\n\n[CACHE WEIGHTS INTIALIZER CALLED!]" << '\n';
+    std::cout<< "[CACHE SIZE: " << cache.size() << "]\n" << '\n';
     if (!m1 || cache.empty()) {
-        std::cout << "[ERROR: INVALID PARAMETERS!]" << std::endl;
+        std::cout << "[ERROR: INVALID PARAMETERS!]" << '\n';
         return;
     }
 
     int static count = 0;
 
-    for (int i = 0; i < cache.size(); i++) {
-        parameter_initializer(cache[i], m1);
-        count++;
-        std::cout << "[CACHE WEIGHTS INTIALIZED AT LAYER: " << count << ']' <<std::endl;
+    for (int i = 0; i < cache.size() - 1; i++) {
+        for (int j = 0; j < cache[i].size(); j++) {
+            for (int k = 0; k < cache[i][j].next_node.size(); k++) {
+                if (i + 1 < cache.size()) {
+                    cache[i][j].next_node[k] = std::make_shared<Node>(cache[i + 1][j]);
+                }
+            }
+        }
     }
 
-    std::cout << "[CACHED LAYERS: " << count << ']' << std::endl;
-    std::cout << "[CACHE WEIGHTS INTIALIZED!]" <<std::endl;
+
+    for (int i = 0; i < cache.size(); i++) {
+        parameter_initializer(cache[i], m1);
+
+        count++;
+        std::cout << "[CACHE WEIGHTS INTIALIZED AT LAYER: " << count << ']' <<"\n\n\n\n";
+    }
+
+    std::cout << "[CACHED LAYERS: " << count << ']' << '\n';
+    std::cout << "[CACHE WEIGHTS INTIALIZED!]" <<'\n';
 }
 
 std::vector<Node> HyperParams::output_layer_constructor(Nd &layers, Nd &output_nodes) {

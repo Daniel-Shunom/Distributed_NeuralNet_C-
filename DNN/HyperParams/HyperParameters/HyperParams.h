@@ -15,8 +15,7 @@ Instructions:
 
 #pragma once
 
-#include "../Propagations/Propagation.h"
-//#include "MemManager.h"
+#include "../../Essential_Methods/Propagations/Propagation.h"
 #include <vector>
 #include <array>
 #include <iostream>

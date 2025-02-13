@@ -17,8 +17,8 @@ Instructions:
 #include <iostream>
 #include <vector>
 #include <functional>
-#include "../Propagations/Propagation.h"
-#include "../HyperParams/HyperParams.h"
+#include "../Essential_Methods/Propagations/Propagation.h"
+#include "../HyperParams/HyperParameters/HyperParams.h"
 #include <variant>
 
 class MenuConstruct: public HyperParams {

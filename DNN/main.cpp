@@ -14,9 +14,9 @@ Instructions:
 */
 
 #include "./NET_CONSTRUCT/net_construct.h"
-#include "./Data_Operations/MatrixOps.h"
-#include "./Image_Operations/ImgOps.h"
-#include "./HyperParams/MemManager.h"
+#include "./Essential_Methods/Data_Operations/MatrixOps.h"
+#include "./Essential_Methods/Image_Operations/ImgOps.h"
+#include "./HyperParams/Lifetime_Managers/MemManager.h"
 #include <iostream>
 
 int main() {
@@ -39,32 +39,42 @@ int main() {
     tubby.push_back(mpp);
     tubby.push_back(mcc);
 
-    Nd input_nodes(2);
-    Nd next_nodes(3);
+    //once input nodes are in cache, the input node vector 
+    Nd input_nodes(4);
+    Nd next_nodes(6);
 
-    int depth = 2;
+    int depth = 7;
     LC layer_cache;
 
     //ifstream pathing is relative from the location of the executable
     std::vector<std::shared_ptr<Img>> x = img->csv_to_imgs("../../F_MNIST/fashion-mnist_test.csv", 30);
-    img->img_print(x[12]);
+    img->img_print(x[20]);
 
     mc->hidden_layer(input_nodes, next_nodes, layer_cache, depth);
     mc->cache_initializer(layer_cache, x[0]->img_data);
     
-    if (!input_nodes[0].Weights) {
-        std::cout << "WEIGHT OBJECT DOES NOT EXIST\n";
-    } else {
-        std::cout << "ALL GOOD\n";
+    std::cout << std::endl;
+    for (auto const &n: layer_cache[5][4].next_node) {
+        std::cout << "Layer 5 Points to Node: " << n << '\n';
     }
-    
+    std::cout << std::endl;
+    std::cout << std::endl;
+
+    for (int i = 0; i < layer_cache[6].size(); i++) {
+        std::cout << "Layer 6 Nodes: " << &layer_cache[6][i] << '\n';
+    }
+    std::cout << std::endl;
+    std::cout << std::endl;
+
+
     manager.mem_size();
-    std::tuple<int, int> pos = mp->returnDimensions(input_nodes[0].Weights);
+    std::tuple<int, int> pos = mp->returnDimensions(layer_cache[6][4].Weights);
     std::cout << "Row: " <<std::get<0>(pos) << '\n';
     std::cout << "Col: " <<std::get<1>(pos) << '\n';
 
-    mp->v_matrix_print(input_nodes[0].Weights);
-    mp->v_matrix_multiply(input_nodes[0].Weights, next_nodes[0].Weights);
+    mp->v_matrix_print(layer_cache[6][4].Weights);
+    mp->v_matrix_print(layer_cache[5][4].Weights);
+    mp->v_matrix_multiply(layer_cache[6][4].Weights, layer_cache[5][4].Weights);
 
     manager.ptr_release();
     tubby.clear();
