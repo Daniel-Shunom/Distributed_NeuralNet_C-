@@ -143,7 +143,7 @@ std::shared_ptr<vMatrix> MatrixOps::v_matrix_multiply(std::shared_ptr<vMatrix> m
         }
     }
 
-    v_matrix_print(m);
+    std::cout << "[MATRIX CALCULATION DONE!]\n";
     return m;
 }
 
