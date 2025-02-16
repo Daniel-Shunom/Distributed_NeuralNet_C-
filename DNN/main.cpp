@@ -48,8 +48,6 @@ int main() {
 
     //ifstream pathing is relative from the location of the executable
     std::vector<std::shared_ptr<Img>> x = img->csv_to_imgs("../../F_MNIST/fashion-mnist_test.csv", 30);
-    img->img_print(x[20]);
-
     mc->hidden_layer(input_nodes, next_nodes, layer_cache, depth);
     mc->cache_initializer(layer_cache, x[0]->img_data);
     
@@ -72,8 +70,6 @@ int main() {
     std::cout << "Row: " <<std::get<0>(pos) << '\n';
     std::cout << "Col: " <<std::get<1>(pos) << '\n';
 
-    mp->v_matrix_print(layer_cache[6][4].Weights);
-    mp->v_matrix_print(layer_cache[5][4].Weights);
     mp->v_matrix_multiply(layer_cache[6][4].Weights, layer_cache[5][4].Weights);
 
     manager.ptr_release();
