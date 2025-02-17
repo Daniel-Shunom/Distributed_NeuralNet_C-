@@ -1,12 +1,16 @@
 #include "CacheMangr.h"
 
+std::shared_ptr<NodeMangr> NodeMangr::getNodeMangr() {
+    return instance;
+}
+
 void NodeMangr::Store() {
     std::cout << "NodeManager Called\n";
 }
 
 void NodeMangr::TypeCache() {};
 
-void NodeMangr::CacheTree(CacheCM node) {
+void NodeMangr::CacheTree(CacheCM &node) {
     bool is_used = used();
     auto traveler = [this](auto type) {
         while (!type) {
