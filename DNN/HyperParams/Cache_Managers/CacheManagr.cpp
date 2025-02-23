@@ -8,6 +8,13 @@ void NodeMangr::Store() {
     std::cout << "NodeManager Called\n";
 }
 
+template<typename RtnType, typename... Args>
+NodeMangr::FuncObj<RtnType, Args...> 
+NodeMangr::usedFunction(FuncObj<RtnType, Args...> func) {
+    std::cout << "Collected Forward pass function";
+    NodeFunction = func;
+}
+
 void NodeMangr::TypeCache() {};
 
 void NodeMangr::CacheTree(CacheCM &node) {
@@ -28,7 +35,7 @@ void ParamMangr::Store() {
 
 void NodeMangr::TypeCache() {
     NodeStore.push_back(type_obj2);
-}
+} 
 
 void ParamMangr::TypeCache() {
     ParamStore.push_back(type_obj1);
