@@ -29,6 +29,7 @@ Instructions:
 #include <vector>
 #include <memory>
 #include <variant>
+#include <functional>
 
 typedef struct {
     double** entries;
@@ -59,12 +60,20 @@ typedef struct {
     int label;
 } Img;
 
+template<typename RtnType, typename ...Args>
+using NodeFunc = std::function<RtnType(Args...)>;
+typedef std::shared_ptr<vMatrix> FuncParam;
+
 struct Node {
     std::shared_ptr<vMatrix> inputs;
     std::shared_ptr<vMatrix> Weights;
     std::shared_ptr<vMatrix> Biases;
     std::shared_ptr<vMatrix> Activations;
     
+    //stored function for forward and
+    //backward propagations
+    NodeFunc<FuncParam, FuncParam> funcStore;
+
     std::vector<double> computed_activations;
     double learning_rate;
     std::vector<std::shared_ptr<Node>> next_node;
