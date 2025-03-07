@@ -46,8 +46,13 @@ int main() {
     int depth = 7;
     LC layer_cache;
 
-    //ifstream pathing is relative from the location of the executable
-    std::vector<std::shared_ptr<Img>> x = img->csv_to_imgs("../../F_MNIST/fashion-mnist_test.csv", 30);
+    //So this is stupid
+    //Apparently the ifstream reads the correct file path to be
+    //the path relative to where the execute command is called
+    //so in this case you have to be in the project root directory
+    //to figure use this specifc relative path
+    std::vector<std::shared_ptr<Img>> x = img->csv_to_imgs("./F_MNIST/fashion-mnist_test.csv", 10);
+    
     mc->hidden_layer(input_nodes, next_nodes, layer_cache, depth);
     mc->cache_initializer(layer_cache, x[0]->img_data);
     

@@ -77,6 +77,7 @@ void HyperParams::hidden_layer(Nd &h_nodes, Nd &n_nodes, LC &cache, int depth) {
     };
 
     for (int i = 0; i < h_nodes.size(); i++) {
+        //std::cout << &h_nodes[i].funcStore;
         for (int j = 0; j < n_nodes.size(); j++) {
             h_nodes[i].next_node[j] = std::make_shared<Node>(n_nodes[j]);
         }
