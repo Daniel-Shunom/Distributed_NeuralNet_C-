@@ -65,6 +65,7 @@ using NodeFunc = std::function<RtnType(Args...)>;
 typedef std::shared_ptr<vMatrix> FuncParam;
 
 struct Node {
+    //Here, I think that the goal is that for 
     std::shared_ptr<vMatrix> inputs;
     std::shared_ptr<vMatrix> Weights;
     std::shared_ptr<vMatrix> Biases;
