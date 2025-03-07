@@ -16,6 +16,7 @@ Instructions:
 #pragma once
 
 #include "../../Essential_Methods/Propagations/Propagation.h"
+#include "../Cache_Managers/CacheMangr.h"
 #include <vector>
 #include <array>
 #include <iostream>
@@ -37,6 +38,8 @@ public:
         std::array<double, HIDDEN_LAYERS> hidden_layers;
         H_Params *data;
     };
+
+    std::shared_ptr<NodeMangr> manager = NodeMangr::getNodeMangr();
 
     Node node;
     H_Params h_params;
