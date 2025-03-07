@@ -1,4 +1,17 @@
 #include "CacheMangr.h"
+std::vector<std::shared_ptr<CacheMangr>> ParamMangr::ParamStore;
+std::shared_ptr<NodeMangr> NodeMangr::instance;
+std::vector<std::shared_ptr<CacheMangr>> NodeMangr::NodeStore;
+
+bool CacheMangr::used() {
+    std::cout << "used";
+    return 0>1;
+}
+
+bool CacheMangr::activity() {
+    std::cout << "activity";
+    return 0>1;
+}
 
 std::shared_ptr<NodeMangr> NodeMangr::getNodeMangr() {
     return instance;
@@ -15,7 +28,7 @@ NodeMangr::usedFunction(FuncObj<RtnType, Args...> func) {
     NodeFunction = func;
 }
 
-void NodeMangr::TypeCache() {};
+//void NodeMangr::TypeCache() {};
 
 void NodeMangr::CacheTree(CacheCM &node) {
     bool is_used = used();
