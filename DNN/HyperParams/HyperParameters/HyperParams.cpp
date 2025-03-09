@@ -26,7 +26,14 @@ std::vector<double> HyperParams::hidden_unit(std::vector<double> activations) {
     return node.computed_activations;
 }
 
-void HyperParams::hidden_layer(rP_Nd &h_nodes, rP_Nd &n_nodes, int depth) {
+template<>
+void HyperParams::hidden_layer (
+    rP_Nd &h_nodes, 
+    rP_Nd &n_nodes, 
+    int depth
+) {
+    const size_t h_n = h_nodes.size();
+    const size_t n_n = n_nodes.size();
     if (depth == 0 || h_nodes.empty() || n_nodes.empty()) {
         return;
     }
@@ -34,51 +41,47 @@ void HyperParams::hidden_layer(rP_Nd &h_nodes, rP_Nd &n_nodes, int depth) {
     for (auto &n: h_nodes) {
         n = std::make_shared<Node>();
         n->next_node.resize(n_nodes.size());
-        for (int i = 0; i < n_nodes.size(); i++) {
+        for (size_t i = 0; i < n_n; i++) {
             n->next_node.push_back(std::make_shared<Node>());
         }
     }
 
     for (std::shared_ptr<Node> n: n_nodes) {
         n = std::make_shared<Node>();
-        for (int i = 0; i < n_nodes.size(); i++) {
+        for (size_t i = 0; i < n_n; i++) {
             n->next_node.push_back(std::make_shared<Node>());
         }
     }
 
-    for (int i = 0; i < h_nodes.size(); i++) {
-        for (int j = 0; j < n_nodes.size(); j++) {
+    for (size_t i = 0; i < h_n; i++) {
+        for (size_t j = 0; j < n_n; j++) {
             h_nodes[i]->next_node[j] = n_nodes[j];
         }
     }
 
     rP_Nd new_layer;
-
     hidden_layer(n_nodes, new_layer, depth-1);
     std::cout << "LAYER BUILDER FUNCTION CALLED\n";
-}
+};
 
-void HyperParams::hidden_layer_destructor(Nd &hidden_nodes, Nd &next_nodes, int depth) {
-    
-    for (int i = 0; i < hidden_nodes.size(); i++) {
-        for (int j = 0; j < next_nodes.size(); j++) {
-            std::cout << &next_nodes[j];
-        }
-        std::cout << &hidden_nodes[i];
-    }
-}
-
-void HyperParams::hidden_layer(Nd &h_nodes, Nd &n_nodes, LC &cache, int depth) {
-    std::cout << "LAYER BUILDER FUNCTION CALLED\n";
+template <>
+void HyperParams::hidden_layer(
+    Nd &h_nodes, 
+    Nd &n_nodes, 
+    LC &cache, 
+    int depth
+) {
     static int count = 0;
+    const size_t h_n = h_nodes.size();
+    const size_t n_n = n_nodes.size();
+    std::cout << "LAYER BUILDER FUNCTION CALLED\n";
 
     for (auto &n: h_nodes) {
         n.next_node.resize(n_nodes.size());
     };
 
-    for (int i = 0; i < h_nodes.size(); i++) {
-        //std::cout << &h_nodes[i].funcStore;
-        for (int j = 0; j < n_nodes.size(); j++) {
+    for (size_t i = 0; i < h_n; i++) {
+        for (size_t j = 0; j < n_n; j++) {
             h_nodes[i].next_node[j] = std::make_shared<Node>(n_nodes[j]);
         }
     }
@@ -86,14 +89,12 @@ void HyperParams::hidden_layer(Nd &h_nodes, Nd &n_nodes, LC &cache, int depth) {
     cache.push_back(h_nodes);
     count++;
 
-    std::cout << "[LAYER: " << count << " ] " << "h_nodes-> contains: " << h_nodes.size() << " pointers\t";
-    std::cout << "[LAYER: " << count << " ] " << "n_nodes-> contains: " << n_nodes.size() << " pointers\t";
-
+    std::cout << "[LAYER: " << count << " ] " << "h_nodes-> contains: " << h_n << " pointers\t";
+    std::cout << "[LAYER: " << count << " ] " << "n_nodes-> contains: " << n_n << " pointers\t";
     std::cout << "[LAYER CACHE ITEMS: " << cache.size() << ']' << '\n';
 
     if (depth > 1) {
         Nd new_layer(n_nodes.size());
-        
         hidden_layer(n_nodes, new_layer, cache, depth-1);
     }
 
@@ -102,6 +103,18 @@ void HyperParams::hidden_layer(Nd &h_nodes, Nd &n_nodes, LC &cache, int depth) {
         return;
     }
 }
+
+void HyperParams::hidden_layer_destructor(Nd &hidden_nodes, Nd &next_nodes, int depth) {
+    size_t hidden_size = hidden_nodes.size();
+    size_t next_size = next_nodes.size();
+    for (size_t i = 0; i < hidden_size; i++) {
+        for (size_t j = 0; j < next_size; j++) {
+            std::cout << &next_nodes[j];
+        }
+        std::cout << &hidden_nodes[i];
+    }
+}
+
 
 void HyperParams::parameter_initializer(Nd &input, std::shared_ptr<vMatrix> &m1) {
     static int count = 0;
@@ -141,11 +154,12 @@ void HyperParams::cache_initializer(LC &cache, std::shared_ptr<vMatrix> &m1) {
     }
 
     int static count = 0;
+    const size_t cs = cache.size();
 
-    for (int i = 0; i < cache.size() - 1; i++) {
-        for (int j = 0; j < cache[i].size(); j++) {
-            for (int k = 0; k < cache[i][j].next_node.size(); k++) {
-                if (i + 1 < cache.size()) {
+    for (size_t i = 0; i < cs - 1; i++) {
+        for (size_t j = 0; j < cache[i].size(); j++) {
+            for (size_t k = 0; k < cache[i][j].next_node.size(); k++) {
+                if (i + 1 < cs) {
                     cache[i][j].next_node[k] = std::make_shared<Node>(cache[i + 1][j]);
                 }
             }
@@ -153,7 +167,7 @@ void HyperParams::cache_initializer(LC &cache, std::shared_ptr<vMatrix> &m1) {
     }
 
 
-    for (int i = 0; i < cache.size(); i++) {
+    for (size_t i = 0; i < cs; i++) {
         parameter_initializer(cache[i], m1);
 
         count++;
