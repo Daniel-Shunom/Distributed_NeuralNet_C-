@@ -61,8 +61,9 @@ public:
     /// @param input_nodes input array of nodes
     /// @param next_nodes input array of next layer nodes
     /// @param depth depth of the hidden layer
-    template<typename ...args>
-    void hidden_layer(args... obj);
+
+    void hidden_layer(Nd &h_nodes, Nd &n_nodes, LC &cache, int depth);
+    void hidden_layer (rP_Nd &h_nodes, rP_Nd &n_nodes, int depth);
 
     /// @brief overloaded hidden_layer_destructor with templatized arrays
     /// @param input_nodes input array of nodes

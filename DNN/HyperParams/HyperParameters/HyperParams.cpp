@@ -26,7 +26,6 @@ std::vector<double> HyperParams::hidden_unit(std::vector<double> activations) {
     return node.computed_activations;
 }
 
-template<>
 void HyperParams::hidden_layer (
     rP_Nd &h_nodes, 
     rP_Nd &n_nodes, 
@@ -64,7 +63,6 @@ void HyperParams::hidden_layer (
     std::cout << "LAYER BUILDER FUNCTION CALLED\n";
 };
 
-template <>
 void HyperParams::hidden_layer(
     Nd &h_nodes, 
     Nd &n_nodes, 
@@ -82,7 +80,9 @@ void HyperParams::hidden_layer(
 
     for (size_t i = 0; i < h_n; i++) {
         for (size_t j = 0; j < n_n; j++) {
-            h_nodes[i].next_node[j] = std::make_shared<Node>(n_nodes[j]);
+            n_nodes[j] = Node();
+            h_nodes[i].next_node[j] = std::make_shared<Node>(n_nodes[j]);//std::make_shared<Node>(n_nodes[j]);
+            n_nodes[j] = *(h_nodes[i].next_node[j]);
         }
     }
 
