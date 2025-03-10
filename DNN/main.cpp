@@ -17,6 +17,7 @@ Instructions:
 #include "./Essential_Methods/Data_Operations/MatrixOps.h"
 #include "./Essential_Methods/Image_Operations/ImgOps.h"
 #include "./HyperParams/Lifetime_Managers/MemManager.h"
+#include "./Algorithm/alg.h"
 #include <iostream>
 
 int main() {
@@ -34,6 +35,7 @@ int main() {
     std::shared_ptr<MenuConstruct> mcc = mc;
     std::shared_ptr<MatrixOps> mpp = mp;
     std::shared_ptr<Image> imgg = img;
+    Alg alg;
 
     tubby.push_back(imgg);
     tubby.push_back(mpp);
@@ -75,7 +77,11 @@ int main() {
     std::cout << "Row: " <<std::get<0>(pos) << '\n';
     std::cout << "Col: " <<std::get<1>(pos) << '\n';
 
-    mp->v_matrix_multiply(layer_cache[6][4].Weights, layer_cache[5][4].Weights);
+    //mp->v_matrix_multiply(layer_cache[6][4].Weights, layer_cache[5][4].Weights);
+    vMatrix temp = *x[0]->img_data;
+    alg.set_input_lyr(layer_cache, temp);
+    alg.forwardprop(layer_cache);
+
 
     manager.ptr_release();
     tubby.clear();
