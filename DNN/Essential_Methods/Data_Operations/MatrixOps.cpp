@@ -52,22 +52,48 @@ Matrix* MatrixOps::matrix_add(Matrix* m1, Matrix* m2) {
 }
 
 std::shared_ptr<vMatrix> MatrixOps::v_matrix_add(std::shared_ptr<vMatrix> m1, std::shared_ptr<vMatrix> m2) {
-    
-    if (!checkDimensions(m1, m2)) {
+    std::cout << "Add function called\n";
+
+    // Check if dimensions are compatible for broadcasting
+    if (m1->rows == m2->rows && m1->cols == m2->cols) {
+        // Case 1: Both matrices have the same dimensions (standard addition)
+        auto m = v_matrix_create(m1->rows, m1->cols);
+        for (int i = 0; i < m->rows; ++i) {
+            for (int j = 0; j < m->cols; ++j) {
+                m->entries[i][j] = m1->entries[i][j] + m2->entries[i][j];
+            }
+        }
+        return m;
+    } else if (m2->rows == 1 && m1->cols == m2->cols) {
+        // Case 2: Broadcasting a 1xN matrix (row vector) to an MxN matrix
+        auto m = v_matrix_create(m1->rows, m1->cols);
+        for (int i = 0; i < m->rows; ++i) {
+            for (int j = 0; j < m->cols; ++j) {
+                // Add the corresponding column element from the row vector
+                m->entries[i][j] = m1->entries[i][j] + m2->entries[0][j];
+            }
+        }
+        std::cout<< "done adding [case 1]\n";
+        return m;
+    } else if (m2->cols == 1 && m1->rows == m2->rows) {
+        // Case 3: Broadcasting an Mx1 matrix (column vector) to an MxN matrix
+        auto m = v_matrix_create(m1->rows, m1->cols);
+        for (int i = 0; i < m->rows; ++i) {
+            for (int j = 0; j < m->cols; ++j) {
+                // Add the corresponding row element from the column vector
+                m->entries[i][j] = m1->entries[i][j] + m2->entries[i][0];
+            }
+        }
+        std::cout<< "done adding [case 2]\n";
+        return m;
+    } else {
         throw std::invalid_argument(
-            "Dimension Mismatch: "
+            "Dimension Mismatch: Matrices cannot be added due to incompatible shapes."
         );
     }
-
-    std::shared_ptr<vMatrix> m =  v_matrix_create(m1->rows, m1->cols);
-    for (int i = 0; i < m->rows; i++) {
-        for (int j = 0; j < m->cols; j++) {
-            m->entries[i][j] = m1->entries[i][j] + m2->entries[i][j];
-        }
-    }
-
-    return m;
+    std::cout<< "done adding \n";
 }
+
 
 Matrix* MatrixOps::matrix_subtract(Matrix* m1, Matrix* m2) {
     

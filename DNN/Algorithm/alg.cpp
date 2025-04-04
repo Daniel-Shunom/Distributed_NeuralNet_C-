@@ -1,16 +1,19 @@
 #include "./alg.h"
 
-void Alg::set_input_lyr(LC &cache, vMatrix mx) {
+void Alg::set_input_lyr(LC &cache, std::shared_ptr<vMatrix> mx) {
+    DataOps d;
     std::cout<< "setting input layer\n";
     for (auto &nd: cache[0]) {
-        *nd.inputs = mx;
+        std::cout<< "begining operation\n";
+        nd.inputs = d.v_matrix_copy(mx);
     }
     std::cout<< "set layer\n";
 }
 
 std::shared_ptr<vMatrix> Alg::calc_prod(MatrixOps m, Node v) {
     std::shared_ptr<vMatrix> temp = m.v_matrix_multiply(v.inputs, v.Weights);
-    return m.v_matrix_add(temp, v.Biases);
+    std::shared_ptr<vMatrix> tmp = m.v_matrix_add(temp, v.Biases); 
+    return tmp;
 }
 
 void Alg::forwardprop(LC &cache) {

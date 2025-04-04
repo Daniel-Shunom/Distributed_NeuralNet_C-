@@ -6,7 +6,7 @@
 [![C++](https://img.shields.io/badge/C++-17-blue.svg?style=flat&logo=c%2B%2B)](http://www.cplusplus.org/)
 [![PRs Welcome](https://img.shields.io/badge/PRs-welcome-brightgreen.svg?style=flat)](http://makeapullrequest.com)
 [![Build Status](https://img.shields.io/badge/build-passing-brightgreen.svg)](https://github.com/Daniel-Shunom/Distributed_NeuralNet_C-)
-[![Stars](https://img.shields.io/github/stars/Daniel-Shunom/Distributed_NeuralNet_C-?style=social)](https://github.com/Daniel-Shunom/Distributed_NeuralNet_C-/stargazers)
+[![Stars](kttps://img.shields.io/github/stars/Daniel-Shunom/Distributed_NeuralNet_C-?style=social)](https://github.com/Daniel-Shunom/Distributed_NeuralNet_C-/stargazers)
 
 <br/>
 

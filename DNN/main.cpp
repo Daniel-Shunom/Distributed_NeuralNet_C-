@@ -79,7 +79,7 @@ int main() {
 
     //mp->v_matrix_multiply(layer_cache[6][4].Weights, layer_cache[5][4].Weights);
     vMatrix temp = *x[0]->img_data;
-    alg.set_input_lyr(layer_cache, temp);
+    alg.set_input_lyr(layer_cache, x[0]->img_data);
     alg.forwardprop(layer_cache);
 
 
