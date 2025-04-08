@@ -60,7 +60,11 @@ public:
     /// @param w Weights matrix
     /// @param b Bias matrix
     /// @return vMatrix Z
-    std::shared_ptr<vMatrix> v_forwardpass(std::shared_ptr<vMatrix> m, std::shared_ptr<vMatrix> w, std::shared_ptr<vMatrix> b);
+    std::shared_ptr<vMatrix> v_forwardpass (
+	    std::shared_ptr<vMatrix> m, 
+	    std::shared_ptr<vMatrix> w, 
+	    std::shared_ptr<vMatrix> b
+    );
 
     /// @brief Sigmoid Activation function
     /// @param m Input matrix
@@ -86,7 +90,11 @@ public:
     /// @param input_y 
     /// @param label_yhat 
     /// @return Cross Entropy Loss
-    double v_cross_entropy_loss(std::shared_ptr<vMatrix> &input_y, std::shared_ptr<vMatrix> &label_yhat);
+    double v_cross_entropy_loss (
+	    std::shared_ptr<vMatrix> &input_y, 
+	    std::shared_ptr<vMatrix> &label_yhat
+    );
+
     double cross_entropy_loss(double &input_y, double &label_yhat);
 
     /// @brief Cost function
@@ -99,8 +107,10 @@ public:
     /// @param _biases 
     /// @param input 
     /// @return Returns error message if input size does not match weight and bias size
-    std::string error_check(std::vector<double> &_weights, 
-                            std::vector<double> &_biases,
-                            std::vector<double> &input);
+    std::string error_check (
+	    std::vector<double> &_weights, 
+	    std::vector<double> &_biases,
+        std::vector<double> &input
+    );
 
 };

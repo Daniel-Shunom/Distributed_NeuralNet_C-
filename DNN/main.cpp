@@ -21,10 +21,12 @@ Instructions:
 #include <iostream>
 
 int main() {
-    using tub = std::variant<std::shared_ptr<Image>, 
-                std::shared_ptr<MatrixOps>, 
-                std::shared_ptr<MenuConstruct>, 
-                std::shared_ptr<MemManager>>;
+    using tub = std::variant<
+        std::shared_ptr<Image>, 
+        std::shared_ptr<MatrixOps>, 
+        std::shared_ptr<MenuConstruct>, 
+        std::shared_ptr<MemManager>
+    >;
     std::vector<tub> tubby;
  
     MemManager& manager = MemManager::getInstance();
