@@ -49,38 +49,29 @@ std::shared_ptr<vMatrix> Propagation::v_forwardpass(
   std::shared_ptr<vMatrix> w, 
   std::shared_ptr<vMatrix> b
 ) {
-    std::shared_ptr<vMatrix> mat = mp.v_matrix_multiply(m, w);
-    std::shared_ptr<vMatrix> Z = mp.v_matrix_add(mat, b);
-
-    return Z;
+  return mp.v_matrix_add(mp.v_matrix_multiply(m, w), b);
 }
 
 std::shared_ptr<vMatrix> Propagation::v_sigmoid_activation(std::shared_ptr<vMatrix> Z) {
-  apply_func(Z, [](double x){ return 1/(1+std::exp(x)); });
-  return Z;
+  return apply_func(Z, [](double x){ return 1/(1+std::exp(x)); });
 }
 
 std::shared_ptr<vMatrix> Propagation::v_tanh_activation(std::shared_ptr<vMatrix> Z) {
-  apply_func(Z, tanh);
-  return Z;
+  return apply_func(Z, tanh);
 }
 
 std::shared_ptr<vMatrix> Propagation::v_relu_activation(std::shared_ptr<vMatrix> Z) {
-  apply_func(Z, [](double x){ return std::max(0.0, x); });
-  return Z;
+  return apply_func(Z, [](double x){ return std::max(0.0, x); });
 }
 
 std::shared_ptr<vMatrix> Propagation::v_leaky_relu_activation(std::shared_ptr<vMatrix> Z) {
-  apply_func(Z, [](double x){ return std::max(0.0001*x, x); });
-  return Z;
+  return apply_func(Z, [](double x){ return std::max(0.0001*x, x); });
 }
 
 double Propagation::cross_entropy_loss(double &input_y, double &input_yhat) {
-    double loss = -(input_y*log(input_yhat) + (1-input_y)*log(1-input_yhat));
-    return loss;
+  return -(input_y*log(input_yhat) + (1-input_y)*log(1-input_yhat));
 }
 
 double Propagation::cost_function(double &cost) {
-    cost = cross_entropy_loss(params.input_y, params.input_yhat)/params.input.size();
-    return cost;
+  return cross_entropy_loss(params.input_y, params.input_yhat)/params.input.size();
 }
