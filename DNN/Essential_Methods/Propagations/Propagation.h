@@ -53,8 +53,8 @@ public:
     Initializer _init;
     MatrixOps mp;
     
-    Propagation();
-    
+    std::shared_ptr<vMatrix> apply_func(std::shared_ptr<vMatrix> m, double (*func)(double));
+
     /// @brief Performs the forward pass calculation Z = Wx + b
     /// @param m Input matrix
     /// @param w Weights matrix
