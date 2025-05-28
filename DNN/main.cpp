@@ -13,11 +13,11 @@ Instructions:
 
 */
 
-#include "./NET_CONSTRUCT/net_construct.h"
-#include "./Essential_Methods/Data_Operations/MatrixOps.h"
-#include "./Essential_Methods/Image_Operations/ImgOps.h"
-#include "./HyperParams/Lifetime_Managers/MemManager.h"
-#include "./Algorithm/alg.h"
+#include "./menu/net_construct.h"
+#include "./methods/Data_Operations/MatrixOps.h"
+#include "./methods/Image_Operations/ImgOps.h"
+#include "./cache/Lifetime_Managers/MemManager.h"
+#include "./alg/alg.h"
 #include <iostream>
 
 int main() {

@@ -9,8 +9,8 @@
 class Alg {
 public:
     std::unordered_map<int, vMatrix> NetCache = {};
-    std::shared_ptr<vMatrix> calc_prod(MatrixOps m, Node v);
-    void set_input_lyr(LC &cache, std::shared_ptr<vMatrix> mx);
+    matrix_obj calc_prod(MatrixOps m, Node v);
+    void set_input_lyr(LC &cache, matrix_obj mx);
     //void backprop();
     void forwardprop(LC &cache);
     //void param_cache();

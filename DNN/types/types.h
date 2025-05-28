@@ -73,7 +73,7 @@ struct Node {
     
     //stored function for forward and
     //backward propagations
-    NodeFunc<FuncParam, FuncParam> funcStore;
+    NodeFunc<matrix_obj, matrix_obj> funcStore;
 
     std::vector<double> computed_activations;
     double learning_rate;
