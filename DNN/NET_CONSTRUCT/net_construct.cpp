@@ -15,40 +15,103 @@ Instructions:
 
 #include "./net_construct.h"
 #include <iostream>
+#include <memory>
+
+
+#ifdef _WIN32
+  #include <conio.h>
+  int read_arrow() {
+    int c = _getch();
+    if (c == 0 || c == 0xE0) {
+      int code = _getch();
+      if (code == 72) return +1;
+      if (code == 80) return -1;
+    }
+    return 0;
+  }
+
+  int read_key() {
+    int c = _getch();
+    if (c == '\r') return '\n';
+    return c;
+  }
+
+#else 
+  #include <termios.h>
+  #include <unistd.h>
+  
+  struct TermRaw {
+    termios oldt;
+    TermRaw() {
+      tcgetattr(STDIN_FILENO, &oldt);
+      termios raw = oldt;
+      raw.c_lflag &= ~(ICANON | ECHO);
+      raw.c_cc[VMIN] = 1;
+      raw.c_cc[VTIME] = 0;
+      tcsetattr(STDIN_FILENO, TCSANOW, &raw);
+    }
+    ~TermRaw() {
+      tcsetattr(STDIN_FILENO, TCSANOW, &oldt);
+    }
+  };
+
+  int read_arrow() {
+    char buf[3];
+    if (read(STDIN_FILENO, buf, 1) != 1) return 0;
+    if (buf[0] != '\x1b') return 0;
+    if (read(STDIN_FILENO, buf+1, 2) != 2) return 0;
+    if (buf[1] == '[') {
+      if (buf[2] == 'A') return +1;
+      if (buf[2] == 'B') return -1;
+    }
+    return 0;
+  }
+
+  int read_key() {
+    char c;
+    if (read(STDIN_FILENO, &c, 1) != 1) return 0;
+    return c;
+  }
+#endif
+
+void clear_screen() { std::cout << "\033[2J\033[H"; }
+void invert_on() { std::cout << "\033[7m"; }
+void invert_off() { std::cout << "\033[0m"; }
 
 MenuConstruct::iAselect MenuConstruct::select_activation() {
-    int selection;
-    std::cout << "Select Activation function\n\n";
-    std::cout << "[1. tanh        Activation ]\n";
-    std::cout << "[2. ReLU        Activation ]\n";
-    std::cout << "[3. Leaky ReLU  Activation ]\n";
-    std::cout << "[4. Sigmoid     Activation ]\n";
-    std::cout << "Enter Selection: ";
-    std::cin >> selection;
-    
-    std::function<void(std::shared_ptr<vMatrix>)> selectedFunction;
-    switch (selection) {
-        case 1:
-            selectedFunction = [this](std::shared_ptr<vMatrix> input) {
-                this->v_tanh_activation(input);};
-            break;
-        case 2:
-            selectedFunction = [this](std::shared_ptr<vMatrix> input) {
-                this->v_relu_activation(input);};
-            break;
-        case 3:
-            selectedFunction = [this](std::shared_ptr<vMatrix> input) {
-                this->v_leaky_relu_activation(input);};
-            break;
-        case 4:
-            selectedFunction = [this](std::shared_ptr<vMatrix> input) {
-                this->v_sigmoid_activation(input);};
-            break;
-        default:
-            throw std::invalid_argument("INVALID SELECTION\n");
-    }
+    struct Item { std::string label; std::function<void(std::shared_ptr<vMatrix>)> fn; };
+    std::vector<Item> items = {
+      {"Tanh        activation", [this](auto p){ this->v_tanh_activation(p); }},
+      {"ReLU        activation", [this](auto p){ this->v_relu_activation(p); }},
+      {"Leaky ReLU  activation", [this](auto p){ this->v_leaky_relu_activation(p); }},
+      {"Sigmoid     activation", [this](auto p){ this->v_sigmoid_activation(p); }}
+    };
 
-    return selectedFunction;
+    int cursor = 0;
+
+    #ifndef _WIN32
+      TermRaw tr;
+    #endif
+
+    while (true) {
+      clear_screen();
+      std::cout << "select activation function\n\n";
+      for (int i = 0; i < (int)items.size(); ++i) {
+        if (i == cursor) invert_on();
+        std::cout << " " << items[i].label << "\n";
+        if (i == cursor) invert_off();
+      }
+
+      int delta = read_arrow();
+      if (delta != 0) {
+        int n = items.size();
+        cursor = (cursor + n + (delta == +1 ? -1 : +1)) % n;
+      } else if (read_key() == '\n') {
+        break;
+      }
+    }
+    
+    return items[cursor].fn;
 }
 
 MenuConstruct::deepNetTuple MenuConstruct::configure_deepnet() {
@@ -82,60 +145,52 @@ MenuConstruct::deepNetTuple MenuConstruct::configure_deepnet() {
 }
 
 MenuConstruct::ioTuple MenuConstruct::io_nodes_config() {
-    int i_nodes;
-    int o_nodes;
-    std::cout << "Enter number of input nodes: ";
-    std::cin >> i_nodes;
-    std::cout << "Enter number of output nodes: ";
-    std::cin >> o_nodes;
+  int i_nodes;
+  int o_nodes;
+  std::cout << "Enter number of input nodes: ";
+  std::cin >> i_nodes;
+  std::cout << "Enter number of output nodes: ";
+  std::cin >> o_nodes;
     
-    std::cout << "\n[CURRENT WEIGHTS]\n";
-    for (int i = 0; i < params.weights.size(); i++) {
-        std::cout << params.weights[i] << "  ";
-    }
-    std::cout << "\n\n";
+  std::cout << "\n[CURRENT WEIGHTS]\n";
+  for (int i = 0; i < params.weights.size(); i++) {
+      std::cout << params.weights[i] << "  ";
+  }
+  std::cout << "\n\n";
 
-    ioTuple net_config;
+  ioTuple net_config;
 
-    std::function<void(Nd, Nd)> layer_config;
-    
-    std::function<void(Nd, Nd)> node_config;
+  std::function<void(Nd, Nd)> layer_config;
+  std::function<void(Nd, Nd)> node_config;
 
-    layer_config = [this, i_nodes](Nd &input_layer, Nd &hidden_layers) 
-    mutable {
-        input_layer.resize(i_nodes),
-        hidden_layers.resize(HIDDEN_NODES);
-        this->hidden_layer(input_layer, hidden_layers, layer_cache, depth);
-    };
+  layer_config = [this, i_nodes](Nd &input_layer, Nd &hidden_layers) 
+  mutable {
+      input_layer.resize(i_nodes),
+      hidden_layers.resize(HIDDEN_NODES);
+      this->hidden_layer(input_layer, hidden_layers, layer_cache, depth);
+  };
 
-    node_config = [this, o_nodes](Nd &hidden_layers, Nd &output_nodes) 
-    mutable {
-        hidden_layers.resize(HIDDEN_NODES);
-        output_nodes.resize(o_nodes);
-        this->hidden_layer(hidden_layers, output_nodes, layer_cache, depth);
-    };
+  node_config = [this, o_nodes](Nd &hidden_layers, Nd &output_nodes) 
+  mutable {
+      hidden_layers.resize(HIDDEN_NODES);
+      output_nodes.resize(o_nodes);
+      this->hidden_layer(hidden_layers, output_nodes, layer_cache, depth);
+  };
 
-    net_config = std::make_tuple(layer_config, node_config);
+  net_config = std::make_tuple(layer_config, node_config);
 
-    return net_config;
+  return net_config;
 }
 
 void MenuConstruct::instruction_eval(iSet x) {
-    auto length = x.size();
-    std::cout << "\n[INSTRUCTION SET HAS "<< length <<" METHODS]\n";
+    std::cout << "\n[INSTRUCTION SET HAS "<< x.size() <<" METHODS]\n";
 }
 
 int MenuConstruct::menu_configuration() {
-    auto config1 = io_nodes_config();
-    instructions.push_back(config1);
+  instructions.push_back(select_activation());
+  instructions.push_back(io_nodes_config());
+  instructions.push_back(configure_deepnet());
+  instruction_eval(instructions);
 
-    auto config2 = configure_deepnet();
-    instructions.push_back(config2);
-    
-    auto config3 = select_activation();
-    instructions.push_back(config3);
-
-    instruction_eval(instructions);
-
-    return 0;
+  return 0;
 }
