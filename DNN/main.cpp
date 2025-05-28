@@ -31,7 +31,7 @@ int main() {
  
     MemManager& manager = MemManager::getInstance();
     std::shared_ptr<MenuConstruct> mc = std::make_shared<MenuConstruct>();
-    std::shared_ptr<MatrixOps> mp = std::make_shared<MatrixOps>();
+    /*std::shared_ptr<MatrixOps> mp = std::make_shared<MatrixOps>();
     std::shared_ptr<Image> img = std::make_shared<Image>();
 
     std::shared_ptr<MenuConstruct> mcc = mc;
@@ -86,6 +86,7 @@ int main() {
 
 
     manager.ptr_release();
-    tubby.clear();
+    tubby.clear();/**/
+    mc->menu_configuration();
     return 0;
 }
