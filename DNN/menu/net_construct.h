@@ -23,33 +23,22 @@ Instructions:
 
 class MenuConstruct: public HyperParams {
 private:
-public:
-    typedef std::function<void(matrix_obj)> iAselect;
-    typedef std::tuple<std::function<void(Nd, Nd)>> deepNetTuple;
-    typedef std::tuple<std::function<void(Nd, Nd)>, 
-                       std::function<void(Nd, Nd)>> ioTuple;
-    typedef std::vector<std::variant<ioTuple, deepNetTuple, iAselect>> iSet;
-    
-    iSet instructions;
+    using func_store = std::function<void(Nd, Nd)>;
+
+    using actv_func = std::function<void(matrix_obj)>;
+    using net_config = std::pair<func_store, func_store>;
+    using io_config = std::pair<func_store, func_store>;
+    using instr_set = std::vector<std::variant<io_config, actv_func>>;
+
+    instr_set instructions;
     int depth;
     LC layer_cache;
 
-    /// @brief Select menu for activation functions
-    /// @return Selected activation function ad a function pointer
-    iAselect select_activation();
-    
-    /// @brief Configure the deep neural network
-    /// @return Configuration as a tuple
-    ioTuple io_nodes_config();
-
-    /// @brief Configure the deep neural network
-    /// @return Selected activation function ad a function pointer
-    deepNetTuple configure_deepnet();
-
-    /// @brief Checks length of instruction set
-    /// @param A Variant Container of Instructions
-    void instruction_eval(iSet A);
-                               
+    actv_func select_activation();
+    io_config io_nodes_config();
+    net_config configure_deepnet();
+    void instruction_eval(instr_set A);
+public:                    
     /// @brief Starts Deep Neural Network Configuration
     /// @return Exits the configuration program
     int menu_configuration();
