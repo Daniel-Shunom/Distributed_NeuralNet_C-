@@ -1,6 +1,6 @@
 #pragma once
 
-#include "../../types/Params.h"
+#include "../../types/types.h"
 #include <vector>
 #include <iostream>
 #include <initializer_list>

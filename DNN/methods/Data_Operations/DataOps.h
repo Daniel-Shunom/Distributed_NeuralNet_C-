@@ -17,7 +17,7 @@ Instructions:
 
 #define MAX_CHAR 100
 
-#include "../../types/Params.h"
+#include "../../types/types.h"
 #include "../../cache/Lifetime_Managers/MemManager.h"
 #include <iostream>
 #include <fstream>
