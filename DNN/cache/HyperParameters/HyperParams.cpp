@@ -15,7 +15,7 @@ Instructions:
 
 #include <iostream>
 #include <stdexcept>
-#include "HyperParams.h"
+#include "./HyperParams.h"
 
 HyperParams::HyperParams() {
     //node.computed_activations = tanh_activations(params.input);

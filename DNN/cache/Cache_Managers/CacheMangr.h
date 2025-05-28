@@ -4,7 +4,7 @@
 #include <memory>
 #include <vector>
 
-#include "../../Essential_Params/Params.h"
+#include "../../types/Params.h"
 
 //class ParamMangr;
 //class NodeManagr;
