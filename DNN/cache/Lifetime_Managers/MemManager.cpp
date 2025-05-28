@@ -2,13 +2,13 @@
 
 // Defined static members
 MemManager MemManager::my_instance;
-std::vector<std::shared_ptr<vMatrix>> MemManager::MemCache;
+std::vector<matrix_obj> MemManager::MemCache;
 
 void MemManager::mem_size() {
     std::cout << "Memory Cache Size: " << MemCache.size() << '\n';
 }
 
-void MemManager::ptr_freeze(std::shared_ptr<vMatrix> &object1) {
+void MemManager::ptr_freeze(matrix_obj &object1) {
     MemCache.push_back(object1);
 }
 

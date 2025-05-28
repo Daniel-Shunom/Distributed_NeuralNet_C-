@@ -32,8 +32,8 @@ std::string Propagation::error_check(
     return "ok";
 }
 
-std::shared_ptr<vMatrix> Propagation::apply_func(
-  std::shared_ptr<vMatrix> m,
+matrix_obj Propagation::apply_func(
+  matrix_obj m,
   double (*func)(double)
 ) {
   for (int i = 0; i < m->rows; i++) {
@@ -44,27 +44,27 @@ std::shared_ptr<vMatrix> Propagation::apply_func(
   return m;
 }
 
-std::shared_ptr<vMatrix> Propagation::v_forwardpass(
-  std::shared_ptr<vMatrix> m, 
-  std::shared_ptr<vMatrix> w, 
-  std::shared_ptr<vMatrix> b
+matrix_obj Propagation::v_forwardpass(
+  matrix_obj m, 
+  matrix_obj w, 
+  matrix_obj b
 ) {
   return mp.v_matrix_add(mp.v_matrix_multiply(m, w), b);
 }
 
-std::shared_ptr<vMatrix> Propagation::v_sigmoid_activation(std::shared_ptr<vMatrix> Z) {
+matrix_obj Propagation::v_sigmoid_activation(matrix_obj Z) {
   return apply_func(Z, [](double x){ return 1/(1+std::exp(x)); });
 }
 
-std::shared_ptr<vMatrix> Propagation::v_tanh_activation(std::shared_ptr<vMatrix> Z) {
+matrix_obj Propagation::v_tanh_activation(matrix_obj Z) {
   return apply_func(Z, tanh);
 }
 
-std::shared_ptr<vMatrix> Propagation::v_relu_activation(std::shared_ptr<vMatrix> Z) {
+matrix_obj Propagation::v_relu_activation(matrix_obj Z) {
   return apply_func(Z, [](double x){ return std::max(0.0, x); });
 }
 
-std::shared_ptr<vMatrix> Propagation::v_leaky_relu_activation(std::shared_ptr<vMatrix> Z) {
+matrix_obj Propagation::v_leaky_relu_activation(matrix_obj Z) {
   return apply_func(Z, [](double x){ return std::max(0.0001*x, x); });
 }
 

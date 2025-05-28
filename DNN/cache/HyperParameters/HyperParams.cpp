@@ -116,7 +116,7 @@ void HyperParams::hidden_layer_destructor(Nd &hidden_nodes, Nd &next_nodes, int 
 }
 
 
-void HyperParams::parameter_initializer(Nd &input, std::shared_ptr<vMatrix> &m1) {
+void HyperParams::parameter_initializer(Nd &input, matrix_obj &m1) {
     static int count = 0;
     int weight_count = 0;
 
@@ -145,7 +145,7 @@ void HyperParams::parameter_initializer(Nd &input, std::shared_ptr<vMatrix> &m1)
     std::cout << "No of Weights: " << weight_count << '\n' << '\n';
 }
 
-void HyperParams::cache_initializer(LC &cache, std::shared_ptr<vMatrix> &m1) {
+void HyperParams::cache_initializer(LC &cache, matrix_obj &m1) {
     std::cout << "\n\n[CACHE WEIGHTS INTIALIZER CALLED!]" << '\n';
     std::cout<< "[CACHE SIZE: " << cache.size() << "]\n" << '\n';
     if (!m1 || cache.empty()) {

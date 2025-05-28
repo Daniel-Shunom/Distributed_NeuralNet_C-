@@ -79,7 +79,7 @@ void invert_on() { std::cout << "\033[7m"; }
 void invert_off() { std::cout << "\033[0m"; }
 
 MenuConstruct::iAselect MenuConstruct::select_activation() {
-    struct Item { std::string label; std::function<void(std::shared_ptr<vMatrix>)> fn; };
+    struct Item { std::string label; std::function<void(matrix_obj)> fn; };
     std::vector<Item> items = {
       {"Tanh        activation", [this](auto p){ this->v_tanh_activation(p); }},
       {"ReLU        activation", [this](auto p){ this->v_relu_activation(p); }},

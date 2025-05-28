@@ -73,12 +73,12 @@ public:
     /// @brief Intializes weights and biases for each Node
     /// @param input input node
     /// @param m1 Matrix pointer to image reference
-    void parameter_initializer(Nd &input, std::shared_ptr<vMatrix> &m1);
+    void parameter_initializer(Nd &input, matrix_obj &m1);
 
     /// @brief Intializes Node parameters for each layer in cache
     /// @param input Layer cache vector
     /// @param m1 Image refrence 
-    void cache_initializer(LC &input, std::shared_ptr<vMatrix> &m1);
+    void cache_initializer(LC &input, matrix_obj &m1);
 
     /// @brief To change the learning rate
     /// @param learning_rate new learning rate

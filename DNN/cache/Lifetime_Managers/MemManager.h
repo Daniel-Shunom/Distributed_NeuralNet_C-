@@ -9,10 +9,10 @@ class MemManager {
 private:
     MemManager() = default;
     static MemManager my_instance;
-    static std::vector<std::shared_ptr<vMatrix>> MemCache;
+    static std::vector<matrix_obj> MemCache;
 public:
     static MemManager& getInstance();
-    void ptr_freeze(std::shared_ptr<vMatrix> &object1);
+    void ptr_freeze(matrix_obj &object1);
     void ptr_release();
     void mem_size();
 };

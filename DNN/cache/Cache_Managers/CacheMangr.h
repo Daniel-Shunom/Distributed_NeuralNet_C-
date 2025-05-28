@@ -36,7 +36,7 @@ private:
 public:
     template<typename RtnType, typename ...Args>
     using FuncObj = std::function<RtnType(Args...)>;
-    typedef std::shared_ptr<vMatrix> FuncParam;
+    typedef matrix_obj FuncParam;
     FuncObj<FuncParam, FuncParam> NodeFunction;
 
     /// @brief Returns singleton instance of NodeMangr

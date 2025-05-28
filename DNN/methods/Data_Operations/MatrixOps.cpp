@@ -21,11 +21,11 @@ bool MatrixOps::checkDimensions(Matrix* m1, Matrix* m2) {
 }
 
 //Checks dimensions of vector matrices
-bool MatrixOps::checkDimensions(std::shared_ptr<vMatrix> m1, std::shared_ptr<vMatrix> m2) {
+bool MatrixOps::checkDimensions(matrix_obj m1, matrix_obj m2) {
     return (m1->rows == m2->cols && m1->cols == m2->cols);
 }
 
-std::tuple<int, int> MatrixOps::returnDimensions(std::shared_ptr<vMatrix> m1) {
+std::tuple<int, int> MatrixOps::returnDimensions(matrix_obj m1) {
     int rows = m1->rows;
     int cols = m1->rows;
     std::cout <<"[DIMENSIONs: " << rows << " rows, " << cols << " columns]" << '\n';
@@ -51,7 +51,7 @@ Matrix* MatrixOps::matrix_add(Matrix* m1, Matrix* m2) {
     return m;
 }
 
-std::shared_ptr<vMatrix> MatrixOps::v_matrix_add(std::shared_ptr<vMatrix> m1, std::shared_ptr<vMatrix> m2) {
+matrix_obj MatrixOps::v_matrix_add(matrix_obj m1, matrix_obj m2) {
     std::cout << "Add function called\n";
 
     // Check if dimensions are compatible for broadcasting
@@ -113,7 +113,7 @@ Matrix* MatrixOps::matrix_subtract(Matrix* m1, Matrix* m2) {
     return m;
 }
 
-std::shared_ptr<vMatrix> MatrixOps::v_matrix_subtract(std::shared_ptr<vMatrix> m1, std::shared_ptr<vMatrix> m2) {
+matrix_obj MatrixOps::v_matrix_subtract(matrix_obj m1, matrix_obj m2) {
     
     if (!checkDimensions(m1, m2)) {
         throw std::invalid_argument(
@@ -121,7 +121,7 @@ std::shared_ptr<vMatrix> MatrixOps::v_matrix_subtract(std::shared_ptr<vMatrix> m
         );
     }
 
-    std::shared_ptr<vMatrix> m =  v_matrix_create(m1->rows, m1->cols);
+    matrix_obj m =  v_matrix_create(m1->rows, m1->cols);
     for (int i = 0; i < m->rows; i++) {
         for (int j = 0; j < m->cols; j++) {
             m->entries[i][j] = m1->entries[i][j] - m2->entries[i][j];
@@ -149,7 +149,7 @@ Matrix* MatrixOps::matrix_multiply(Matrix* m1, Matrix* m2) {
     return m;
 }
 
-std::shared_ptr<vMatrix> MatrixOps::v_matrix_multiply(std::shared_ptr<vMatrix> m1, std::shared_ptr<vMatrix> m2) {
+matrix_obj MatrixOps::v_matrix_multiply(matrix_obj m1, matrix_obj m2) {
     std::cout << "[CALCULATING MATRIX MULTIPLICATION...]\n";
     
     if (m1->cols != m2->rows) {
@@ -158,7 +158,7 @@ std::shared_ptr<vMatrix> MatrixOps::v_matrix_multiply(std::shared_ptr<vMatrix> m
         );
     }
 
-    std::shared_ptr<vMatrix> m =  v_matrix_create(m1->rows, m2->cols);
+    matrix_obj m =  v_matrix_create(m1->rows, m2->cols);
     for (int i = 0; i < m1->rows; i++) {
         for (int j = 0; j < m2->cols; j++) {
             double sum = 0;
@@ -195,7 +195,7 @@ Matrix* MatrixOps::matrix_dot(Matrix* m1, Matrix* m2) {
     return m;
 }
 
-std::shared_ptr<vMatrix> MatrixOps::v_matrix_dot(std::shared_ptr<vMatrix> m1, std::shared_ptr<vMatrix> m2) {
+matrix_obj MatrixOps::v_matrix_dot(matrix_obj m1, matrix_obj m2) {
     
     if (m1->cols != m2->rows) {
         throw std::invalid_argument(
@@ -203,7 +203,7 @@ std::shared_ptr<vMatrix> MatrixOps::v_matrix_dot(std::shared_ptr<vMatrix> m1, st
         );
     }
 
-    std::shared_ptr<vMatrix> m =  v_matrix_create(m1->rows, m2->cols);
+    matrix_obj m =  v_matrix_create(m1->rows, m2->cols);
     for (int i = 0; i < m1->rows; i++) {
         for (int j = 0; j < m2->cols; j++) {
             double sum = 0;
@@ -229,8 +229,8 @@ Matrix* MatrixOps::matrix_scale(double n, Matrix* m) {
     return mat;
 }
 
-std::shared_ptr<vMatrix> MatrixOps::v_matrix_scale(double n, std::shared_ptr<vMatrix> m) {
-    std::shared_ptr<vMatrix> mat = v_matrix_copy(m);
+matrix_obj MatrixOps::v_matrix_scale(double n, matrix_obj m) {
+    matrix_obj mat = v_matrix_copy(m);
     for (int i = 0; i < m->rows; i++) {
         for (int j = 0; j < m->cols; j++) {
             mat->entries[i][j] *= n;
@@ -251,8 +251,8 @@ Matrix* MatrixOps::matrix_add_scalar(double n, Matrix* m) {
     return mat;
 }
 
-std::shared_ptr<vMatrix> MatrixOps::v_matrix_add_scalar(double n, std::shared_ptr<vMatrix> m) {
-    std::shared_ptr<vMatrix> mat = v_matrix_copy(m);
+matrix_obj MatrixOps::v_matrix_add_scalar(double n, matrix_obj m) {
+    matrix_obj mat = v_matrix_copy(m);
     for (int i = 0; i < m->rows; i++) {
         for (int j = 0; j < m->cols; j++) {
             mat->entries[i][j] += n;
@@ -273,8 +273,8 @@ Matrix* MatrixOps::matrix_apply(double (*func)(double), Matrix* m) {
 	return mat;
 }
 
-std::shared_ptr<vMatrix> MatrixOps::v_matrix_apply(double (*func)(double), std::shared_ptr<vMatrix> m) {
-    std::shared_ptr<vMatrix> mat = v_matrix_copy(m);
+matrix_obj MatrixOps::v_matrix_apply(double (*func)(double), matrix_obj m) {
+    matrix_obj mat = v_matrix_copy(m);
 	for (int i = 0; i < m->rows; i++) {
 		for (int j = 0; j < m->cols; j++) {
 			mat->entries[i][j] = (*func)(m->entries[i][j]);
@@ -295,8 +295,8 @@ Matrix* MatrixOps::matrix_transpose(Matrix* m) {
     return mat;
 }
 
-std::shared_ptr<vMatrix> MatrixOps::v_matrix_transpose(std::shared_ptr<vMatrix> m) {
-    std::shared_ptr<vMatrix> mat = v_matrix_copy(m);
+matrix_obj MatrixOps::v_matrix_transpose(matrix_obj m) {
+    matrix_obj mat = v_matrix_copy(m);
     for (int i = 0; i < m->rows; i++) {
         for (int j = 0; j < m->cols; j++) {
             mat->entries[i][j] = m->entries[i][j];

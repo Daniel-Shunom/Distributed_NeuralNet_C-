@@ -110,7 +110,7 @@ public:
     std::string error_check (
 	    std::vector<double> &_weights, 
 	    std::vector<double> &_biases,
-        std::vector<double> &input
+      std::vector<double> &input
     );
 
 };
