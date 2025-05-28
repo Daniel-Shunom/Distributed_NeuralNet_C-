@@ -18,7 +18,7 @@ Instructions:
 
 #include "../Data_Operations/MatrixOps.h"
 #include "../Data_Operations/DataOps.h"
-#include "../../Essential_Params/Params.h"
+#include "../../types/Params.h"
 #include <sstream>
 #include <memory>
 

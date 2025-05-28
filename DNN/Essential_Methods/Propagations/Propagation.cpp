@@ -13,7 +13,7 @@ Instructions:
 
 */
 
-#include "Propagation.h"
+#include "./Propagation.h"
 
 std::string Propagation::error_check(
   std::vector<double> &_weights,

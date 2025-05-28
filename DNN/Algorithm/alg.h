@@ -1,6 +1,6 @@
 #pragma once 
 #include <unordered_map>
-#include "../Essential_Params/Params.h"
+#include "../types/Params.h"
 #include "../Essential_Methods/Data_Operations/MatrixOps.h"
 #include "../Essential_Methods/Data_Operations/DataOps.h"
 #include "../Essential_Methods/Propagations/Propagation.h"

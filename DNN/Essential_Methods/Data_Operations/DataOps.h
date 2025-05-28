@@ -17,8 +17,8 @@ Instructions:
 
 #define MAX_CHAR 100
 
-#include "../../Essential_Params/Params.h"
-#include "../../HyperParams/Lifetime_Managers/MemManager.h"
+#include "../../types/Params.h"
+#include "../../cache/Lifetime_Managers/MemManager.h"
 #include <iostream>
 #include <fstream>
 #include <iomanip>
