@@ -31,7 +31,6 @@ Instructions:
 #include <variant>
 #include <functional>
 
-using matrix_obj = std::shared_ptr<vMatrix>;
 typedef struct {
     double** entries;
     int rows;
@@ -57,12 +56,13 @@ typedef struct {
 } Bias;
 
 typedef struct {
-    matrix_obj img_data;
+    std::shared_ptr<vMatrix> img_data;
     int label;
 } Img;
 
 template<typename RtnType, typename ...Args>
 using NodeFunc = std::function<RtnType(Args...)>;
+using matrix_obj = std::shared_ptr<vMatrix>;
 
 struct Node {
     //Here, I think that the goal is that for 

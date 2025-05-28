@@ -79,12 +79,12 @@ void invert_on() { std::cout << "\033[7m"; }
 void invert_off() { std::cout << "\033[0m"; }
 
 MenuConstruct::iAselect MenuConstruct::select_activation() {
-    struct Item { std::string label; std::function<void(matrix_obj)> fn; };
+    struct Item { std::string label; std::function<matrix_obj(matrix_obj)> fn; };
     std::vector<Item> items = {
-      {"Tanh        activation", [this](auto p){ this->v_tanh_activation(p); }},
-      {"ReLU        activation", [this](auto p){ this->v_relu_activation(p); }},
-      {"Leaky ReLU  activation", [this](auto p){ this->v_leaky_relu_activation(p); }},
-      {"Sigmoid     activation", [this](auto p){ this->v_sigmoid_activation(p); }}
+      {"Tanh        activation", [this](matrix_obj p){ return this->v_tanh_activation(p); }},
+      {"ReLU        activation", [this](matrix_obj p){ return this->v_relu_activation(p); }},
+      {"Leaky ReLU  activation", [this](matrix_obj p){ return this->v_leaky_relu_activation(p); }},
+      {"Sigmoid     activation", [this](matrix_obj p){ return this->v_sigmoid_activation(p); }}
     };
 
     int cursor = 0;
