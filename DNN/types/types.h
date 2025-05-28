@@ -31,6 +31,7 @@ Instructions:
 #include <variant>
 #include <functional>
 
+using matrix_obj = std::shared_ptr<vMatrix>;
 typedef struct {
     double** entries;
     int rows;
@@ -56,20 +57,19 @@ typedef struct {
 } Bias;
 
 typedef struct {
-    std::shared_ptr<vMatrix> img_data;
+    matrix_obj img_data;
     int label;
 } Img;
 
 template<typename RtnType, typename ...Args>
 using NodeFunc = std::function<RtnType(Args...)>;
-typedef std::shared_ptr<vMatrix> FuncParam;
 
 struct Node {
     //Here, I think that the goal is that for 
-    std::shared_ptr<vMatrix> inputs;
-    std::shared_ptr<vMatrix> Weights;
-    std::shared_ptr<vMatrix> Biases;
-    std::shared_ptr<vMatrix> Activations;
+    matrix_obj inputs;
+    matrix_obj Weights;
+    matrix_obj Biases;
+    matrix_obj Activations;
     
     //stored function for forward and
     //backward propagations
@@ -87,4 +87,4 @@ typedef std::vector<Node> Nd;
 typedef std::vector<std::shared_ptr<Node>> P_Nd;
 typedef std::vector<Nd> LC;
 
-using bucket = std::variant<Nd, P_Nd, LC, rI_Nd, rP_Nd, rO_Nd, std::shared_ptr<vMatrix>> ;
+using bucket = std::variant<Nd, P_Nd, LC, rI_Nd, rP_Nd, rO_Nd, matrix_obj> ;
