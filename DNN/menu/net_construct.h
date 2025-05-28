@@ -17,7 +17,7 @@ Instructions:
 #include <iostream>
 #include <vector>
 #include <functional>
-#include "../Essential_Methods/Propagations/Propagation.h"
+#include "../methods/Propagations/Propagation.h"
 #include "../cache/HyperParameters/HyperParams.h"
 #include <variant>
 

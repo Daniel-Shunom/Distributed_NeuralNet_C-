@@ -1,9 +1,9 @@
 #pragma once 
 #include <unordered_map>
 #include "../types/Params.h"
-#include "../Essential_Methods/Data_Operations/MatrixOps.h"
-#include "../Essential_Methods/Data_Operations/DataOps.h"
-#include "../Essential_Methods/Propagations/Propagation.h"
+#include "../methods/Data_Operations/MatrixOps.h"
+#include "../methods/Data_Operations/DataOps.h"
+#include "../methods/Propagations/Propagation.h"
 
 
 class Alg {

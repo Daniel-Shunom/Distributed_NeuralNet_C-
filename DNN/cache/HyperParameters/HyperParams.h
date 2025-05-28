@@ -15,7 +15,7 @@ Instructions:
 
 #pragma once
 
-#include "../../Essential_Methods/Propagations/Propagation.h"
+#include "../../methods/Propagations/Propagation.h"
 #include "../Cache_Managers/CacheMangr.h"
 #include <vector>
 #include <array>
