@@ -10,7 +10,7 @@
 
 <br/>
 
-<img src="./Assets/n_net.png" alt="Project Logo" width="200"/>
+<img src="./assets/n_net.png" alt="Project Logo" width="200"/>
 
 ### *Deep Neural Networks Implementation via Distributed Computing*
 
