@@ -32,3 +32,12 @@ int http::dnnsocket::get_connection() {
 int http::dnnsocket::get_socket() {
   return sock;
 }
+
+http::dnnsocket::~dnnsocket() {
+  #ifdef _WIN32
+    closesocket(sock);
+    WSACleanup();
+  #else
+    close(sock);
+  #endif
+}

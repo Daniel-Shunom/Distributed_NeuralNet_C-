@@ -18,7 +18,7 @@ namespace http {
     int connection;
   public:
     dnnsocket(int domain, int service, int protocol, uint16_t port, uint32_t bridge);
-    // Pure virtual function to connect to the network
+    ~dnnsocket();
     virtual int connect_to_network(int sock, struct sockaddr_in address) = 0;
     void test_connection(int con);
     struct sockaddr_in get_address();
