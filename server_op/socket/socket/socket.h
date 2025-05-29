@@ -1,6 +1,7 @@
 #pragma once
 
-#include <stdio.h>
+#include <iostream>
+#include <cstdint>
 #ifdef _WIN32
   #include <winsock2.h>
   #include <ws2tcpip.h>
@@ -16,7 +17,7 @@ namespace http {
     int sock;
     int connection;
   public:
-    dnnsocket(int domain, int service, int protocol, int port, u_long bridge);
+    dnnsocket(int domain, int service, int protocol, uint16_t port, uint32_t bridge);
     // Pure virtual function to connect to the network
     virtual int connect_to_network(int sock, struct sockaddr_in address) = 0;
     void test_connection(int con);
