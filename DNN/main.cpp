@@ -16,7 +16,7 @@ Instructions:
 #include "./menu/menu.h"
 #include "./methods/Data_Operations/MatrixOps.h"
 #include "./methods/Image_Operations/ImgOps.h"
-#include "./cache/Lifetime_Managers/MemManager.h"
+#include "./cache/img_cache/img_cache.h"
 #include "./alg/alg.h"
 #include <iostream>
 
@@ -25,11 +25,11 @@ int main() {
         std::shared_ptr<Image>, 
         std::shared_ptr<MatrixOps>, 
         std::shared_ptr<MenuConstruct>, 
-        std::shared_ptr<MemManager>
+        std::shared_ptr<ImgCache>
     >;
     std::vector<tub> tubby;
  
-    MemManager& manager = MemManager::getInstance();
+    ImgCache& manager = ImgCache::getInstance();
     std::shared_ptr<MenuConstruct> mc = std::make_shared<MenuConstruct>();
     /*std::shared_ptr<MatrixOps> mp = std::make_shared<MatrixOps>();
     std::shared_ptr<Image> img = std::make_shared<Image>();

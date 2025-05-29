@@ -18,7 +18,7 @@ Instructions:
 #define MAX_CHAR 100
 
 #include "../../types/types.h"
-#include "../../cache/Lifetime_Managers/MemManager.h"
+#include "../../cache/img_cache/img_cache.h"
 #include <iostream>
 #include <fstream>
 #include <iomanip>
@@ -36,7 +36,7 @@ public:
         float label_yhat;
     };
 
-    MemManager& mem = MemManager::getInstance();
+    ImgCache& mem = ImgCache::getInstance();
     /// @brief Loads a vector matrix from a file
     /// @param file_string Path to the file
     /// @return Shared pointer to the loaded vector matrix
