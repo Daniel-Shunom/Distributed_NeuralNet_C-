@@ -4,9 +4,9 @@
 class AutoGrad
 {
 private:
-    /* data */
+  /* data */
 public:
-    AutoGrad(/* args */);
-    ~AutoGrad();
-friend void find_foo();
+  AutoGrad(/* args */);
+  ~AutoGrad();
+  friend void find_foo();
 };

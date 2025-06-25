@@ -19,59 +19,59 @@ Instructions:
 
 
 #ifdef _WIN32
-  #include <conio.h>
-  int read_arrow() {
-    int c = _getch();
-    if (c == 0 || c == 0xE0) {
-      int code = _getch();
-      if (code == 72) return +1;
-      if (code == 80) return -1;
-    }
-    return 0;
+#include <conio.h>
+int read_arrow() {
+  int c = _getch();
+  if (c == 0 || c == 0xE0) {
+    int code = _getch();
+    if (code == 72) return +1;
+    if (code == 80) return -1;
   }
+  return 0;
+}
 
-  int read_key() {
-    int c = _getch();
-    if (c == '\r') return '\n';
-    return c;
-  }
+int read_key() {
+  int c = _getch();
+  if (c == '\r') return '\n';
+  return c;
+}
 
 #else 
-  #include <termios.h>
-  #include <unistd.h>
-  
-  struct TermRaw {
-    termios oldt;
-    TermRaw() {
-      tcgetattr(STDIN_FILENO, &oldt);
-      termios raw = oldt;
-      raw.c_lflag &= ~(ICANON | ECHO);
-      raw.c_cc[VMIN] = 1;
-      raw.c_cc[VTIME] = 0;
-      tcsetattr(STDIN_FILENO, TCSANOW, &raw);
-    }
-    ~TermRaw() {
-      tcsetattr(STDIN_FILENO, TCSANOW, &oldt);
-    }
-  };
+#include <termios.h>
+#include <unistd.h>
 
-  int read_arrow() {
-    char buf[3];
-    if (read(STDIN_FILENO, buf, 1) != 1) return 0;
-    if (buf[0] != '\x1b') return 0;
-    if (read(STDIN_FILENO, buf+1, 2) != 2) return 0;
-    if (buf[1] == '[') {
-      if (buf[2] == 'A') return +1;
-      if (buf[2] == 'B') return -1;
-    }
-    return 0;
+struct TermRaw {
+  termios oldt;
+  TermRaw() {
+    tcgetattr(STDIN_FILENO, &oldt);
+    termios raw = oldt;
+    raw.c_lflag &= ~(ICANON | ECHO);
+    raw.c_cc[VMIN] = 1;
+    raw.c_cc[VTIME] = 0;
+    tcsetattr(STDIN_FILENO, TCSANOW, &raw);
   }
+  ~TermRaw() {
+    tcsetattr(STDIN_FILENO, TCSANOW, &oldt);
+  }
+};
 
-  int read_key() {
-    char c;
-    if (read(STDIN_FILENO, &c, 1) != 1) return 0;
-    return c;
+int read_arrow() {
+  char buf[3];
+  if (read(STDIN_FILENO, buf, 1) != 1) return 0;
+  if (buf[0] != '\x1b') return 0;
+  if (read(STDIN_FILENO, buf+1, 2) != 2) return 0;
+  if (buf[1] == '[') {
+    if (buf[2] == 'A') return +1;
+    if (buf[2] == 'B') return -1;
   }
+  return 0;
+}
+
+int read_key() {
+  char c;
+  if (read(STDIN_FILENO, &c, 1) != 1) return 0;
+  return c;
+}
 #endif
 
 void clear_screen() { std::cout << "\033[2J\033[H"; }
@@ -89,9 +89,9 @@ MenuConstruct::actv_func MenuConstruct::select_activation() {
 
   int cursor = 0;
 
-  #ifndef _WIN32
-    TermRaw tr;
-  #endif
+#ifndef _WIN32
+  TermRaw tr;
+#endif
 
   while (true) {
     clear_screen();
@@ -110,7 +110,7 @@ MenuConstruct::actv_func MenuConstruct::select_activation() {
       break;
     }
   }
-    
+
   return items[cursor].fn;
 }
 
@@ -126,7 +126,7 @@ MenuConstruct::net_config MenuConstruct::configure_deepnet() {
 
   net_config net_config;
   std::function<void(Nd, Nd)> layer_config, node_config;
-  
+
   layer_config = [this, layers, depth](Nd hidden_layers, Nd next_layer) {
     this->hidden_layer(hidden_layers, next_layer, layer_cache, depth);
   };
@@ -145,7 +145,7 @@ MenuConstruct::io_config MenuConstruct::io_nodes_config() {
   std::cin >> i_nodes;
   std::cout << "Enter number of output nodes: ";
   std::cin >> o_nodes;
-    
+
   std::cout << "\n[CURRENT WEIGHTS]\n";
   for (int i = 0; i < params.weights.size(); i++) {
     std::cout << params.weights[i] << "  ";
@@ -159,7 +159,7 @@ MenuConstruct::io_config MenuConstruct::io_nodes_config() {
 
   layer_config = [this, i_nodes](Nd &input_layer, Nd &hidden_layers) {
     input_layer.resize(i_nodes),
-    hidden_layers.resize(HIDDEN_NODES);
+      hidden_layers.resize(HIDDEN_NODES);
     this->hidden_layer(input_layer, hidden_layers, layer_cache, depth);
   };
 

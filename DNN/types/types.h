@@ -32,32 +32,32 @@ Instructions:
 #include <functional>
 
 typedef struct {
-    double** entries;
-    int rows;
-    int cols;
+  double** entries;
+  int rows;
+  int cols;
 } Matrix;
 
 typedef struct {
-    std::vector<std::vector<double>> entries;
-    int rows;
-    int cols;
+  std::vector<std::vector<double>> entries;
+  int rows;
+  int cols;
 } vMatrix;
 
 typedef struct {
-    std::vector<std::vector<double>> entries;
-    int rows;
-    int cols;
+  std::vector<std::vector<double>> entries;
+  int rows;
+  int cols;
 } Weight;
 
 typedef struct {
-    std::vector<std::vector<double>> entries;
-    int rows;
-    int cols;
+  std::vector<std::vector<double>> entries;
+  int rows;
+  int cols;
 } Bias;
 
 typedef struct {
-    std::shared_ptr<vMatrix> img_data;
-    int label;
+  std::shared_ptr<vMatrix> img_data;
+  int label;
 } Img;
 
 template<typename RtnType, typename ...Args>
@@ -65,19 +65,19 @@ using NodeFunc = std::function<RtnType(Args...)>;
 using matrix_obj = std::shared_ptr<vMatrix>;
 
 struct Node {
-    //Here, I think that the goal is that for 
-    matrix_obj inputs;
-    matrix_obj Weights;
-    matrix_obj Biases;
-    matrix_obj Activations;
-    
-    //stored function for forward and
-    //backward propagations
-    NodeFunc<matrix_obj, matrix_obj> funcStore;
+  //Here, I think that the goal is that for 
+  matrix_obj inputs;
+  matrix_obj Weights;
+  matrix_obj Biases;
+  matrix_obj Activations;
 
-    std::vector<double> computed_activations;
-    double learning_rate;
-    std::vector<std::shared_ptr<Node>> next_node;
+  //stored function for forward and
+  //backward propagations
+  NodeFunc<matrix_obj, matrix_obj> funcStore;
+
+  std::vector<double> computed_activations;
+  double learning_rate;
+  std::vector<std::shared_ptr<Node>> next_node;
 };
 
 typedef std::array<std::shared_ptr<Node>, INPUT_NODES> rI_Nd;

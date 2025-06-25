@@ -24,24 +24,24 @@ Instructions:
 
 class Image {
 public:
-    DataOps dp;
+  DataOps dp;
 
-    /// @brief Extracts image data from a CSV file
-    /// @param file_string csv file path
-    /// @param num_imgs number of images to extract
-    /// @return Image data as pixel values between 0 and 1
-    std::vector<std::shared_ptr<Img>> csv_to_imgs(std::string file_string, int num_imgs);
+  /// @brief Extracts image data from a CSV file
+  /// @param file_string csv file path
+  /// @param num_imgs number of images to extract
+  /// @return Image data as pixel values between 0 and 1
+  std::vector<std::shared_ptr<Img>> csv_to_imgs(std::string file_string, int num_imgs);
 
-    /// @brief Prints image data
-    /// @param img input image
-    void img_print(std::shared_ptr<Img> img);
+  /// @brief Prints image data
+  /// @param img input image
+  void img_print(std::shared_ptr<Img> img);
 
-    /// @brief deletes image data from memory
-    /// @param img input image
-    void img_free(std::shared_ptr<Img>img);
+  /// @brief deletes image data from memory
+  /// @param img input image
+  void img_free(std::shared_ptr<Img>img);
 
-    /// @brief deletes image data from memory
-    /// @param imgs input images
-    /// @param n number of images
-    void imgs_free(std::vector<std::shared_ptr<Img>>imgs, int n);
+  /// @brief deletes image data from memory
+  /// @param imgs input images
+  /// @param n number of images
+  void imgs_free(std::vector<std::shared_ptr<Img>>imgs, int n);
 };

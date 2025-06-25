@@ -21,17 +21,17 @@ Instructions:
 #include <iostream>
 
 int main() {
-    using tub = std::variant<
-        std::shared_ptr<Image>, 
-        std::shared_ptr<MatrixOps>, 
-        std::shared_ptr<MenuConstruct>, 
-        std::shared_ptr<ImgCache>
-    >;
-    std::vector<tub> tubby;
- 
-    ImgCache& manager = ImgCache::getInstance();
-    std::shared_ptr<MenuConstruct> mc = std::make_shared<MenuConstruct>();
-    /*std::shared_ptr<MatrixOps> mp = std::make_shared<MatrixOps>();
+  using tub = std::variant<
+  std::shared_ptr<Image>, 
+  std::shared_ptr<MatrixOps>, 
+  std::shared_ptr<MenuConstruct>, 
+  std::shared_ptr<ImgCache>
+  >;
+  std::vector<tub> tubby;
+
+  ImgCache& manager = ImgCache::getInstance();
+  std::shared_ptr<MenuConstruct> mc = std::make_shared<MenuConstruct>();
+  /*std::shared_ptr<MatrixOps> mp = std::make_shared<MatrixOps>();
     std::shared_ptr<Image> img = std::make_shared<Image>();
 
     std::shared_ptr<MenuConstruct> mcc = mc;
@@ -59,7 +59,7 @@ int main() {
     img->img_print(x[8]);  
     mc->hidden_layer(input_nodes, next_nodes, layer_cache, depth);
     mc->cache_initializer(layer_cache, x[0]->img_data);
-    
+
     std::cout << std::endl;
     for (auto const &n: layer_cache[5][4].next_node) {
         std::cout << "Layer 5 Points to Node: " << n << '\n';
@@ -87,6 +87,6 @@ int main() {
 
     manager.ptr_release();
     tubby.clear();/**/
-    mc->menu_configuration();
-    return 0;
+  mc->menu_configuration();
+  return 0;
 }

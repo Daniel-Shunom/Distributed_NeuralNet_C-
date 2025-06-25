@@ -38,7 +38,7 @@ std::vector<std::shared_ptr<Img>> Image::csv_to_imgs(std::string file_string, in
     int j = 0;
     while (std::getline(ss, token, ',')) {
       j == 0 ? imgs[i]->label = std::stoi(token)
-      : imgs[i]->img_data->entries[(j-1)/28][(j-1)%28] = std::stoi(token)/256.0;
+        : imgs[i]->img_data->entries[(j-1)/28][(j-1)%28] = std::stoi(token)/256.0;
       j++;
     }
     i++;

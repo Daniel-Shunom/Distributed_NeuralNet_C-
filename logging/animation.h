@@ -4,6 +4,6 @@
 
 class Animation {
 private:
-    //std::chrono::seconds(1);
-    
+  //std::chrono::seconds(1);
+
 };

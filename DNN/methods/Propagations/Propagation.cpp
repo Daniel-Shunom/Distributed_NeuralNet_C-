@@ -20,16 +20,16 @@ std::string Propagation::error_check(
   std::vector<double> &_biases,
   std::vector<double> &input
 ) {
-    if(_weights.size() != input.size()) {
-        return prop_error.weight_off;
-    }
-    if (_biases.size() != input.size()) {
-        return prop_error.bias_off;
-    }
-    else {
-        std::cout << "[GOOD TO GO!]\n\n";
-    }
-    return "ok";
+  if(_weights.size() != input.size()) {
+    return prop_error.weight_off;
+  }
+  if (_biases.size() != input.size()) {
+    return prop_error.bias_off;
+  }
+  else {
+    std::cout << "[GOOD TO GO!]\n\n";
+  }
+  return "ok";
 }
 
 matrix_obj Propagation::apply_func(
