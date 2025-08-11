@@ -33,8 +33,6 @@
 
 ## 🌟 Overview/Abstract
 
-Welcome to the Distributed Neural Network Architecture project! 
-
 Large language models and machine learning algorithms are typically large computing processes that occur often 
 in local multithreaded environments. This localization of computing is notoriously resource-intensive for the 
 given system and puts a lot of load on the processors and computers involved. For large companies, these issues 
@@ -60,89 +58,3 @@ This innovative implementation brings together:
 <div align="center">
     <img src="https://raw.githubusercontent.com/Daniel-Shunom/Distributed_NeuralNet_C-/main/assets/architecture.png" alt="Architecture Overview" width="600"/>
 </div>
-
-## 🚀 Installation
-
-Get up and running with these simple steps:
-
-```Powershell
-# Clone the latest version of the repository
-git clone https://github.com/Daniel-Shunom/Distributed_NeuralNet_C-.git
-
-# Navigate to the project directory
-cd DNN
-
-# Build and Run with CMake 
-mkdir build
-cd build
-cmake ..
-cmake --build . --clean-first
-
-#To run executable
-cd build/Debug
-./DNN.exe
-
-## 💻 Usage
-
-Implement the Propagation library functions to configure network parameters and hyperparameters:
-
-```cpp
-#include <iostream>
-#include "yourproject.h"
-
-int main() {
-    YourProject project;
-    project.run();
-    return 0;
-}
-```
-
-## ⚡ Features
-
-### Core Components
-
-- **MNIST Matrix Library**
-  - CSV to Img Methods
-  - Rectified Linear Unit (ReLU)
-  - Sigmoid
-  - Leaky ReLU
-
-- **Neural Network Essentials**
-  - Weight Initialization System
-  - Network Layer Cache or smoother intialization
-  - Configurable network paramters and hyperparameters
-  - Modular Network Architecture
-
-- **Server Essentials (Coming soon)**
-  - Coming Soon
-
-> 📝 *Note: Additional features and components will be added as the project evolves.*
-
-## 🤝 Contributing
-
-I always welcome contributions! Guidelines for contributing will be established once core functionalities are completed.
-
-Stay tuned for:
-- Coding standards
-- Pull request protocol
-- Development workflow
-- Testing requirements
-
-## 📜 License
-
-This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
-
-## 📬 Contact
-
-Let's connect! Reach out on any of these platforms:
-
-[![Email](https://img.shields.io/badge/Email-danielshunom2%40gmail.com-red)](mailto:danielshunom2@gmail.com)
-[![GitHub](https://img.shields.io/badge/GitHub-Daniel--Shunom-black)](https://github.com/Daniel-shunom)
-[![LinkedIn](https://img.shields.io/badge/LinkedIn-Daniel--Jeremiah-blue)](https://www.linkedin.com/in/daniel-jeremiah-177416245/)
-
----
-
-<div align="center">
-⭐ Star this repo if you find it helpful!
-</div>
-```
